@@ -1,23 +1,23 @@
-# adminconsole
+# Platform Admin Console
 
 ## Project setup
 ```
-npm install
+yarn install or npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+yarn serve or npm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+yarn build or npm run build
 ```
 
 ### Lints and fixes files
 ```
-npm run lint
+yarn lint or npm run lint
 ```
 
 ### Customize configuration
