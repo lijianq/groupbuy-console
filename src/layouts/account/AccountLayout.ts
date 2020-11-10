@@ -4,7 +4,7 @@ import { AppPreferenceModule } from '@/store/modules/AppPreference'
 @Component
 export default class AccountLayout extends Vue {
 
-    isMobile = true
+    isMobile = false
 
     constructor() {
         super()

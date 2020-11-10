@@ -1,4 +1,4 @@
-import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
+import {Module, VuexModule, MutationAction, getModule} from 'vuex-module-decorators'
 import store from '@/store'
 
 @Module({
@@ -7,11 +7,11 @@ import store from '@/store'
 
 class AppPreference extends VuexModule {
 
-    public layout = ''
+    public layout = 'sidemenu'
 
-    public navTheme = ''
+    public navTheme = 'dark'
 
-    public primaryColor = ''
+    public primaryColor = '#52C41A'
 
     public colorWeak = false
 
@@ -19,7 +19,7 @@ class AppPreference extends VuexModule {
 
     public fixSiderbar = true
 
-    public contentWidth = ''
+    public contentWidth = 'Fluid'
 
     public autoHideHeader = false
 
@@ -31,5 +31,34 @@ class AppPreference extends VuexModule {
 
     public currentLang = 'zh-CN'
 
+    @MutationAction({mutate: ['layout', 'navTheme', 'primaryColor', 'colorWeak', 'fixedHeader',
+        'fixSiderbar', 'contentWidth', 'autoHideHeader', 'sidebarCollapsed', 'multiTab', 'currentLang']})
+    async setAppPreference(layout: string,
+                    navTheme: string,
+                    primaryColor: string,
+                    colorWeak: boolean,
+                    fixedHeader: boolean,
+                    fixSiderbar: boolean,
+                    contentWidth: string,
+                    autoHideHeader: boolean,
+                    sidebarCollapsed: boolean,
+                    multiTab: boolean,
+                    currentLang: string) {
+        return {
+            layout: layout,
+            navTheme: navTheme,
+            primaryColor: primaryColor,
+            colorWeak: colorWeak,
+            fixedHeader: fixedHeader,
+            fixSiderbar: fixSiderbar,
+            contentWidth: contentWidth,
+            autoHideHeader: autoHideHeader,
+            sidebarCollapsed: sidebarCollapsed,
+            multiTab: multiTab,
+            currentLang: currentLang
+        }
+    }
+
 }
+
 export const AppPreferenceModule = getModule(AppPreference)

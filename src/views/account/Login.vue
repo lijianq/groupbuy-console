@@ -4,8 +4,10 @@
         id="loginForm"
         class="account-layout-login"
         ref="loginForm"
+        :form="form"
+        @submit="handleSubmit"
     >
-      <a-alert v-if="false" type="error" showIcon style="margin-bottom: 24px;"
+      <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;"
                :message="$t('account.login.error')"/>
       <a-form-item>
         <a-input
@@ -14,7 +16,7 @@
             :placeholder="$t('account.login.account')"
             v-decorator="[
                 'account',
-                {rules: [{ required: true, message: $t('account.login.accountMessage') }], validateTrigger: 'change'}
+                {rules: [{ required: true, message: $t('account.login.accountMessage') }], validateTrigger: 'blur'}
               ]"
         >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -37,7 +39,7 @@
       <a-form-item>
         <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{$t('account.login.autologin')}}</a-checkbox>
         <router-link
-            :to="{ path: '/about/info', params: { user: 'admin'} }"
+            :to="{ path: '/about/info', params: { accout: 'admin'} }"
             class="forge-password"
             style="float: right;"
         >{{$t('account.login.forgot')}}
@@ -50,6 +52,8 @@
             type="primary"
             htmlType="submit"
             class="login-button"
+            :loading="state.loginBtn"
+            :disabled="state.loginBtn"
         >{{$t('account.login.confirm')}}
         </a-button>
       </a-form-item>
@@ -57,9 +61,9 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Login"
+<script lang="ts">
+import Login from './Login'
+export default class MyLogin extends Login {
 }
 </script>
 
