@@ -1,14 +1,14 @@
 import Vue from 'vue'
-import { Button } from 'ant-design-vue';
 import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
-import i18n from './locales'
-import './core/lazy_use'
+import { RegisterServiceWorker } from '@/cache'
+import router from '@/router'
+import store from '@/store'
+import i18n from '@/locales'
+import { AntdLazyLoad } from "@/core"
 
-Vue.component(Button.name, Button)
 Vue.config.productionTip = false
+RegisterServiceWorker.doRegister()
+AntdLazyLoad.doLazyLoad()
 
 new Vue({
   router,

@@ -1,5 +1,5 @@
 <template>
-  <div id="accountLayout" :class="['account-layout-wrapper', false && 'mobile']">
+  <div id="accountLayout" :class="['account-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
       <div class="top">
         <div class="header">
@@ -30,8 +30,11 @@
 </template>
 
 <script lang="ts">
-import AccountLayout from "./AccountLayout"
-export default { AccountLayout }
+import AccountLayout from "@/layouts/account/AccountLayout"
+import {Component} from "vue-property-decorator";
+@Component
+export default class MyAccountLayout extends AccountLayout {
+}
 </script>
 
 <style lang="less" scoped>

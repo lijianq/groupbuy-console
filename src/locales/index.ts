@@ -2,15 +2,12 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import storage from 'store'
 import moment from 'moment'
-
-
 import zhCN from './lang/zh-CN'
 import enUS from './lang/en-US'
 
 Vue.use(VueI18n)
 
-export const defaultLang = 'zh-CN'
-
+const defaultLang = 'zh-CN'
 const messages = {
     'zh-CN': {
         ...zhCN
@@ -24,7 +21,7 @@ const i18n = new VueI18n({
     silentTranslationWarn: true,
     locale: defaultLang,
     fallbackLocale: defaultLang,
-    messages
+    messages: messages
 })
 
 const loadedLanguages = [defaultLang]
@@ -62,5 +59,4 @@ export function loadLanguageAsync(lang = defaultLang) {
 export function i18nRender(key: string) {
     return i18n.t(`${key}`)
 }
-
 export default i18n

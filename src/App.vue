@@ -6,22 +6,20 @@
   </a-config-provider>
 </template>
 
-<script>
-import { domTitle, setDocumentTitle } from '@/utils/domUtil'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { DomUtil } from '@/utils/DomUtil'
 import { i18nRender } from '@/locales'
 
-export default {
-  data () {
-    return {
-    }
-  },
-  computed: {
-    locale () {
-      const { title } = this.$route.meta
-      title && (setDocumentTitle(`${i18nRender(title)} - ${i18nRender(domTitle)}`))
-      return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
-    }
+@Component({
+  components: {}
+})
+
+export default class App extends Vue {
+  get locale () {
+    const { title } = this.$route.meta
+    title && (DomUtil.setDocumentTitle(`${i18nRender(title)} - ${i18nRender(DomUtil.domTitle)}`))
+    return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
   }
 }
-
 </script>
