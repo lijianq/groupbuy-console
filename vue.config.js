@@ -1,3 +1,5 @@
+const contextPath = process.env.VUE_APP_CONTEXT
+const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
     css: {
         loaderOptions: {
@@ -11,5 +13,6 @@ module.exports = {
             }
         }
     },
-    productionSourceMap: false
+    productionSourceMap: false,
+    publicPath: contextPath
 };

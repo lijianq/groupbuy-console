@@ -9,7 +9,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { DomUtil } from '@/utils/DomUtil'
-import { i18nRender } from '@/locales'
 
 @Component({
   components: {}
@@ -18,7 +17,7 @@ import { i18nRender } from '@/locales'
 export default class App extends Vue {
   get locale () {
     const { title } = this.$route.meta
-    title && (DomUtil.setDocumentTitle(`${i18nRender(title)} - ${i18nRender(DomUtil.domTitle)}`))
+    title && (DomUtil.setDocumentTitle(`${this.$t(title)} - ${this.$t(DomUtil.domTitle)}`))
     return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
   }
 }

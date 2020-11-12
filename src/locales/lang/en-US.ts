@@ -1,23 +1,28 @@
 import antdEnUS from 'ant-design-vue/es/locale-provider/en_US'
 import momentEU from 'moment/locale/eu'
 
-const components = {
-    antLocale: antdEnUS,
-    momentName: 'eu',
-    momentLocale: momentEU
-}
+export default class EnUS {
 
-const locale = {
-
-    router: {
-        'about': 'About'
-    },
-    company: {
-        'name': 'TECHNOLOGY MATTERS'
+    private static components = {
+        antLocale: antdEnUS,
+        momentName: 'eu',
+        momentLocale: momentEU
     }
-}
 
-export default {
-    ...components,
-    ...locale
+    private static messages = {
+        router: {
+            'about': 'About'
+        },
+        company: {
+            'name': 'TECHNOLOGY MATTERS'
+        }
+    }
+
+    static getMessages() {
+        return {
+            ...this.components,
+            ...this.messages
+        }
+    }
+
 }
