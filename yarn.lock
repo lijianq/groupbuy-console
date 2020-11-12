@@ -4270,6 +4270,11 @@ flatted@^2.0.0:
   resolved "https://registry.npm.taobao.org/flatted/download/flatted-2.0.2.tgz?cache=0&sync_timestamp=1601444397688&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fflatted%2Fdownload%2Fflatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha1-RXWyHivO50NKqb5mL0t7X5wrUTg=
 
+flatted@^3.0.5:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/flatted/download/flatted-3.1.0.tgz#a5d06b4a8b01e3a63771daa5cb7a1903e2e57067"
+  integrity sha1-pdBrSosB46Y3cdqly3oZA+LlcGc=
+
 flush-write-stream@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/flush-write-stream/download/flush-write-stream-1.1.1.tgz#8dd7d873a1babc207d94ead0c2e0e44276ebf2e8"
@@ -9065,6 +9070,14 @@ vuex-module-decorators@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/vuex-module-decorators/download/vuex-module-decorators-1.0.1.tgz#d34dafb5428a3636f1c26d3d014c15fc9659ccd0"
   integrity sha1-002vtUKKNjbxwm09AUwV/JZZzNA=
+
+vuex-persist@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.npm.taobao.org/vuex-persist/download/vuex-persist-3.1.3.tgz#518c722a2ca3026bcee5732f99d24f75cee0f3b6"
+  integrity sha1-UYxyKiyjAmvO5XMvmdJPdc7g87Y=
+  dependencies:
+    deepmerge "^4.2.2"
+    flatted "^3.0.5"
 
 vuex@^3.4.0:
   version "3.5.1"

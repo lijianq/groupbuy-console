@@ -31,10 +31,7 @@
 
 <script lang="ts">
 import AccountLayout from "@/layouts/account/AccountLayout"
-import {Component} from "vue-property-decorator";
-@Component
-export default class MyAccountLayout extends AccountLayout {
-}
+export default AccountLayout
 </script>
 
 <style lang="less" scoped>

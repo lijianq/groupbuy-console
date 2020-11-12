@@ -1,11 +1,7 @@
-import {Module, VuexModule, MutationAction, getModule} from 'vuex-module-decorators'
-import store from '@/store'
+import { Module, VuexModule, MutationAction } from 'vuex-module-decorators'
 
-@Module({
-    name: 'app-preference', dynamic: true, namespaced: true, store
-})
-
-class AppPreference extends VuexModule {
+@Module({ name: 'appPreference'})
+export default class AppPreference extends VuexModule {
 
     public layout = 'sidemenu'
 
@@ -58,7 +54,4 @@ class AppPreference extends VuexModule {
             currentLang: currentLang
         }
     }
-
 }
-
-export const AppPreferenceModule = getModule(AppPreference)

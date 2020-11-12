@@ -18,7 +18,7 @@ const locale = {
         name: '无所谓科技'
     },
     about: {
-        content: '无所谓科技有限公司提供电子商务服务'
+        content: '欢迎'
     },
     account: {
         layout: {

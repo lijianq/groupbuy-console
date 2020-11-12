@@ -63,8 +63,7 @@
 
 <script lang="ts">
 import Login from './Login'
-export default class MyLogin extends Login {
-}
+export default Login
 </script>
 
 <style lang="less" scoped>

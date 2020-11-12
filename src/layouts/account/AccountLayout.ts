@@ -1,10 +1,10 @@
 import {Component,Vue} from 'vue-property-decorator'
-import { AppPreferenceModule } from '@/store/modules/AppPreference'
+import { AppPreferenceModule } from '@/store'
 
 @Component
 export default class AccountLayout extends Vue {
 
-    isMobile = false
+    isMobile = true
 
     constructor() {
         super()
