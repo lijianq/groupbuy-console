@@ -14,6 +14,11 @@ export default  class ZhCN {
             about: '关于',
             account: {
                 login: '登录'
+            },
+            error: {
+                '401': '401',
+                '404': '404',
+                '500': '500'
             }
         },
         company: {
@@ -41,6 +46,11 @@ export default  class ZhCN {
                 forgot: "忘记密码",
                 confirm: "确定"
             }
+        },
+        error: {
+            "401": "抱歉，你无权访问该页面。请联系管理员。",
+            "404": "抱歉，你访问的页面不存在。",
+            "500": "抱歉，服务器响应发生错误。请稍后重试。"
         }
     }
 

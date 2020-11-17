@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 RegisterServiceWorker.doRegister()
 AntdLazyLoad.doLazyLoad()
 
-const i18n = new I18N().getVueI18N('zh-CN')
+const i18n = new I18N().getVueI18N('en-US')
 
 new Vue({
   router,
