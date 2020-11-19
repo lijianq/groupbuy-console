@@ -91,26 +91,32 @@ export default class MainLayout extends Vue {
         switch (type) {
             case 'theme':
                 this.settings.theme = value
+                AppPreferenceModule.setTheme(value)
                 break
             case 'primaryColor':
                 this.settings.primaryColor = value
+                AppPreferenceModule.setPrimaryColor(value)
                 break
             case 'layout':
                 this.settings.layout = value
+                AppPreferenceModule.setLayout(value)
                 break
             case 'fixedHeader':
                 this.settings.fixedHeader = value
+                AppPreferenceModule.setFixedHeader(value)
                 break
             case 'fixSiderbar':
                 this.settings.fixSiderbar = value
+                AppPreferenceModule.setFixSiderbar(value)
                 break
             case 'colorWeak':
                 this.settings.colorWeak = value
+                AppPreferenceModule.setColorWeak(value)
                 break
             case 'contentWidth':
                 this.settings.contentWidth = value
+                AppPreferenceModule.setContentWidth(value)
                 break
         }
-        AppPreferenceModule.setAppPreference(this.settings)
     }
 }

@@ -92,20 +92,4 @@ export default class AppPreference extends VuexModule {
             multiTab: multiTab
         }
     }
-
-    @MutationAction({mutate: ['layout', 'theme', 'primaryColor', 'colorWeak', 'fixedHeader',
-        'fixSiderbar', 'contentWidth', 'autoHideHeader', 'multiTab']})
-    async setAppPreference(settings: any) {
-        return {
-            layout: settings.layout,
-            theme: settings.theme,
-            primaryColor: settings.primaryColor,
-            colorWeak: settings.colorWeak,
-            fixedHeader: settings.fixedHeader,
-            fixSiderbar: settings.fixSidebar,
-            contentWidth: settings.contentWidth,
-            autoHideHeader: settings.autoHideHeader,
-            multiTab: settings.multiTab
-        }
-    }
 }

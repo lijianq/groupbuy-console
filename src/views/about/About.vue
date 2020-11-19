@@ -6,9 +6,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { AccountModule } from "@/store";
+// import { Route } from 'vue-router'
 
 @Component
 export default class About extends Vue {
     accountName = AccountModule.name
+    // beforeRouteEnter(to: Route, from: Route, next: () => void): void {
+    //     console.log('From:', from, 'To:', to)
+    //     next()
+    // }
+    //
+    // beforeRouteLeave(to: Route, from: Route, next: () => void): void {
+    //     console.log('From:', from, 'To:', to)
+    //     next()
+    // }
 }
 </script>

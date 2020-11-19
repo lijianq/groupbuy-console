@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
 const generate = require('@ant-design/colors/lib/generate').default
-const contextPath = process.env.VUE_APP_CONTEXT ? process.env.VUE_APP_CONTEXT.replace('/', ''): ''
+const contextPath = process.env.VUE_APP_CONTEXT ? process.env.VUE_APP_CONTEXT.trim().substring(1) + '/' : ''
 
 const getAntdSerials = (color) => {
     // 淡化（即less的tint）
@@ -14,7 +14,7 @@ const getAntdSerials = (color) => {
 }
 
 const themePluginOption = {
-    fileName: contextPath + '/css/theme-colors-[contenthash:8].css',
+    fileName: contextPath + 'css/theme-colors-[contenthash:8].css',
     matchColors: getAntdSerials('#1890ff'), // 主色系列
     changeSelector (selector) {
         switch (selector) {

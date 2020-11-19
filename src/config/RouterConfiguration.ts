@@ -1,4 +1,4 @@
-import { BlankLayout, AccountLayout, MainLayout } from '@/layouts'
+import { AccountLayout, MainLayout } from '@/layouts'
 
 export class RouterConfiguration {
 
@@ -39,7 +39,7 @@ export class RouterConfiguration {
         },
         {
             path: '/error',
-            component: BlankLayout,
+            component: MainLayout,
             redirect: '/error/404',
             children: [
                 {

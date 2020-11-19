@@ -6,11 +6,18 @@ import store, { AppPreferenceModule } from '@/store'
 import I18N from '@/locales'
 import { AntdLazyLoad } from '@/core'
 import { ThemeConfiguration} from '@/config'
+import { Component } from 'vue-property-decorator'
 
 (window as any).umi_plugin_ant_themeVar = ThemeConfiguration.themes
 Vue.config.productionTip = false
 RegisterServiceWorker.doRegister()
 AntdLazyLoad.doLazyLoad()
+Component.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'beforeRouteUpdate',
+    'beforeEach'
+])
 
 const i18n = new I18N().getVueI18N(AppPreferenceModule.currentLang)
 
