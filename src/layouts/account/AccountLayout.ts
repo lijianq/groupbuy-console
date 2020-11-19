@@ -1,5 +1,5 @@
 import {Component,Vue} from 'vue-property-decorator'
-import { AppPreferenceModule } from '@/store'
+import AppRuntimeModule from '@/store/modules/AppRuntime'
 
 @Component
 export default class AccountLayout extends Vue {
@@ -11,7 +11,7 @@ export default class AccountLayout extends Vue {
     }
 
     created() {
-        this.isMobile = AppPreferenceModule.isMobile
+        this.isMobile = AppRuntimeModule.isMobile
     }
 
     mounted() {

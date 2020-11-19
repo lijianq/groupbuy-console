@@ -22,3 +22,7 @@ export default class App extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+@import "App";
+</style>

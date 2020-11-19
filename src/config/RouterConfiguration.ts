@@ -1,4 +1,4 @@
-import { BlankLayout, AccountLayout } from '@/layouts'
+import { BlankLayout, AccountLayout, MainLayout } from '@/layouts'
 
 export class RouterConfiguration {
 
@@ -9,7 +9,7 @@ export class RouterConfiguration {
         },
         {
             path: '/about',
-            component: BlankLayout,
+            component: MainLayout,
             redirect: '/about/info',
             children: [
                 {

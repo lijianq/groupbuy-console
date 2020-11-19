@@ -8,7 +8,7 @@
       <h1>{{ types[type].title }}</h1>
       <div class="desc">{{ $t(types[type].desc) }}</div>
       <div class="actions">
-        <a-button type="primary" @click="goHome">返回首页</a-button>
+        <a-button type="primary" @click="goHome">{{ $t("error.backtohome") }}</a-button>
       </div>
     </div>
   </div>
@@ -20,5 +20,5 @@ export default ErrorPage
 </script>
 
 <style lang="less" scoped>
-@import "ErrorPage";
+@import "src/components/error/errorpage";
 </style>

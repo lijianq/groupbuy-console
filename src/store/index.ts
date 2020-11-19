@@ -17,5 +17,6 @@ const store = new Vuex.Store({
 })
 
 export default new Vuex.Store({})
-export const AccountModule = getModule(Account, store)
-export const AppPreferenceModule = getModule(AppPreference, store)
+const AccountModule = getModule(Account, store)
+const AppPreferenceModule = getModule(AppPreference, store)
+export { AccountModule, AppPreferenceModule }

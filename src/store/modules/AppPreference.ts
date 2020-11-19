@@ -5,7 +5,7 @@ export default class AppPreference extends VuexModule {
 
     public layout = 'sidemenu'
 
-    public navTheme = 'dark'
+    public theme = 'dark'
 
     public primaryColor = '#52C41A'
 
@@ -19,39 +19,93 @@ export default class AppPreference extends VuexModule {
 
     public autoHideHeader = false
 
-    public isMobile = false
-
-    public sidebarCollapsed = true
-
     public multiTab = false
 
     public currentLang = 'zh-CN'
 
-    @MutationAction({mutate: ['layout', 'navTheme', 'primaryColor', 'colorWeak', 'fixedHeader',
-        'fixSiderbar', 'contentWidth', 'autoHideHeader', 'sidebarCollapsed', 'multiTab', 'currentLang']})
-    async setAppPreference(layout: string,
-                    navTheme: string,
-                    primaryColor: string,
-                    colorWeak: boolean,
-                    fixedHeader: boolean,
-                    fixSiderbar: boolean,
-                    contentWidth: string,
-                    autoHideHeader: boolean,
-                    sidebarCollapsed: boolean,
-                    multiTab: boolean,
-                    currentLang: string) {
+    @MutationAction({ mutate: ['currentLang']})
+    async setLanguage(currentLang: string) {
         return {
-            layout: layout,
-            navTheme: navTheme,
-            primaryColor: primaryColor,
-            colorWeak: colorWeak,
-            fixedHeader: fixedHeader,
-            fixSiderbar: fixSiderbar,
-            contentWidth: contentWidth,
-            autoHideHeader: autoHideHeader,
-            sidebarCollapsed: sidebarCollapsed,
-            multiTab: multiTab,
             currentLang: currentLang
+        }
+    }
+
+    @MutationAction({ mutate: ['layout']})
+    async setLayout(layout: string) {
+        return {
+            layout: layout
+        }
+    }
+
+    @MutationAction({ mutate: ['theme']})
+    async setTheme(theme: string) {
+        return {
+            theme: theme
+        }
+    }
+
+    @MutationAction({ mutate: ['primaryColor']})
+    async setPrimaryColor(primaryColor: string) {
+        return {
+            primaryColor: primaryColor
+        }
+    }
+
+    @MutationAction({ mutate: ['contentWidth']})
+    async setContentWidth(contentWidth: string) {
+        return {
+            contentWidth: contentWidth
+        }
+    }
+
+    @MutationAction({ mutate: ['colorWeak']})
+    async setColorWeak(colorWeak: boolean) {
+        return {
+            colorWeak: colorWeak
+        }
+    }
+
+    @MutationAction({ mutate: ['fixedHeader']})
+    async setFixedHeader(fixedHeader: boolean) {
+        return {
+            fixedHeader: fixedHeader
+        }
+    }
+
+    @MutationAction({ mutate: ['fixSiderbar']})
+    async setFixSiderbar(fixSiderbar: boolean) {
+        return {
+            fixSiderbar: fixSiderbar
+        }
+    }
+
+    @MutationAction({ mutate: ['autoHideHeader']})
+    async setAutoHideHeader(autoHideHeader: boolean) {
+        return {
+            autoHideHeader: autoHideHeader
+        }
+    }
+
+    @MutationAction({ mutate: ['multiTab']})
+    async setMultiTab(multiTab: boolean) {
+        return {
+            multiTab: multiTab
+        }
+    }
+
+    @MutationAction({mutate: ['layout', 'theme', 'primaryColor', 'colorWeak', 'fixedHeader',
+        'fixSiderbar', 'contentWidth', 'autoHideHeader', 'multiTab']})
+    async setAppPreference(settings: any) {
+        return {
+            layout: settings.layout,
+            theme: settings.theme,
+            primaryColor: settings.primaryColor,
+            colorWeak: settings.colorWeak,
+            fixedHeader: settings.fixedHeader,
+            fixSiderbar: settings.fixSidebar,
+            contentWidth: settings.contentWidth,
+            autoHideHeader: settings.autoHideHeader,
+            multiTab: settings.multiTab
         }
     }
 }

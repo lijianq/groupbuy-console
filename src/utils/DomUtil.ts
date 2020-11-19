@@ -4,6 +4,13 @@ export class DomUtil {
 
     static domTitle: string = DefaultSetting.title
 
+    static setDocumentLang(lang: string) {
+        const element = document.querySelector('html')
+        if (element != null) {
+            element.setAttribute('lang', lang)
+        }
+    }
+
     static setDocumentTitle(title: string) {
         document.title = title
         const ua = navigator.userAgent
