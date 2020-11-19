@@ -20,5 +20,5 @@ export default ErrorPage
 </script>
 
 <style lang="less" scoped>
-@import "src/components/error/errorpage";
+@import "Errorpage";
 </style>
