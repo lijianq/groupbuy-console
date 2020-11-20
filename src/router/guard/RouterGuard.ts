@@ -10,7 +10,7 @@ class RouterGuard extends  Vue {
 
     allowList = ['/account/login', '/account/forgot']
     loginRoutePath = '/account/login'
-    defaultRoutePath = '/about/info'
+    defaultRoutePath = '/dashboard'
 
     beforeEach(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
         NProgress.start()
