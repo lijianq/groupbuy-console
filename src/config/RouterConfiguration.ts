@@ -8,13 +8,14 @@ export class RouterConfiguration {
             redirect: '/account',
         },
         {
+            name: 'about',
             path: '/about',
             component: MainLayout,
             redirect: '/about/info',
             children: [
                 {
                     path: 'info',
-                    name: 'About',
+                    name: 'info',
                     meta: {
                         title: 'router.about'
                     },

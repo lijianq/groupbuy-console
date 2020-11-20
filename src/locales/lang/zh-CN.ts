@@ -40,6 +40,13 @@ export default  class ZhCN {
         "app.setting.copyinfo": "拷贝设置到剪切板。",
         "app.setting.production.hint": "拷贝设置仅用于开发环境。",
         "app.setting.changcolor": "正在设置主色调",
+        "router.menu.dashboard": "仪表盘",
+        "router.menu.dashboard.workspace": "工作空间",
+        "router.menu.dashboard.analysis": "分析图表",
+        "router.menu.product": "商品中心",
+        "router.menu.inventory": "库存中心",
+        "router.menu.member": "会员中心",
+        "router.menu.about": "关于",
         router: {
             about: '关于',
             account: {

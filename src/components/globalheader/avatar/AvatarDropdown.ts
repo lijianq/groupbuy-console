@@ -1,6 +1,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { AccountModule } from '@/store'
 import { Modal } from 'ant-design-vue'
+import { accountAPI } from '@/api'
 
 @Component
 export default class AvatarDropdown extends Vue {
@@ -40,7 +41,7 @@ export default class AvatarDropdown extends Vue {
             title: this.$t('main.layout.logout.dialog.title'),
             content: this.$t('main.layout.logout.dialog.content'),
             onOk: () => {
-                AccountModule.setAccount({})
+                accountAPI.logout()
                 this.$router.push({path: '/account/login'})
             },
             onCancel: () => { console.log("Cancel logout.")}

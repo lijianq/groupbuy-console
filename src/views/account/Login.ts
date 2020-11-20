@@ -1,7 +1,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import {WrappedFormUtils} from "ant-design-vue/types/form/form"
 import md5 from 'md5'
-import { AccountModule } from "@/store";
+import { accountAPI } from "@/api";
 
 @Component
 export default class Login extends Vue {
@@ -17,7 +17,7 @@ export default class Login extends Vue {
     }
 
     handleSubmit (event: Event) {
-        let redirect = '/about'
+        let redirect = '/dashboard'
         if (this.$route.query.redirect) {
             redirect = this.$route.query.redirect as string
         }
@@ -28,12 +28,7 @@ export default class Login extends Vue {
         this.form.validateFields(validateFieldsKey, { force: true }, (err, values) => {
             if (!err) {
                 if (values.account == 'admin' && md5(values.password) == '21232f297a57a5a743894a0e4a801fc3') {
-                    AccountModule.setAccount({
-                        name: 'Admin',
-                        avatar: 'bluenet.png',
-                        accessToken: '1223231313133131133',
-                        expireTime: '123131414241'
-                    })
+                    accountAPI.login()
                     this.$router.push({ path: redirect })
                 } else {
                     this.isLoginError = true

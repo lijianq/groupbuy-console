@@ -40,6 +40,13 @@ export default class EnUS {
         "app.setting.copyinfo": "Copied setting to clipboard.",
         "app.setting.production.hint": "Copy setting works only in development environment",
         "app.setting.changcolor": "Setting new theme color",
+        "router.menu.dashboard": "Dashboard",
+        "router.menu.dashboard.workspace": "Workspace",
+        "router.menu.dashboard.analysis": "Analysis",
+        "router.menu.product": "Commodity Center",
+        "router.menu.inventory": "Inventory Center",
+        "router.menu.member": "Member Center",
+        "router.menu.about": "About",
         router: {
             about: 'ABOUT',
             account: {
@@ -59,7 +66,7 @@ export default class EnUS {
         },
         account: {
             layout: {
-                title: "Devops Admin Console",
+                title: "Devops Platform",
                 desc: "",
                 help: "Help",
                 privacy: "Privacy",

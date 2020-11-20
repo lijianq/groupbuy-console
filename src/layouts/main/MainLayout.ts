@@ -14,7 +14,7 @@ import RightContent from '@/components/globalheader'
 export default class MainLayout extends Vue {
 
     isProPreviewSite = process.env.VUE_APP_PREVIEW === 'true' && process.env.NODE_ENV !== 'development'
-    menus = []
+    menus: any[] = []
     collapsed = AppRuntimeModule.sidebarCollapsed
     title = DefaultSetting.title
 
@@ -32,7 +32,6 @@ export default class MainLayout extends Vue {
     }
     isMobile = AppRuntimeModule.isMobile
     query: any = {}
-    mainMenu: any[] = []
 
     @Watch('collapsed')
     setCollapsed() {
@@ -45,8 +44,7 @@ export default class MainLayout extends Vue {
     }
 
     created() {
-        const routes = this.mainMenu.find(item => item.path === '/')
-        this.menus = (routes && routes.children) || []
+        this.menus = AppRuntimeModule.menus
     }
 
     mounted() {
