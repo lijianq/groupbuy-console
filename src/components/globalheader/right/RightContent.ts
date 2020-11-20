@@ -1,7 +1,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import AvatarDropdown from '../avatar/AvatarDropdown.vue'
 import LangSelector from '../lang/LangSelector'
-import { AccountModule } from '@/store'
 
 @Component({
     components: {
@@ -21,18 +20,11 @@ export default class RightContent extends Vue {
     public theme: string | undefined
 
     showMenu = true
-    currentAccount: any = {}
 
     get wrpCls() {
         return {
             'ant-pro-global-header-index-right': true,
             [`ant-pro-global-header-index-${(this.isMobile || !this.topMenu) ? 'light' : this.theme}`]: true
         }
-    }
-
-    mounted() {
-        setTimeout(() => {
-            this.currentAccount = AccountModule.getAccount()
-        }, 800)
     }
 }

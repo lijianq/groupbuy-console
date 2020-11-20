@@ -30,7 +30,7 @@ export default class Login extends Vue {
                 if (values.account == 'admin' && md5(values.password) == '21232f297a57a5a743894a0e4a801fc3') {
                     AccountModule.setAccount({
                         name: 'Admin',
-                        avatar: '/img/avatars/default.png',
+                        avatar: 'bluenet.png',
                         accessToken: '1223231313133131133',
                         expireTime: '123131414241'
                     })

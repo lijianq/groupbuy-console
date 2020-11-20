@@ -12,7 +12,6 @@ class RouterGuard extends  Vue {
     defaultRoutePath = '/about/info'
 
     beforeEach(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
-        console.log('RouterGuard: ', 'From:', from, 'To:', to)
         NProgress.start()
 
         const accessToken = AccountModule.getAccount().accessToken

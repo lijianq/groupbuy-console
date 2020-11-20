@@ -1,6 +1,6 @@
 <template>
   <div :class="wrpCls">
-    <avatar-dropdown :menu="showMenu" :current-account="currentAccount" :class="prefixCls" />
+    <avatar-dropdown :menu="showMenu"  :class="prefixCls" />
     <lang-selector :class="prefixCls" />
   </div>
 </template>

@@ -5,10 +5,25 @@ import { Modal } from 'ant-design-vue'
 @Component
 export default class AvatarDropdown extends Vue {
 
-    @Prop({type: Object, default: null})
-    public currentAccount: any | undefined
     @Prop({type: Boolean, default: true})
     public menu: boolean | undefined
+
+    public currentAccount = AccountModule.getAccount()
+    avatar: string = ''
+
+    created() {
+        let avatarSrc: string = this.currentAccount.avatar
+        if (typeof avatarSrc !== 'undefined' && avatarSrc.trim().length > 0) {
+            avatarSrc = avatarSrc.trim()
+            if (avatarSrc.toLowerCase().startsWith('http')) {
+                this.avatar = avatarSrc
+            } else {
+                this.avatar = require('@/assets/avatars/' + avatarSrc)
+            }
+        } else {
+            this.avatar = require('@/assets/avatars/default.png')
+        }
+    }
 
     goCenter() {
         this.$router.push({path: '/account/center'})
