@@ -21,7 +21,6 @@ export default class Login extends Vue {
         if (this.$route.query.redirect) {
             redirect = this.$route.query.redirect as string
         }
-        console.log("Redirect URL: ", redirect)
         event.preventDefault()
         this.state.loginBtn = true
         const validateFieldsKey = ['account', 'password']

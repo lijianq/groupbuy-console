@@ -19,7 +19,6 @@ class RouterGuard extends  Vue {
         if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
 
             if (AppRuntimeModule.menus.length === 0) {
-                console.log('need to set menus after refresh.')
                 accountAPI.setAccountMenu()
             }
 
