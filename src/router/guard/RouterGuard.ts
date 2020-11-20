@@ -15,7 +15,6 @@ class RouterGuard extends  Vue {
         NProgress.start()
 
         const accessToken = AccountModule.getAccount().accessToken
-
         if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
             if (to.path === this.loginRoutePath ) {
                 next({path: this.defaultRoutePath})
@@ -38,6 +37,8 @@ class RouterGuard extends  Vue {
                 next({ path: this.loginRoutePath, query: { redirect: to.fullPath } })
             }
         }
+
+        NProgress.done()
     }
 
     afterEach() {
