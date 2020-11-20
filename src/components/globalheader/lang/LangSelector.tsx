@@ -8,7 +8,7 @@ export default class LangSelector extends Vue {
 
     private languages = ['zh-CN', 'en-US']
 
-    private currentLang = AppPreferenceModule.currentLang
+    private currentLang = AppPreferenceModule.getLanguage()
 
     private languageLabels: any = {
         'zh-CN': '简体中文',
@@ -33,9 +33,8 @@ export default class LangSelector extends Vue {
     private changeLang(item: any) {
         const lang: string = item.key
         this.currentLang = lang
-        AppPreferenceModule.setLanguage(lang).then(() => {
-            this.loadLanguageAsync(lang)
-        })
+        AppPreferenceModule.setLanguage(lang)
+        this.loadLanguageAsync(lang)
     }
 
     @Prop({type: String, default: 'ant-pro-drop-down'})

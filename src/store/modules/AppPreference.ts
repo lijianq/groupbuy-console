@@ -1,95 +1,106 @@
-import { Module, VuexModule, MutationAction } from 'vuex-module-decorators'
+class AppPreference {
 
-@Module({ name: 'appPreference'})
-export default class AppPreference extends VuexModule {
+    private currentLangKey = "app.preference.currentLang"
+    private layoutKey = "app.preference.layout"
+    private themeKey = "app.preference.theme"
+    private primaryColorKey = "app.preference.primaryColor"
+    private colorWeakKey = "app.preference.colorWeak"
+    private fixedHeaderKey = "app.preference.fixedHeader"
+    private fixSiderbarKey = "app.preference.fixSiderbar"
+    private contentWidthKey = "app.preference.contentWidth"
+    private autoHideHeaderKey = "app.preference.autoHideHeader"
+    private multiTabKey = "app.preference.multiTab"
 
-    public layout = 'sidemenu'
-
-    public theme = 'dark'
-
-    public primaryColor = '#52C41A'
-
-    public colorWeak = false
-
-    public fixedHeader = true
-
-    public fixSiderbar = true
-
-    public contentWidth = 'Fluid'
-
-    public autoHideHeader = false
-
-    public multiTab = false
-
-    public currentLang = 'zh-CN'
-
-    @MutationAction({ mutate: ['currentLang']})
-    async setLanguage(currentLang: string) {
-        return {
-            currentLang: currentLang
-        }
+    setLanguage(currentLang: string) {
+        localStorage.setItem(this.currentLangKey, currentLang)
     }
 
-    @MutationAction({ mutate: ['layout']})
-    async setLayout(layout: string) {
-        return {
-            layout: layout
-        }
+    getLanguage() {
+        const currentLang = localStorage.getItem(this.currentLangKey)
+        return currentLang ? currentLang : 'zh-CN'
     }
 
-    @MutationAction({ mutate: ['theme']})
-    async setTheme(theme: string) {
-        return {
-            theme: theme
-        }
+    setLayout(layout: string) {
+        localStorage.setItem(this.layoutKey, layout)
     }
 
-    @MutationAction({ mutate: ['primaryColor']})
-    async setPrimaryColor(primaryColor: string) {
-        return {
-            primaryColor: primaryColor
-        }
+    getLayout() {
+        const layout = localStorage.getItem(this.layoutKey)
+        return layout ? layout : 'sidemenu'
     }
 
-    @MutationAction({ mutate: ['contentWidth']})
-    async setContentWidth(contentWidth: string) {
-        return {
-            contentWidth: contentWidth
-        }
+    setTheme(theme: string) {
+        localStorage.setItem(this.themeKey, theme)
     }
 
-    @MutationAction({ mutate: ['colorWeak']})
-    async setColorWeak(colorWeak: boolean) {
-        return {
-            colorWeak: colorWeak
-        }
+    getTheme() {
+        const theme = localStorage.getItem(this.themeKey)
+        return theme ? theme : 'dark'
     }
 
-    @MutationAction({ mutate: ['fixedHeader']})
-    async setFixedHeader(fixedHeader: boolean) {
-        return {
-            fixedHeader: fixedHeader
-        }
+    setPrimaryColor(primaryColor: string) {
+        localStorage.setItem(this.primaryColorKey, primaryColor)
     }
 
-    @MutationAction({ mutate: ['fixSiderbar']})
-    async setFixSiderbar(fixSiderbar: boolean) {
-        return {
-            fixSiderbar: fixSiderbar
-        }
+    getPrimaryColor() {
+        const primaryColor = localStorage.getItem(this.primaryColorKey)
+        return primaryColor ? primaryColor : '#52C41A'
     }
 
-    @MutationAction({ mutate: ['autoHideHeader']})
-    async setAutoHideHeader(autoHideHeader: boolean) {
-        return {
-            autoHideHeader: autoHideHeader
-        }
+    setContentWidth(contentWidth: string) {
+        localStorage.setItem(this.contentWidthKey, contentWidth)
     }
 
-    @MutationAction({ mutate: ['multiTab']})
-    async setMultiTab(multiTab: boolean) {
-        return {
-            multiTab: multiTab
-        }
+    getContentWidth() {
+        const contentWidth = localStorage.getItem(this.contentWidthKey)
+        return contentWidth ? contentWidth : 'Fluid'
+    }
+
+    setColorWeak(colorWeak: boolean) {
+        localStorage.setItem(this.colorWeakKey, String(colorWeak))
+    }
+
+    getColorWeak() {
+        const colorWeak = localStorage.getItem(this.colorWeakKey)
+        return colorWeak ? ( colorWeak === 'true') : false
+    }
+
+    setFixedHeader(fixedHeader: boolean) {
+        localStorage.setItem(this.fixedHeaderKey, String(fixedHeader))
+    }
+
+    getFixedHeader() {
+        const fixedHeader = localStorage.getItem(this.fixedHeaderKey)
+        return fixedHeader ? ( fixedHeader === 'true') : true
+    }
+
+    setFixSiderbar(fixSiderbar: boolean) {
+        localStorage.setItem(this.fixSiderbarKey, String(fixSiderbar))
+    }
+
+    getFixSiderbar() {
+        const fixSiderbar = localStorage.getItem(this.fixSiderbarKey)
+        return fixSiderbar ? ( fixSiderbar === 'true') : true
+    }
+
+    setAutoHideHeader(autoHideHeader: boolean) {
+        localStorage.setItem(this.autoHideHeaderKey, String(autoHideHeader))
+    }
+
+    getAutoHideHeader() {
+        const autoHideHeader = localStorage.getItem(this.autoHideHeaderKey)
+        return autoHideHeader ? ( autoHideHeader === 'true') : false
+    }
+
+    setMultiTab(multiTab: boolean) {
+        localStorage.setItem(this.multiTabKey, String(multiTab))
+    }
+
+    getMultiTab() {
+        const multiTab = localStorage.getItem(this.multiTabKey)
+        return multiTab ? ( multiTab === 'true') : false
     }
 }
+
+const AppPreferenceModule = new AppPreference()
+export default AppPreferenceModule

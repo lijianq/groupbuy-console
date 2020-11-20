@@ -25,11 +25,7 @@ export default class AvatarDropdown extends Vue {
             title: this.$t('main.layout.logout.dialog.title'),
             content: this.$t('main.layout.logout.dialog.content'),
             onOk: () => {
-                AccountModule.setName('')
-                AccountModule.setRoles([])
-                AccountModule.setAvatar('')
-                AccountModule.setAccessToken('')
-                AccountModule.setExpireTime('')
+                AccountModule.setAccount({})
                 this.$router.push({path: '/account/login'})
             },
             onCancel: () => { console.log("Cancel logout.")}

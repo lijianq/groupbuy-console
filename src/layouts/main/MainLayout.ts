@@ -1,7 +1,6 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import ProLayout, { SettingDrawer, updateTheme, updateColorWeak } from '@ant-design-vue/pro-layout'
-import { AppPreferenceModule } from '@/store'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
+import { AppPreferenceModule, AppRuntimeModule } from '@/store'
 import { DefaultSetting } from '@/config'
 import RightContent from '@/components/globalheader'
 
@@ -20,14 +19,14 @@ export default class MainLayout extends Vue {
     title = DefaultSetting.title
 
     settings: any = {
-        layout: AppPreferenceModule.layout,
-        contentWidth: AppPreferenceModule.layout === 'sidemenu' ? 'Fluid' : AppPreferenceModule.contentWidth,
-        theme: AppPreferenceModule.theme,
-        primaryColor: AppPreferenceModule.primaryColor,
-        fixedHeader: AppPreferenceModule.fixedHeader,
-        fixSiderbar: AppPreferenceModule.fixSiderbar,
-        colorWeak: AppPreferenceModule.colorWeak,
-        autoHideHeader: AppPreferenceModule.autoHideHeader,
+        layout: AppPreferenceModule.getLayout(),
+        contentWidth: AppPreferenceModule.getLayout() === 'sidemenu' ? 'Fluid' : AppPreferenceModule.getContentWidth(),
+        theme: AppPreferenceModule.getTheme(),
+        primaryColor: AppPreferenceModule.getPrimaryColor(),
+        fixedHeader: AppPreferenceModule.getFixedHeader(),
+        fixSiderbar: AppPreferenceModule.getFixSiderbar(),
+        colorWeak: AppPreferenceModule.getColorWeak(),
+        autoHideHeader: AppPreferenceModule.getAutoHideHeader(),
         hideHintAlert: true,
         hideCopyButton: true
     }

@@ -15,7 +15,7 @@ class RouterGuard extends  Vue {
         console.log('RouterGuard: ', 'From:', from, 'To:', to)
         NProgress.start()
 
-        const accessToken = AccountModule.accessToken
+        const accessToken = AccountModule.getAccount().accessToken
 
         if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
             if (to.path === this.loginRoutePath ) {

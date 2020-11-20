@@ -32,10 +32,7 @@ export default class RightContent extends Vue {
 
     mounted() {
         setTimeout(() => {
-            this.currentAccount = {
-                name: AccountModule.name,
-                avatar: require('@/assets/default.png')
-            }
+            this.currentAccount = AccountModule.getAccount()
         }, 800)
     }
 }

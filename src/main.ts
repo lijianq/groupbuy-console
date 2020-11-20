@@ -19,7 +19,7 @@ Component.registerHooks([
     'beforeEach'
 ])
 
-const i18n = new I18N().getVueI18N(AppPreferenceModule.currentLang)
+const i18n = new I18N().getVueI18N(AppPreferenceModule.getLanguage())
 
 new Vue({
   router,

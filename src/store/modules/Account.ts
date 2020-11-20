@@ -1,36 +1,16 @@
-import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
+class Account {
 
-@Module({name: 'account'})
-export default class Account extends VuexModule {
+    private accountKey = "app.current.account"
 
-    public name = ''
-    public roles: string[] = []
-    public avatar = ''
-    public accessToken = ''
-    public expireTime = ''
-
-    @Mutation
-    public setName(name: string) {
-        this.name = name
+    getAccount() {
+        const account = localStorage.getItem(this.accountKey)
+        return account ? JSON.parse(account) : {}
     }
 
-    @Mutation
-    public setAvatar(avatar: string) {
-        this.avatar = avatar
-    }
-
-    @Mutation
-    public setRoles(roles: string[]) {
-        this.roles = roles
-    }
-
-    @Mutation
-    public setAccessToken(accessToken: string) {
-        this.accessToken = accessToken
-    }
-
-    @Mutation
-    public setExpireTime(expireTime: string) {
-        this.expireTime = expireTime
+    setAccount(account: any) {
+        localStorage.setItem(this.accountKey, JSON.stringify(account))
     }
 }
+
+const AccountModule = new Account()
+export default AccountModule

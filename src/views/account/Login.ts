@@ -28,11 +28,12 @@ export default class Login extends Vue {
         this.form.validateFields(validateFieldsKey, { force: true }, (err, values) => {
             if (!err) {
                 if (values.account == 'admin' && md5(values.password) == '21232f297a57a5a743894a0e4a801fc3') {
-                    AccountModule.setName('Admin')
-                    AccountModule.setRoles(['admin'])
-                    AccountModule.setAvatar('@/assets/default.png')
-                    AccountModule.setAccessToken('1223231313133131133')
-                    AccountModule.setExpireTime('123131414241')
+                    AccountModule.setAccount({
+                        name: 'Admin',
+                        avatar: '/img/avatars/default.png',
+                        accessToken: '1223231313133131133',
+                        expireTime: '123131414241'
+                    })
                     this.$router.push({ path: redirect })
                 } else {
                     this.isLoginError = true
