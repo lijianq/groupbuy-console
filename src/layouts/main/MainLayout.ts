@@ -1,5 +1,5 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import ProLayout, { SettingDrawer, updateTheme, updateColorWeak } from '@ant-design-vue/pro-layout'
+import ProLayout, { SettingDrawer, updateColorWeak } from '@ant-design-vue/pro-layout'
 import { AppPreferenceModule, AppRuntimeModule } from '@/store'
 import { DefaultSetting } from '@/config'
 import RightContent from '@/components/globalheader'
@@ -57,7 +57,7 @@ export default class MainLayout extends Vue {
                 }, 16)
             })
         }
-        updateTheme(this.settings.primaryColor)
+        // updateTheme(this.settings.primaryColor)
         updateColorWeak(this.settings.colorWeak)
     }
 

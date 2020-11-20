@@ -7,6 +7,7 @@ import I18N from '@/locales'
 import { AntdLazyLoad } from '@/core'
 import { ThemeConfiguration} from '@/config'
 import { Component } from 'vue-property-decorator'
+import { updateTheme } from '@ant-design-vue/pro-layout'
 
 (window as any).umi_plugin_ant_themeVar = ThemeConfiguration.themes
 Vue.config.productionTip = false
@@ -18,6 +19,7 @@ Component.registerHooks([
     'beforeRouteUpdate',
     'beforeEach'
 ])
+
 
 const i18n = new I18N().getVueI18N(AppPreferenceModule.getLanguage())
 

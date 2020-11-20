@@ -10,6 +10,7 @@ class AppPreference {
     private contentWidthKey = "app.preference.contentWidth"
     private autoHideHeaderKey = "app.preference.autoHideHeader"
     private multiTabKey = "app.preference.multiTab"
+    private autoLoginKey = "app.preference.autoLoginKey"
 
     setLanguage(currentLang: string) {
         localStorage.setItem(this.currentLangKey, currentLang)
@@ -99,6 +100,15 @@ class AppPreference {
     getMultiTab() {
         const multiTab = localStorage.getItem(this.multiTabKey)
         return multiTab ? ( multiTab === 'true') : false
+    }
+
+    setAutoLogin(autoLogin: boolean) {
+        localStorage.setItem(this.autoLoginKey, String(autoLogin))
+    }
+
+    getAutoLogin() {
+        const autoLogin = localStorage.getItem(this.autoLoginKey)
+        return autoLogin ? ( autoLogin === 'true') : false
     }
 }
 

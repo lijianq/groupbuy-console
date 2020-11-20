@@ -1,7 +1,9 @@
 import { Component, Vue } from 'vue-property-decorator'
-import {WrappedFormUtils} from "ant-design-vue/types/form/form"
+import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
 import md5 from 'md5'
-import { accountAPI } from "@/api";
+import { accountAPI } from '@/api'
+import { AppPreferenceModule } from '@/store'
+
 
 @Component
 export default class Login extends Vue {
@@ -11,9 +13,15 @@ export default class Login extends Vue {
     state = {
         loginBtn: false
     }
+    autoLogin = false
 
     created() {
         this.form = this.$form.createForm(this, {name: 'loginForm'})
+        this.autoLogin = AppPreferenceModule.getAutoLogin()
+    }
+
+    mounted() {
+        this.form.setFieldsValue({rememberMe: this.autoLogin });
     }
 
     handleSubmit (event: Event) {
@@ -23,10 +31,14 @@ export default class Login extends Vue {
         }
         event.preventDefault()
         this.state.loginBtn = true
-        const validateFieldsKey = ['account', 'password']
+        const validateFieldsKey = ['account', 'password', 'rememberMe']
         this.form.validateFields(validateFieldsKey, { force: true }, (err, values) => {
             if (!err) {
                 if (values.account == 'admin' && md5(values.password) == '21232f297a57a5a743894a0e4a801fc3') {
+                    const rememberMe = values.rememberMe ? values.rememberMe : false
+                    if (this.autoLogin !== rememberMe) {
+                        AppPreferenceModule.setAutoLogin(rememberMe)
+                    }
                     accountAPI.login()
                     this.$router.push({ path: redirect })
                 } else {
