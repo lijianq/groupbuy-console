@@ -1,6 +1,7 @@
 // import axios from 'axios'
 
-import { AccountModule, AppRuntimeModule } from "@/store";
+import { AccountModule } from '@/store'
+import AppRuntimeModule from '@/store/modules/AppRuntime'
 
 class AccountAPI {
 

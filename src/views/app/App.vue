@@ -11,6 +11,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import { DomUtil } from '@/utils/DomUtil'
 import { ThemeUtil } from '@/utils/ThemeUtil'
 import { AppPreferenceModule } from '@/store'
+import AppRuntimeModule from '@/store/modules/AppRuntime'
+import isMobile from 'ismobilejs'
 
 @Component({
   components: {}
@@ -19,6 +21,7 @@ import { AppPreferenceModule } from '@/store'
 export default class App extends Vue {
   primaryColor = AppPreferenceModule.getPrimaryColor()
   mounted() {
+    AppRuntimeModule.setMobileMode(isMobile().any)
     ThemeUtil.updateTheme(this.primaryColor)
   }
   get locale () {

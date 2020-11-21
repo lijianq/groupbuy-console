@@ -1,9 +1,10 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Route, NavigationGuardNext } from 'vue-router'
-import { AccountModule, AppRuntimeModule } from '@/store'
+import { AccountModule } from '@/store'
 import { accountAPI } from '@/api'
 import NProgress from 'nprogress'
 import '@/components/nprogress/NProgress.less'
+import AppRuntimeModule from '@/store/modules/AppRuntime'
 
 @Component
 class RouterGuard extends  Vue {

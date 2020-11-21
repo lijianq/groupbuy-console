@@ -4,14 +4,10 @@ import AppRuntimeModule from '@/store/modules/AppRuntime'
 @Component
 export default class AccountLayout extends Vue {
 
-    isMobile = true
+    isMobile = AppRuntimeModule.isMobile
 
     constructor() {
         super()
-    }
-
-    created() {
-        this.isMobile = AppRuntimeModule.isMobile
     }
 
     mounted() {

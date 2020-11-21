@@ -1,6 +1,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import ProLayout, { SettingDrawer, updateColorWeak } from '@ant-design-vue/pro-layout'
-import { AppPreferenceModule, AppRuntimeModule } from '@/store'
+import { AppPreferenceModule } from '@/store'
+import AppRuntimeModule from '@/store/modules/AppRuntime'
 import { DefaultSetting } from '@/config'
 import RightContent from '@/components/globalheader'
 
@@ -13,7 +14,6 @@ import RightContent from '@/components/globalheader'
 })
 export default class MainLayout extends Vue {
 
-    isProPreviewSite = process.env.VUE_APP_PREVIEW === 'true' && process.env.NODE_ENV !== 'development'
     menus: any[] = []
     collapsed = AppRuntimeModule.sidebarCollapsed
     title = DefaultSetting.title
@@ -38,11 +38,6 @@ export default class MainLayout extends Vue {
         AppRuntimeModule.setSidebarCollapsed(this.collapsed)
     }
 
-    @Watch('isMobile')
-    setMobileMode() {
-        AppRuntimeModule.setMobileMode(this.isMobile)
-    }
-
     created() {
         this.menus = AppRuntimeModule.menus
     }
@@ -57,7 +52,6 @@ export default class MainLayout extends Vue {
                 }, 16)
             })
         }
-        // updateTheme(this.settings.primaryColor)
         updateColorWeak(this.settings.colorWeak)
     }
 
