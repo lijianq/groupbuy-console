@@ -28,6 +28,6 @@ export default class ErrorPage extends Vue {
     public type: string | undefined
 
     goHome() {
-        this.$router.push({name: 'Home'})
+        this.$router.push({path: '/dashboard/workspace'})
     }
 }
