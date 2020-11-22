@@ -26,10 +26,6 @@ export default class AvatarDropdown extends Vue {
         }
     }
 
-    goCenter() {
-        this.$router.push({path: '/account/center'})
-    }
-
     goSettings() {
         this.$router.push({path: '/account/settings'})
     }
@@ -42,7 +38,9 @@ export default class AvatarDropdown extends Vue {
             content: this.$t('main.layout.logout.dialog.content'),
             onOk: () => {
                 accountAPI.logout()
-                this.$router.push({path: '/account/login'})
+                this.$router.push({path: '/account/login'}).then(() => {
+                    location.reload()
+                })
             },
             onCancel: () => { console.log("Cancel logout.")}
         })

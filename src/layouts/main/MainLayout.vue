@@ -1,7 +1,7 @@
 <template>
   <pro-layout
       :menus="menus"
-      :collapsed="collapsed"
+      :collapsed="sidebarCollapsed"
       :mediaQuery="query"
       :isMobile="isMobile"
       :handleMediaQuery="handleMediaQuery"

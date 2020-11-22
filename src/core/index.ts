@@ -1,2 +1,3 @@
-import { AntdLazyLoad } from "./AntdLazyLoad"
-export { AntdLazyLoad }
+import AntdLazyLoad from "./AntdLazyLoad"
+import RefreshLoad from './RefreshLoad'
+export { AntdLazyLoad, RefreshLoad }

@@ -3,7 +3,7 @@ import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
 import md5 from 'md5'
 import { accountAPI } from '@/api'
 import { AppPreferenceModule } from '@/store'
-
+import AppRuntimeModule from "@/store/modules/AppRuntime";
 
 @Component
 export default class Login extends Vue {
@@ -40,6 +40,8 @@ export default class Login extends Vue {
                         AppPreferenceModule.setAutoLogin(rememberMe)
                     }
                     accountAPI.login()
+                    accountAPI.loadAccountConfig()
+                    this.$router.addRoutes(AppRuntimeModule.routes)
                     this.$router.push({ path: redirect })
                 } else {
                     this.isLoginError = true

@@ -40,6 +40,7 @@ export default class EnUS {
         "app.setting.copyinfo": "Copied setting to clipboard.",
         "app.setting.production.hint": "Copy setting works only in development environment",
         "app.setting.changcolor": "Setting new theme color",
+        "router.menu.root": "Home",
         "router.menu.dashboard": "Dashboard",
         "router.menu.dashboard.workspace": "Workspace",
         "router.menu.dashboard.analysis": "Analysis",
@@ -47,6 +48,11 @@ export default class EnUS {
         "router.menu.inventory": "Inventory Center",
         "router.menu.member": "Member Center",
         "router.menu.about": "About",
+        "router.menu.account": "Account Center",
+        "router.menu.account.setting": "Settings",
+        "router.menu.account.roles": "Roles",
+        "router.menu.account.manage": "Accounts",
+        "router.menu.account.permission": "Permissions",
         router: {
             about: 'ABOUT',
             account: {

@@ -15,7 +15,7 @@ import RightContent from '@/components/globalheader'
 export default class MainLayout extends Vue {
 
     menus: any[] = []
-    collapsed = AppRuntimeModule.sidebarCollapsed
+    sidebarCollapsed = AppRuntimeModule.sidebarCollapsed
     title = DefaultSetting.title
 
     settings: any = {
@@ -35,7 +35,7 @@ export default class MainLayout extends Vue {
 
     @Watch('collapsed')
     setCollapsed() {
-        AppRuntimeModule.setSidebarCollapsed(this.collapsed)
+        AppRuntimeModule.setSidebarCollapsed(this.sidebarCollapsed)
     }
 
     created() {
@@ -46,9 +46,9 @@ export default class MainLayout extends Vue {
         const userAgent = navigator.userAgent
         if (userAgent.indexOf('Edge') > -1) {
             this.$nextTick(() => {
-                this.collapsed = !this.collapsed
+                this.sidebarCollapsed = !this.sidebarCollapsed
                 setTimeout(() => {
-                    this.collapsed = !this.collapsed
+                    this.sidebarCollapsed = !this.sidebarCollapsed
                 }, 16)
             })
         }
@@ -67,13 +67,13 @@ export default class MainLayout extends Vue {
         }
         if (!this.isMobile && val['screen-xs']) {
             this.isMobile = true
-            this.collapsed = false
+            this.sidebarCollapsed = false
             this.settings.contentWidth = 'Fluid'
         }
     }
 
     handleCollapse (val: boolean) {
-        this.collapsed = val
+        this.sidebarCollapsed = val
     }
 
     handleChangeSetting (setting: any) {

@@ -7,10 +7,6 @@
 
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
-        <a-menu-item v-if="menu" key="center" @click="goCenter">
-          <a-icon type="user" />
-          {{$t('main.layout.avatar.account.center')}}
-        </a-menu-item>
         <a-menu-item v-if="menu" key="settings" @click="goSettings">
           <a-icon type="setting" />
           {{$t('main.layout.avatar.account.setting')}}

@@ -1,5 +1,7 @@
 import BlankLayout from './blank/BlankLayout.vue'
 import AccountLayout from './account/AccountLayout.vue'
 import MainLayout from  './main/MainLayout.vue'
+import RouteView from './view/RouteView'
+import PageView from './view/PageView'
 
-export { BlankLayout, AccountLayout, MainLayout }
+export { BlankLayout, AccountLayout, MainLayout, RouteView, PageView }

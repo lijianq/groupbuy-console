@@ -1,13 +1,10 @@
-import { Component, Vue } from 'vue-property-decorator'
+import { Vue } from 'vue-property-decorator'
 import { Route, NavigationGuardNext } from 'vue-router'
 import { AccountModule } from '@/store'
-import { accountAPI } from '@/api'
 import NProgress from 'nprogress'
 import '@/components/nprogress/NProgress.less'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
 
-@Component
-class RouterGuard extends  Vue {
+class RouterGuard {
 
     allowList = ['/account/login', '/account/forgot']
     loginRoutePath = '/account/login'
@@ -15,17 +12,12 @@ class RouterGuard extends  Vue {
 
     beforeEach(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
         NProgress.start()
-
         const accessToken = AccountModule.getAccount().accessToken
         if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
-
-            if (AppRuntimeModule.menus.length === 0) {
-                accountAPI.setAccountMenu()
-            }
-
             if (to.path === this.loginRoutePath ) {
                 next({path: this.defaultRoutePath})
             } else {
+
                 let redirect = to.path
                 if (typeof from.query.redirect !== 'undefined') {
                     redirect = decodeURIComponent( from.query.redirect as string)
@@ -38,6 +30,7 @@ class RouterGuard extends  Vue {
             }
             /** Should Process Role based Permission **/
         } else {
+            console.log('No token From:', from, 'To:', to)
             if (this.allowList.includes(to.path)) {
                 next()
             } else {

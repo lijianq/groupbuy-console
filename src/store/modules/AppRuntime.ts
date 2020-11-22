@@ -1,10 +1,12 @@
-import {Module, VuexModule, MutationAction, getModule, Mutation} from 'vuex-module-decorators'
+import {Module, VuexModule, getModule, Mutation} from 'vuex-module-decorators'
 import store from '@/store'
 
 @Module({ name: 'appRuntime', dynamic: true, namespaced: true, store: store})
 class AppRuntime extends VuexModule {
 
     public menus: any[] = []
+
+    public routes: any[] = []
 
     public isMobile = false
 
@@ -15,18 +17,19 @@ class AppRuntime extends VuexModule {
         this.menus = menus
     }
 
-    @MutationAction({ mutate: ['sidebarCollapsed']})
-    async setSidebarCollapsed(sidebarCollapsed: boolean) {
-        return {
-            sidebarCollapsed: sidebarCollapsed
-        }
+    @Mutation
+    setRoutes(routes: any[]) {
+        this.routes = routes
     }
 
-    @MutationAction({ mutate: ['isMobile']})
-    async setMobileMode(isMobile: boolean) {
-        return {
-            isMobile: isMobile
-        }
+    @Mutation
+    setSidebarCollapsed(sidebarCollapsed: boolean) {
+        this.sidebarCollapsed = sidebarCollapsed
+    }
+
+    @Mutation
+    setMobileMode(isMobile: boolean) {
+        this.isMobile = isMobile
     }
 }
 

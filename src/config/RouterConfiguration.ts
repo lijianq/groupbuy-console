@@ -1,4 +1,4 @@
-import { AccountLayout, MainLayout } from '@/layouts'
+import {AccountLayout, MainLayout} from '@/layouts'
 
 export class RouterConfiguration {
 
@@ -6,22 +6,6 @@ export class RouterConfiguration {
         {
             path: '/',
             redirect: '/account',
-        },
-        {
-            name: 'about',
-            path: '/about',
-            component: MainLayout,
-            redirect: '/about/info',
-            children: [
-                {
-                    path: 'info',
-                    name: 'info',
-                    meta: {
-                        title: 'router.about'
-                    },
-                    component: () => import('@/views/about/About.vue')
-                }
-            ]
         },
         {
             path: '/account',
@@ -34,7 +18,7 @@ export class RouterConfiguration {
                     meta: {
                         title: 'router.account.login'
                     },
-                    component: () => import('@/views/account/Login.vue')
+                    component: () => import('@/views/account/login/Login.vue')
                 }
             ]
         },
@@ -70,7 +54,9 @@ export class RouterConfiguration {
             ]
         },
         {
-            path: '*', redirect: '/error/404', hidden: true
+            path: '*',
+            redirect: '/error/404',
+            hidden: true
         }
 
     ]

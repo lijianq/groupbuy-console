@@ -47,7 +47,7 @@ import {
     notification
 } from 'ant-design-vue'
 
-export class AntdLazyLoad {
+export default class AntdLazyLoad {
     static doLazyLoad() {
         Vue.use(ConfigProvider)
         Vue.use(Layout)
