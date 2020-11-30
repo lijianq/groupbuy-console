@@ -177,7 +177,13 @@ export default class EnUS {
         "error.backtohome": "Back to Home",
         "error.401": "Sorry, you does not have access to this page. Please contact your administrator.",
         "error.404": "Sorry, the page was not found",
-        "error.500": "Sorry, server internal error happens. Please try it later."
+        "error.500": "Sorry, server internal error happens. Please try it later.",
+
+        "request.error.default": "Failed to setup connection, please contact admin.",
+        "request.error.400": "Bad Request (400). ",
+        "request.error.401": "Unauthorized (401).",
+        "request.error.404": "Service is not found (404).",
+        "request.error.500": "Server internal error (500)."
     }
 
     static getMessages() {

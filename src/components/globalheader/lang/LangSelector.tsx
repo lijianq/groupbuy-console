@@ -21,13 +21,10 @@ export default class LangSelector extends Vue {
     }
 
     private loadLanguageAsync(lang: string) {
-        return new Promise( resolve => {
-            if (this.$i18n.locale !== lang) {
-                this.$i18n.locale = lang
-                DomUtil.setDocumentLang(lang)
-            }
-            resolve(lang)
-        })
+        if (this.$i18n.locale !== lang) {
+            this.$i18n.locale = lang
+            DomUtil.setDocumentLang(lang)
+        }
     }
 
     private changeLang(item: any) {

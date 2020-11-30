@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './views/app/App.vue'
 import { RegisterServiceWorker } from '@/cache'
 import router from '@/router'
-import store, {AppPreferenceModule} from '@/store'
-import I18N from '@/locales'
+import store from '@/store'
+import i18n from '@/locales'
 import { AntdLazyLoad, RefreshLoad } from '@/core'
 import { ThemeConfiguration} from '@/config'
 import { Component } from 'vue-property-decorator'
@@ -19,7 +19,6 @@ Component.registerHooks([
     'beforeRouteLeave',
     'beforeRouteUpdate'
 ])
-const i18n = new I18N().getVueI18N(AppPreferenceModule.getLanguage())
 
 new Vue({
   router,

@@ -178,7 +178,13 @@ export default  class ZhCN {
         "error.backtohome": "返回首页",
         "error.401": "抱歉，你无权访问该页面。请联系管理员。",
         "error.404": "抱歉，你访问的页面不存在。",
-        "error.500": "抱歉，服务器响应发生错误。请稍后重试。"
+        "error.500": "抱歉，服务器响应发生错误。请稍后重试。",
+
+        "request.error.default": "连接到服务器失败，请联系管理员。",
+        "request.error.400": "无效请求 (400)。 ",
+        "request.error.401": "未授权访问 (401)。",
+        "request.error.404": "无法找到请求地址(404)。",
+        "request.error.500": "服务器内部错误 (500), 请稍后重试。"
     }
 
     static getMessages() {

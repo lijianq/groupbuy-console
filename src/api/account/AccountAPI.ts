@@ -2,8 +2,11 @@
 
 import { AccountModule } from '@/store'
 import AppRuntimeModule from '@/store/modules/AppRuntime'
+import Request from '@/api/common/Request'
 
 class AccountAPI {
+
+    private request = Request.getDefaultInstance()
 
     private routerComponents: any = {
         BlankLayout: () => import('@/layouts/blank/BlankLayout.vue'),
@@ -33,13 +36,18 @@ class AccountAPI {
     }
 
     login() {
-        const account = {
-            name: 'Admin',
-            avatar: 'bluenet.png',
-            accessToken: '1223231313133131133',
-            expireTime: '123131414241'
-        }
-        AccountModule.setAccount(account)
+        // const account = {
+        //     name: 'Admin',
+        //     avatar: 'bluenet.png',
+        //     accessToken: '1223231313133131133',
+        //     expireTime: '123131414241'
+        // }
+        // AccountModule.setAccount(account)
+        return this.request.request({
+            url: '/account/login',
+            method: 'post',
+            data: {}
+        })
     }
 
     logout() {
