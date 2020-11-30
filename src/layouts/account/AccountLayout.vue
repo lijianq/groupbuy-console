@@ -1,26 +1,11 @@
 <template>
   <div id="accountLayout" :class="['account-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
-      <div class="top">
-        <div class="header">
-          <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">{{ $t('account.layout.title')}}</span>
-          </a>
-        </div>
-        <div class="desc">
-          {{ $t('account.layout.desc')}}
-        </div>
+      <div style="float: right; margin-right: 20px;">
+        <lang-selector/>
       </div>
-
       <router-view />
-
       <div class="footer">
-        <div class="links">
-          <a href="_self">{{ $t('account.layout.help')}}</a>
-          <a href="_self">{{ $t('account.layout.privacy')}}</a>
-          <a href="_self">{{ $t('account.layout.conditions')}}</a>
-        </div>
         <div class="copyright">
           {{ $t('account.layout.copyright')}}
         </div>

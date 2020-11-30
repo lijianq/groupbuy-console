@@ -10,6 +10,7 @@ export default class EnUS {
     }
 
     private static messages = {
+        "navBar.lang": "Lang",
         "app.setting.pagestyle": "Page style",
         "app.setting.pagestyle.dark": "Dark",
         "app.setting.pagestyle.light": "Light",
@@ -22,7 +23,7 @@ export default class EnUS {
         "app.setting.themecolor.sunset": "Sunset Orange",
         "app.setting.themecolor.cyan": "Cyan",
         "app.setting.themecolor.green": "Polar Green",
-        "app.setting.themecolor.daybreak": "Daybreak Blue (default)",
+        "app.setting.themecolor.daybreak": "Daybreak Blue",
         "app.setting.themecolor.geekblue": "Geek Glue",
         "app.setting.themecolor.purple": "Golden Purple",
         "app.setting.navigationmode": "Navigation Mode",
@@ -40,10 +41,10 @@ export default class EnUS {
         "app.setting.copyinfo": "Copied setting to clipboard.",
         "app.setting.production.hint": "Copy setting works only in development environment",
         "app.setting.changcolor": "Setting new theme color",
-        "router.menu.root": "Home",
-        "router.menu.dashboard": "Dashboard",
-        "router.menu.dashboard.workspace": "Workspace",
-        "router.menu.dashboard.analysis": "Analysis",
+
+        "router.menu.home": "Home",
+        "router.menu.home.dashboard": "Dashboard",
+        "router.menu.home.analysis": "Analysis",
         "router.menu.product": "Commodity Center",
         "router.menu.inventory": "Inventory Center",
         "router.menu.member": "Member Center",
@@ -53,68 +54,125 @@ export default class EnUS {
         "router.menu.account.roles": "Roles",
         "router.menu.account.manage": "Accounts",
         "router.menu.account.permission": "Permissions",
-        router: {
-            about: 'ABOUT',
-            account: {
-                login: 'LOGIN'
-            },
-            error: {
-                '401': '401',
-                '404': '404',
-                '500': '500'
-            }
-        },
-        company: {
-            name: 'TECH MATTERS'
-        },
-        about: {
-            content: 'Welcome'
-        },
-        account: {
-            layout: {
-                title: "Devops Platform",
-                desc: "",
-                help: "Help",
-                privacy: "Privacy",
-                conditions: "Conditions",
-                copyright: "Copyright @ 2021 TECHNOLOGY MATTERS LTD."
-            },
-            login: {
-                error: "Invalid account name or password",
-                account: "Account",
-                accountMessage: "Please input account name or email",
-                password: "Password",
-                passwordMessage: "Please input password",
-                autologin: "Auto Login",
-                forgot: "Forgot Password",
-                confirm: "Confirm"
-            }
-        },
-        main: {
-            layout: {
-                avatar: {
-                    account: {
-                        center: "Account",
-                        setting: "Setting",
-                        logout: "Logout"
-                    }
-                },
-                logout: {
-                    dialog: {
-                        ok: "Confirm",
-                        cancel: "Cancel",
-                        title: "Logout",
-                        content: "Do you confirm to logout?"
-                    }
-                }
-            }
-        },
-        error: {
-            "backtohome": "Back to Home",
-            "401": "Sorry, you does not have access to this page. Please contact your administrator.",
-            "404": "Sorry, the page was not found",
-            "500": "Sorry, server internal error happens. Please try it later."
-        }
+        "router.menu.system": "System Setting",
+        "router.menu.system.application": "System Application",
+        "router.menu.system.module": "System Module",
+        "router.menu.system.permission": "System Permission",
+        "router.menu.system.tenant": "System Tenant",
+        "router.about": 'ABOUT',
+        "router.account.login": "LOGIN",
+        "router.error.401": "401",
+        "router.error.402": "402",
+        "router.error.403": "403",
+        "router.account.register": "Register",
+        "router.account.forgot": "Forgot",
+
+        "company.name": "TECH MATTERS",
+
+        "about.content": "Welcome",
+        "account.layout.desc": "",
+        "account.layout.help": "Help",
+        "account.layout.privacy": "Privacy",
+        "account.layout.conditions": "Conditions",
+        "account.layout.copyright": "Copyright @ 2021 TECHNOLOGY MATTERS LTD.",
+
+        "account.login.title": "Operational Platform",
+        "account.login.error": "Invalid account name or password",
+        "account.login.tenant": "Company account",
+        "account.login.tenant.message": "Please input company account",
+        "account.login.account": "Account",
+        "account.login.account.message": "Please input account",
+        "account.login.password": "Password",
+        "account.login.password.message": "Please input password",
+        "account.login.autologin": "Auto Login",
+        "account.login.forgot": "Forgot Password",
+        "account.login.confirm": "Confirm",
+        "account.login.register": "Register Company",
+        "account.login.registration": "Your Registration",
+
+        "account.forgot.authcode": "Verify Email",
+        "account.forgot.reset": "Reset Password",
+        "account.forgot.finish": "Reset Finish",
+        "account.forgot.auth.code": "Send Auth Code",
+        "account.forgot.auth.email": "Account Email",
+        "account.forgot.auth.email.required": "Please input your account email",
+        "account.forgot.auth.email.invalid": "Please input a valid email",
+        "account.forgot.reset.authcode": "Auth Code",
+        "account.forgot.reset.authcode.required": "Please input auth code",
+        "account.forgot.reset.password1": "Password",
+        "account.forgot.reset.password2": "Confirm",
+        "account.forgot.reset.password.required": "Please input password",
+        "account.forgot.reset.password.max": "Please input less than 30 characters",
+        "account.forgot.reset.password.min": "Please input more than 8 characters",
+        "account.forgot.reset.password.mismatch": "The input passwords are not same",
+        "account.forgot.reset.prev": "Prev Step",
+        "account.forgot.reset.reset": "Reset Password",
+        "account.forgot.reset.finish": "Successfully to reset password",
+
+        "account.register.baseinfo": "Company Base Info",
+        "account.register.license": "Company Business License",
+        "account.register.finish": "Finish Registration",
+        "account.register.baseinfo.companyname": "Name",
+        "account.register.baseinfo.companyname.required": "Please input company name",
+        "account.register.baseinfo.companyname.max": "Please input less than 100 characters",
+        "account.register.baseinfo.companyindustry": "Industry",
+        "account.register.baseinfo.companyindustry.required": "Please select industry",
+        "account.register.baseinfo.companycontact": "Contact",
+        "account.register.baseinfo.companycontact.required": "Please input company contact",
+        "account.register.baseinfo.companycontact.max": "Please input less than 30 characters",
+        "account.register.baseinfo.companyemail": "E-mail",
+        "account.register.baseinfo.companyemail.required": "Please input company e-mail",
+        "account.register.baseinfo.companyemail.max": "Please input less than 100 characters",
+        "account.register.baseinfo.companyemail.invalid": "Please input valid e-mail",
+        "account.register.baseinfo.companyphone": "Phone",
+        "account.register.baseinfo.companyphone.required": "Please input company phone",
+        "account.register.baseinfo.companyphone.max": "Please input less than 20 characters",
+        "account.register.baseinfo.companyphone.invalid": "Please input valid phone",
+        "account.register.baseinfo.companyaddress": "Address",
+        "account.register.baseinfo.companyaddress.required": "Please input company address",
+        "account.register.baseinfo.companyaddress.max": "Please input less than 200 characters",
+        "account.register.baseinfo.next": "Next Step",
+        "account.register.license.companylogo": "Logo",
+        "account.register.license.companylogo.upload": "Click to upload Logo",
+        "account.register.back": "Back to Login",
+        "account.register.license.companylicenseno": "License No",
+        "account.register.license.companylicenseno.required": "Please input license no",
+        "account.register.license.companylicenseno.invalid": "Please input valid license no",
+        "account.register.license.companylicense": "License",
+        "account.register.license.companylicense.upload": "Click or drag file to upload business license",
+        "account.register.license.companylicense.required": "Please upload your business license",
+        "account.register.license.prev": "Prev Step",
+        "account.register.license.next": "Submit Registration",
+        "account.register.finish.title": "Your registration has been submitted.",
+        "account.register.finish.subtitle": "We will send the approval to your e-mail in 3 - 4 work days with further instruction. Also you can check the status via your registration link.",
+
+        "account.registration.input": "Input required information",
+        "account.registration.result": "The status of your registration",
+        "account.registration.input.query": "Query",
+        "account.registration.result.title": "Registration Status",
+        "account.registration.status": "Registration Status",
+        "account.registration.status.description": "Status Information",
+        "account.registration.status.1": "In process",
+        "account.registration.status.1.message": "Your registration request is in process. Please give us more time.",
+        "account.registration.status.2": "Invalid",
+        "account.registration.status.2.message": "Your registration failed due to invalid business license provided.",
+        "account.registration.status.3": "Approved",
+        "account.registration.status.3.message": "Your registration request has been approved and the company account is active.",
+
+        "company.industry.ecommerce": "E-Commerce",
+        "company.industry.manufacture": "Manufacture",
+        "company.industry.trade": "Trade",
+
+        "main.layout.avatar.account.setting": "Setting",
+        "main.layout.avatar.account.logout": "Logout",
+        "main.layout.logout.dialog.ok": "Confirm",
+        "main.layout.logout.dialog.cancel": "Cancel",
+        "main.layout.logout.dialog.title": "Logout",
+        "main.layout.logout.dialog.content": "Do you confirm to logout?",
+        "error.backtohome": "Back to Home",
+        "error.401": "Sorry, you does not have access to this page. Please contact your administrator.",
+        "error.404": "Sorry, the page was not found",
+        "error.500": "Sorry, server internal error happens. Please try it later."
     }
 
     static getMessages() {

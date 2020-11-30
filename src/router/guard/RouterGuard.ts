@@ -3,19 +3,16 @@ import { Route, NavigationGuardNext } from 'vue-router'
 import { AccountModule } from '@/store'
 import NProgress from 'nprogress'
 import '@/components/nprogress/NProgress.less'
+import { RouterConfiguration } from '@/config'
 
 class RouterGuard {
-
-    allowList = ['/account/login', '/account/forgot']
-    loginRoutePath = '/account/login'
-    defaultRoutePath = '/dashboard'
 
     beforeEach(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
         NProgress.start()
         const accessToken = AccountModule.getAccount().accessToken
         if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
-            if (to.path === this.loginRoutePath ) {
-                next({path: this.defaultRoutePath})
+            if (to.path === RouterConfiguration.loginPath ) {
+                next({path: RouterConfiguration.homePath})
             } else {
 
                 let redirect = to.path
@@ -30,11 +27,10 @@ class RouterGuard {
             }
             /** Should Process Role based Permission **/
         } else {
-            console.log('No token From:', from, 'To:', to)
-            if (this.allowList.includes(to.path)) {
+            if (RouterConfiguration.allowList.includes(to.path)) {
                 next()
             } else {
-                next({ path: this.loginRoutePath, query: { redirect: to.fullPath } })
+                next({ path: RouterConfiguration.loginPath, query: { redirect: to.fullPath } })
             }
         }
 

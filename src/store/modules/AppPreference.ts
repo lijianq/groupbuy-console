@@ -45,7 +45,7 @@ class AppPreference {
 
     getPrimaryColor() {
         const primaryColor = localStorage.getItem(this.primaryColorKey)
-        return primaryColor ? primaryColor : '#52C41A'
+        return primaryColor ? primaryColor : '#722ED1'
     }
 
     setContentWidth(contentWidth: string) {

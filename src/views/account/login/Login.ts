@@ -3,7 +3,8 @@ import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
 import md5 from 'md5'
 import { accountAPI } from '@/api'
 import { AppPreferenceModule } from '@/store'
-import AppRuntimeModule from "@/store/modules/AppRuntime";
+import AppRuntimeModule from '@/store/modules/AppRuntime'
+import { RouterConfiguration } from '@/config'
 
 @Component
 export default class Login extends Vue {
@@ -25,13 +26,13 @@ export default class Login extends Vue {
     }
 
     handleSubmit (event: Event) {
-        let redirect = '/dashboard'
+        let redirect = RouterConfiguration.homePath
         if (this.$route.query.redirect) {
             redirect = this.$route.query.redirect as string
         }
         event.preventDefault()
         this.state.loginBtn = true
-        const validateFieldsKey = ['account', 'password', 'rememberMe']
+        const validateFieldsKey = ['tenant', 'account', 'password', 'rememberMe']
         this.form.validateFields(validateFieldsKey, { force: true }, (err, values) => {
             if (!err) {
                 if (values.account == 'admin' && md5(values.password) == '21232f297a57a5a743894a0e4a801fc3') {

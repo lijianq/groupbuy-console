@@ -1,5 +1,5 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
+import { RouterConfiguration} from '@/config'
 
 @Component
 export default class ErrorPage extends Vue {
@@ -28,6 +28,6 @@ export default class ErrorPage extends Vue {
     public type: string | undefined
 
     goHome() {
-        this.$router.push({path: '/dashboard/workspace'})
+        this.$router.push({path: RouterConfiguration.homePath})
     }
 }

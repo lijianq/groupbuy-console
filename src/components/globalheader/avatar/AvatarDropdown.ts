@@ -2,6 +2,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { AccountModule } from '@/store'
 import { Modal } from 'ant-design-vue'
 import { accountAPI } from '@/api'
+import { RouterConfiguration} from '@/config'
 
 @Component
 export default class AvatarDropdown extends Vue {
@@ -27,7 +28,7 @@ export default class AvatarDropdown extends Vue {
     }
 
     goSettings() {
-        this.$router.push({path: '/account/settings'})
+        this.$router.push({path: '/account/setting'})
     }
 
     logout() {
@@ -38,7 +39,7 @@ export default class AvatarDropdown extends Vue {
             content: this.$t('main.layout.logout.dialog.content'),
             onOk: () => {
                 accountAPI.logout()
-                this.$router.push({path: '/account/login'}).then(() => {
+                this.$router.push({path: RouterConfiguration.loginPath}).then(() => {
                     location.reload()
                 })
             },
