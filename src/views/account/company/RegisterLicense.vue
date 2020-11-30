@@ -3,7 +3,7 @@
     <a-form :form="form" id="licenseForm" style="max-width: 500px; margin: 40px auto 0;">
 
       <a-form-item
-          :label="$t('account.register.license.companylogo')"
+          :label="$t('account.register.license.logo')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
@@ -16,28 +16,28 @@
         >
           <a-button>
             <a-icon type="upload"/>
-            {{ $t('account.register.license.companylogo.upload') }}
+            {{ $t('account.register.license.logo.upload') }}
           </a-button>
         </a-upload>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.license.companylicenseno')"
+          :label="$t('account.register.license.no')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyLicenseNo', {rules: [{required: true, message: $t('account.register.license.companylicenseno.required')}, {pattern: /(^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$)|(^\d{15}$)/, message:$t('account.register.license.companylicenseno.invalid')}]}]"/>
+            v-decorator="['companyLicenseNo', {rules: [{required: true, message: $t('account.register.license.no.required')}, {pattern: /(^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$)|(^\d{15}$)/, message:$t('account.register.license.no.invalid')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.license.companylicense')"
+          :label="$t('account.register.license.license')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-upload-dragger
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            v-decorator="['companyLicense', {getValueFromEvent: checkFile, rules: [{required: true, message: $t('account.register.license.companylicense.required')}]}]"
+            v-decorator="['companyLicense', {getValueFromEvent: checkFile, rules: [{required: true, message: $t('account.register.license.license.required')}]}]"
             :multiple="false"
             :file-list="licenseFileList"
             @change="handleLicenseFileChange"
@@ -46,7 +46,7 @@
             <a-icon type="copy" />
           </p>
           <p class="ant-upload-text">
-            {{ $t('account.register.license.companylicense.upload') }}
+            {{ $t('account.register.license.license.upload') }}
           </p>
         </a-upload-dragger>
       </a-form-item>

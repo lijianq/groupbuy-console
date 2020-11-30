@@ -1,6 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
-import {RouterConfiguration} from '@/config'
+import {RouterConfiguration, Address} from '@/config'
 
 @Component
 export default class RegisterBaseInfo extends Vue {
@@ -8,6 +8,7 @@ export default class RegisterBaseInfo extends Vue {
     labelCol = { lg: { span: 5 }, sm: { span: 5 } }
     wrapperCol = { lg: { span: 19 }, sm: { span: 19 } }
     form!: WrappedFormUtils
+    addressOptions = Address.options
 
     created() {
         this.form = this.$form.createForm(this, {name: 'baseInfoForm'})

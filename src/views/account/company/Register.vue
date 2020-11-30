@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-steps class="steps" :current="currentStep">
-      <a-step :title="$t('account.register.baseinfo')">
+      <a-step :title="$t('account.register.base')">
         <a-icon slot="icon" type="form" />
       </a-step>
       <a-step :title="$t('account.register.license')">
