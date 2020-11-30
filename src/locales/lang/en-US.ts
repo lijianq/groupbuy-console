@@ -54,6 +54,8 @@ export default class EnUS {
         "router.menu.account.setting": "Settings",
         "router.menu.account.roles": "Roles",
         "router.menu.account.manage": "Accounts",
+        "router.menu.account.list": "Account List",
+        "router.menu.account.modify": "Manage Account",
         "router.menu.account.permission": "Permissions",
         "router.menu.system": "System Setting",
         "router.menu.system.application": "System Application",

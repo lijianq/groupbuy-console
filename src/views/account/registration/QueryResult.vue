@@ -6,7 +6,7 @@
         <template #extra>
           <div style="text-align: left;">
             <a-descriptions :column="{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }">
-              <a-descriptions-item :label="$t('account.register.baseinfo.companyname')">
+              <a-descriptions-item :label="$t('account.register.base.name')">
                 无极限科技有限公司
               </a-descriptions-item>
               <a-descriptions-item :label="$t('account.registration.status')">

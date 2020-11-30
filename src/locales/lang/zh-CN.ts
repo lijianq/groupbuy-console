@@ -54,6 +54,8 @@ export default  class ZhCN {
         "router.menu.account.setting": "账号设置",
         "router.menu.account.roles": "角色管理",
         "router.menu.account.manage": "账号管理",
+        "router.menu.account.list": "账号列表",
+        "router.menu.account.modify": "账号修改",
         "router.menu.account.permission": "权限管理",
         "router.menu.system": "系统管理",
         "router.menu.system.application": "应用管理",
