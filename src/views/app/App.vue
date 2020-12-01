@@ -10,6 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { DomUtil } from '@/utils/DomUtil'
 import { ThemeUtil } from '@/utils/ThemeUtil'
+import { FormUtil } from '@/utils/FormUtil'
 import { AppPreferenceModule } from '@/store'
 import AppRuntimeModule from '@/store/modules/AppRuntime'
 import isMobile from 'ismobilejs'
@@ -23,6 +24,7 @@ export default class App extends Vue {
   mounted() {
     AppRuntimeModule.setMobileMode(isMobile().any)
     ThemeUtil.updateTheme(this.primaryColor)
+    FormUtil.cleanForms()
   }
   get locale () {
     const { title } = this.$route.meta

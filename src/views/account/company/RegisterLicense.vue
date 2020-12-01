@@ -8,8 +8,8 @@
           :wrapperCol="wrapperCol"
       >
         <a-upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            name="companyLogo"
+            :before-upload="beforeUpload"
+            id="companyLogo"
             :multiple="false"
             :file-list="logoFileList"
             @change="handleLogoFileChange"
@@ -36,8 +36,8 @@
           :wrapperCol="wrapperCol"
       >
         <a-upload-dragger
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            v-decorator="['companyLicense', {getValueFromEvent: checkFile, rules: [{required: true, message: $t('account.register.license.license.required')}]}]"
+            :before-upload="beforeUpload"
+            v-decorator="['companyLicense', {getValueFromEvent: this.checkFile, rules: [{required: true, message: $t('account.register.license.license.required')}]}]"
             :multiple="false"
             :file-list="licenseFileList"
             @change="handleLicenseFileChange"

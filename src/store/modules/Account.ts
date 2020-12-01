@@ -1,24 +1,25 @@
 import AppPreferenceModule from '@/store/modules/AppPreference'
+import StorageKeys from "@/config/StorageKeys"
 
 class Account {
 
-    private accountKey = "app.current.account"
+
 
     getAccount() {
         let account: string | null
         if ( AppPreferenceModule.getAutoLogin()) {
-            account = localStorage.getItem(this.accountKey)
+            account = localStorage.getItem(StorageKeys.accountKey)
         } else {
-            account = sessionStorage.getItem(this.accountKey)
+            account = sessionStorage.getItem(StorageKeys.accountKey)
         }
         return account ? JSON.parse(account) : {}
     }
 
     setAccount(account: any) {
         if ( AppPreferenceModule.getAutoLogin()) {
-            localStorage.setItem(this.accountKey, JSON.stringify(account))
+            localStorage.setItem(StorageKeys.accountKey, JSON.stringify(account))
         } else {
-            sessionStorage.setItem(this.accountKey, JSON.stringify(account))
+            sessionStorage.setItem(StorageKeys.accountKey, JSON.stringify(account))
         }
     }
 }

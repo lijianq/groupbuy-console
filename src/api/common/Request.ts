@@ -22,16 +22,30 @@ export default class Request {
     }
 
     private processResponse(response: AxiosResponse) {
-        return response.data
+        return response
     }
 
     private processError(error: any) {
         if (error && error.response) {
+            const message = error.response.data.message
             switch (error.response.status) {
-                case 400: error.message = i18n.t('request.error.400'); break;
+                case 400: {
+                    if (message) {
+                        error.message = `${i18n.t('request.error.400')}: ${message}`;
+                    } else {
+                        error.message = i18n.t('request.error.400');
+                    }
+                    break;
+                }
                 case 401: error.message =  i18n.t('request.error.401'); break;
                 case 404: error.message =  i18n.t('request.error.404'); break;
-                case 500: error.message =  i18n.t('request.error.500'); break;
+                case 500: {
+                    if (message) {
+                        error.message = `${i18n.t('request.error.500')}: ${message}`;
+                    } else {
+                        error.message = i18n.t('request.error.500');
+                    }
+                    break; }
                 default: error.message =  i18n.t('request.error.default');
             }
         } else {

@@ -180,10 +180,10 @@ export default class EnUS {
         "error.500": "Sorry, server internal error happens. Please try it later.",
 
         "request.error.default": "Failed to setup connection, please contact admin.",
-        "request.error.400": "Bad Request (400). ",
-        "request.error.401": "Unauthorized (401).",
-        "request.error.404": "Service is not found (404).",
-        "request.error.500": "Server internal error (500)."
+        "request.error.400": "Bad Request",
+        "request.error.401": "Unauthorized",
+        "request.error.404": "Service is not found",
+        "request.error.500": "Server internal error"
     }
 
     static getMessages() {

@@ -1,113 +1,102 @@
+import StorageKeys from '@/config/StorageKeys'
 class AppPreference {
 
-    private currentLangKey = "app.preference.currentLang"
-    private layoutKey = "app.preference.layout"
-    private themeKey = "app.preference.theme"
-    private primaryColorKey = "app.preference.primaryColor"
-    private colorWeakKey = "app.preference.colorWeak"
-    private fixedHeaderKey = "app.preference.fixedHeader"
-    private fixSiderbarKey = "app.preference.fixSiderbar"
-    private contentWidthKey = "app.preference.contentWidth"
-    private autoHideHeaderKey = "app.preference.autoHideHeader"
-    private multiTabKey = "app.preference.multiTab"
-    private autoLoginKey = "app.preference.autoLoginKey"
-
     setLanguage(currentLang: string) {
-        localStorage.setItem(this.currentLangKey, currentLang)
+        localStorage.setItem(StorageKeys.currentLangKey, currentLang)
     }
 
     getLanguage() {
-        const currentLang = localStorage.getItem(this.currentLangKey)
+        const currentLang = localStorage.getItem(StorageKeys.currentLangKey)
         return currentLang ? currentLang : 'zh-CN'
     }
 
     setLayout(layout: string) {
-        localStorage.setItem(this.layoutKey, layout)
+        localStorage.setItem(StorageKeys.layoutKey, layout)
     }
 
     getLayout() {
-        const layout = localStorage.getItem(this.layoutKey)
+        const layout = localStorage.getItem(StorageKeys.layoutKey)
         return layout ? layout : 'sidemenu'
     }
 
     setTheme(theme: string) {
-        localStorage.setItem(this.themeKey, theme)
+        localStorage.setItem(StorageKeys.themeKey, theme)
     }
 
     getTheme() {
-        const theme = localStorage.getItem(this.themeKey)
+        const theme = localStorage.getItem(StorageKeys.themeKey)
         return theme ? theme : 'dark'
     }
 
     setPrimaryColor(primaryColor: string) {
-        localStorage.setItem(this.primaryColorKey, primaryColor)
+        localStorage.setItem(StorageKeys.primaryColorKey, primaryColor)
     }
 
     getPrimaryColor() {
-        const primaryColor = localStorage.getItem(this.primaryColorKey)
+        const primaryColor = localStorage.getItem(StorageKeys.primaryColorKey)
         return primaryColor ? primaryColor : '#722ED1'
     }
 
     setContentWidth(contentWidth: string) {
-        localStorage.setItem(this.contentWidthKey, contentWidth)
+        localStorage.setItem(StorageKeys.contentWidthKey, contentWidth)
     }
 
     getContentWidth() {
-        const contentWidth = localStorage.getItem(this.contentWidthKey)
+        const contentWidth = localStorage.getItem(StorageKeys.contentWidthKey)
         return contentWidth ? contentWidth : 'Fluid'
     }
 
     setColorWeak(colorWeak: boolean) {
-        localStorage.setItem(this.colorWeakKey, String(colorWeak))
+        localStorage.setItem(StorageKeys.colorWeakKey, String(colorWeak))
     }
 
     getColorWeak() {
-        const colorWeak = localStorage.getItem(this.colorWeakKey)
+        const colorWeak = localStorage.getItem(StorageKeys.colorWeakKey)
         return colorWeak ? ( colorWeak === 'true') : false
     }
 
     setFixedHeader(fixedHeader: boolean) {
-        localStorage.setItem(this.fixedHeaderKey, String(fixedHeader))
+        localStorage.setItem(StorageKeys.fixedHeaderKey, String(fixedHeader))
     }
 
     getFixedHeader() {
-        const fixedHeader = localStorage.getItem(this.fixedHeaderKey)
+        const fixedHeader = localStorage.getItem(StorageKeys.fixedHeaderKey)
         return fixedHeader ? ( fixedHeader === 'true') : true
     }
 
     setFixSiderbar(fixSiderbar: boolean) {
-        localStorage.setItem(this.fixSiderbarKey, String(fixSiderbar))
+        localStorage.setItem(StorageKeys.fixSiderbarKey, String(fixSiderbar))
     }
 
     getFixSiderbar() {
-        const fixSiderbar = localStorage.getItem(this.fixSiderbarKey)
+        const fixSiderbar = localStorage.getItem(StorageKeys.fixSiderbarKey)
         return fixSiderbar ? ( fixSiderbar === 'true') : true
     }
 
     setAutoHideHeader(autoHideHeader: boolean) {
-        localStorage.setItem(this.autoHideHeaderKey, String(autoHideHeader))
+        localStorage.setItem(StorageKeys.autoHideHeaderKey, String(autoHideHeader))
     }
 
     getAutoHideHeader() {
-        const autoHideHeader = localStorage.getItem(this.autoHideHeaderKey)
+        const autoHideHeader = localStorage.getItem(StorageKeys.autoHideHeaderKey)
         return autoHideHeader ? ( autoHideHeader === 'true') : false
     }
 
     setMultiTab(multiTab: boolean) {
-        localStorage.setItem(this.multiTabKey, String(multiTab))
+        localStorage.setItem(StorageKeys.multiTabKey, String(multiTab))
     }
 
     getMultiTab() {
-        const multiTab = localStorage.getItem(this.multiTabKey)
+        const multiTab = localStorage.getItem(StorageKeys.multiTabKey)
         return multiTab ? ( multiTab === 'true') : false
     }
 
     setAutoLogin(autoLogin: boolean) {
-        localStorage.setItem(this.autoLoginKey, String(autoLogin))
+        localStorage.setItem(StorageKeys.autoLoginKey, String(autoLogin))
     }
 
     getAutoLogin() {
-        const autoLogin = localStorage.getItem(this.autoLoginKey)
+        const autoLogin = localStorage.getItem(StorageKeys.autoLoginKey)
         return autoLogin ? ( autoLogin === 'true') : false
     }
 }

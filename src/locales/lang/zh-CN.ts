@@ -142,7 +142,7 @@ export default  class ZhCN {
         "account.register.back": "返回登录",
         "account.register.license.no": "营业执照编号",
         "account.register.license.no.required": "请输入营业执照编号",
-        "account.register.license.no.invlaid": "请输入有效的营业执照编号",
+        "account.register.license.no.invalid": "请输入有效的营业执照编号",
         "account.register.license.license": "营业执照",
         "account.register.license.license.upload": "点击或拖动文件上传营业执照副本",
         "account.register.license.license.required": "请上传营业执照",
@@ -181,10 +181,10 @@ export default  class ZhCN {
         "error.500": "抱歉，服务器响应发生错误。请稍后重试。",
 
         "request.error.default": "连接到服务器失败，请联系管理员。",
-        "request.error.400": "无效请求 (400)。 ",
-        "request.error.401": "未授权访问 (401)。",
-        "request.error.404": "无法找到请求地址(404)。",
-        "request.error.500": "服务器内部错误 (500), 请稍后重试。"
+        "request.error.400": "无效请求",
+        "request.error.401": "未授权访问",
+        "request.error.404": "无法找到请求地址",
+        "request.error.500": "服务器内部错误"
     }
 
     static getMessages() {

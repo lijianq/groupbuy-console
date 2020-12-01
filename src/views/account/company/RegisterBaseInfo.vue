@@ -16,7 +16,7 @@
           :wrapperCol="wrapperCol"
       >
         <a-select
-            v-decorator="['companyIndustry', {initialValue: 'ecommerce', rules: [{required: true, message: $t('account.register.base.industry.required')}]}]">
+            v-decorator="['companyIndustry', {rules: [{required: true, message: $t('account.register.base.industry.required')}]}]">
           <a-select-option value="ecommerce">{{ $t('company.industry.ecommerce') }}</a-select-option>
           <a-select-option value="manufacture">{{ $t('company.industry.manufacture') }}</a-select-option>
           <a-select-option value="trade">{{ $t('company.industry.trade') }}</a-select-option>
@@ -56,7 +56,7 @@
           :wrapperCol="wrapperCol"
       >
         <a-cascader :options="addressOptions" :placeholder="$t('address.hint')"
-                    v-decorator="['region', {rules: [{required: true, message: $t('account.register.base.region.required')}]}]"
+                    v-decorator="['companyRegion', {rules: [{required: true, message: $t('account.register.base.region.required')}]}]"
         />
       </a-form-item>
       <a-form-item
