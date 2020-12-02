@@ -9,6 +9,7 @@
       >
         <a-upload
             :before-upload="beforeUpload"
+            accept="image/*"
             id="companyLogo"
             :multiple="false"
             :file-list="logoFileList"
@@ -39,6 +40,7 @@
             :before-upload="beforeUpload"
             v-decorator="['companyLicense', {getValueFromEvent: this.checkFile, rules: [{required: true, message: $t('account.register.license.license.required')}]}]"
             :multiple="false"
+            accept="image/*"
             :file-list="licenseFileList"
             @change="handleLicenseFileChange"
         >

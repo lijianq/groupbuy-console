@@ -3,7 +3,7 @@ import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
 import {RouterConfiguration} from '@/config'
 import StorageKeys from "@/config/StorageKeys"
 import cosAPI from "@/api/cos/CosAPI"
-import CosConfig from "@/api/cos/CosConfig";
+import CosUpload from "@/api/cos/CosUpload"
 
 @Component
 export default class  RegisterLicense extends Vue {
@@ -14,36 +14,48 @@ export default class  RegisterLicense extends Vue {
     loading = false
     licenseFileList: any[] = []
     logoFileList: any[] = []
-    logoFile!: File
-    licenseFile!: File
 
     created() {
         this.form = this.$form.createForm(this, {name: 'licenseForm'})
     }
 
+    closeLoading() {
+        setTimeout(() => {
+            this.loading = false
+        }, 600)
+    }
+
     nextStep () {
         const { form: { validateFields } } = this
+        this.loading = true
+
         validateFields((err, values) => {
             if (!err) {
                 const base = sessionStorage.getItem(StorageKeys.registerBaseKey)
                 if (base) {
                     const baseFormData = JSON.parse(base)
                     baseFormData.companyLicenseNo = values.companyLicenseNo
-                    cosAPI.putObject(this.licenseFile, "license.jpg").then( (result: any) => {
+                    const uploads: CosUpload[] = []
+                    if (this.logoFileList.length > 0) {
+                        uploads.push(new CosUpload(this.logoFileList[0].originFileObj, 'logo'))
+                    }
+                    uploads.push(new CosUpload(this.licenseFileList[0].originFileObj, 'license'))
+                    cosAPI.uploadFiles(uploads).then( (result: any) => {
                         baseFormData.id = result.targetId
-                        baseFormData.companyLicense = result.Location
-                        baseFormData.companyLogo = `${CosConfig.cosUrl}${result.targetId}/logo.jpg`
-                        cosAPI.putObject(this.logoFile, "logo.jpg", result.targetId);
+                        if (result.logo) {
+                            baseFormData.companyLogo = result.logo.Location
+                        }
+                        baseFormData.companyLicense = result.license.Location
                         this.$emit('nextStep')
                     }).catch(error => {
                         this.$message.error(error.message)
+                        this.closeLoading()
                     })
                 } else {
                     this.$emit('prevStep')
                 }
-                this.loading = false
             } else {
-                this.loading = false;
+                this.closeLoading()
             }
         })
     }
@@ -68,17 +80,34 @@ export default class  RegisterLicense extends Vue {
         return false
     }
 
-    handleLicenseFileChange(info: any) {
-        this.logoFile = info.file
+    handleLogoFileChange(info: any) {
         let fileList = [...info.fileList]
         fileList = fileList.slice(-1)
-        this.licenseFileList = fileList
+        if (fileList.length > 0) {
+            const file = fileList[0].originFileObj
+            if (this.isLarge(file, 1)) {
+                this.$message.error(`${this.$t('account.register.license.logo.limit')}`)
+                fileList.pop()
+            }
+        }
+        this.logoFileList = fileList
     }
 
-    handleLogoFileChange(info: any) {
-        this.licenseFile = info.file
+    isLarge(file: File, size: number) {
+        const isLarge = file.size / 1024 / 1024 > size;
+        return isLarge
+    }
+
+    handleLicenseFileChange(info: any) {
         let fileList = [...info.fileList]
         fileList = fileList.slice(-1)
-        this.logoFileList = fileList
+        if (fileList.length > 0) {
+            const file = fileList[0].originFileObj
+            if (this.isLarge(file, 10)) {
+                this.$message.error(`${this.$t('account.register.license.license.limit')}`)
+                fileList.pop()
+            }
+        }
+        this.licenseFileList = fileList
     }
 }
