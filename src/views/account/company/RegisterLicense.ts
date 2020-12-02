@@ -94,8 +94,7 @@ export default class  RegisterLicense extends Vue {
     }
 
     isLarge(file: File, size: number) {
-        const isLarge = file.size / 1024 / 1024 > size;
-        return isLarge
+        return file.size / 1024 / 1024 > size
     }
 
     handleLicenseFileChange(info: any) {
