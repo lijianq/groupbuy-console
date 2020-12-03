@@ -9,9 +9,12 @@ import QueryResult from './QueryResult.vue'
     }
 })
 export default class Query extends Vue {
-    currentStep = 0
 
-    nextStep() {
+    currentStep = 0
+    queryResult = {}
+
+    nextStep(data: any) {
+        this.queryResult = data
         if (this.currentStep < 1) {
             this.currentStep += 1
         }

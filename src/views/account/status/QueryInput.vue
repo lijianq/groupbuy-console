@@ -20,8 +20,8 @@
       </a-form-item>
 
       <a-form-item>
-        <a-button type="primary" class="step-button" @click="query">{{
-            $t('account.registration.input.query')
+        <a-button :loading="loading" type="primary" class="step-button" @click="query">{{
+            $t('account.status.input.query')
           }}
         </a-button>
         <a-button type="primary" class="step-button" @click="backToLogin">{{

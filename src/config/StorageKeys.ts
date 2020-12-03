@@ -11,5 +11,4 @@ export default class StorageKeys {
     static multiTabKey = "app.preference.multiTab"
     static autoLoginKey = "app.preference.autoLoginKey"
     static accountKey = "app.current.account"
-    static registerBaseKey = "account.register.base.form"
 }

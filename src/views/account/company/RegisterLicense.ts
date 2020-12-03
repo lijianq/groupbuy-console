@@ -1,9 +1,9 @@
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
 import {RouterConfiguration} from '@/config'
-import StorageKeys from "@/config/StorageKeys"
 import cosAPI from "@/api/cos/CosAPI"
 import CosUpload from "@/api/cos/CosUpload"
+import registerAPI from "@/api/register/RegisterAPI"
 
 @Component
 export default class  RegisterLicense extends Vue {
@@ -14,6 +14,9 @@ export default class  RegisterLicense extends Vue {
     loading = false
     licenseFileList: any[] = []
     logoFileList: any[] = []
+
+    @Prop({type: Object, default: null})
+    baseFormData: any | null
 
     created() {
         this.form = this.$form.createForm(this, {name: 'licenseForm'})
@@ -31,9 +34,9 @@ export default class  RegisterLicense extends Vue {
 
         validateFields((err, values) => {
             if (!err) {
-                const base = sessionStorage.getItem(StorageKeys.registerBaseKey)
-                if (base) {
-                    const baseFormData = JSON.parse(base)
+                const { baseFormData } = this
+                if (baseFormData) {
+                    const { baseFormData } = this
                     baseFormData.companyLicenseNo = values.companyLicenseNo
                     const uploads: CosUpload[] = []
                     if (this.logoFileList.length > 0) {
@@ -46,7 +49,15 @@ export default class  RegisterLicense extends Vue {
                             baseFormData.companyLogo = result.logo.Location
                         }
                         baseFormData.companyLicense = result.license.Location
-                        this.$emit('nextStep')
+                        baseFormData.companyRegion = baseFormData.companyRegion.toString()
+                        registerAPI.register(baseFormData).then(() => {
+                            this.$emit('nextStep')
+                        }).catch(error => {
+                            // roll back the value of region to array
+                            baseFormData.companyRegion = baseFormData.companyRegion.split(",")
+                            this.$message.error(error.message)
+                            this.closeLoading()
+                        })
                     }).catch(error => {
                         this.$message.error(error.message)
                         this.closeLoading()
@@ -65,7 +76,6 @@ export default class  RegisterLicense extends Vue {
     }
 
     backToLogin() {
-        sessionStorage.removeItem("account.register.base.form")
         this.$router.push({ path: RouterConfiguration.loginPath })
     }
 

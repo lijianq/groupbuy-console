@@ -39,6 +39,7 @@ export default class Request {
                 }
                 case 401: error.message =  i18n.t('request.error.401'); break;
                 case 404: error.message =  i18n.t('request.error.404'); break;
+                case 406: error.message =  i18n.t('request.error.406'); break;
                 case 500: {
                     if (message) {
                         error.message = `${i18n.t('request.error.500')}: ${message}`;

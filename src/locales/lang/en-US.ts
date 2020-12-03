@@ -69,6 +69,7 @@ export default class EnUS {
         "router.error.403": "403",
         "router.account.register": "Register",
         "router.account.forgot": "Forgot",
+        "router.account.status": "Company Status",
 
         "company.name": "TECH MATTERS",
 
@@ -91,7 +92,7 @@ export default class EnUS {
         "account.login.forgot": "Forgot Password",
         "account.login.confirm": "Confirm",
         "account.login.register": "Register Company",
-        "account.login.registration": "Your Registration",
+        "account.login.registration": "Company Status",
 
         "account.forgot.authcode": "Verify Email",
         "account.forgot.reset": "Reset Password",
@@ -151,20 +152,25 @@ export default class EnUS {
         "account.register.license.prev": "Prev Step",
         "account.register.license.next": "Submit Registration",
         "account.register.finish.title": "Your registration has been submitted.",
-        "account.register.finish.subtitle": "We will send the approval to your e-mail in 3 - 4 work days with further instruction. Also you can check the status via your registration link.",
+        "account.register.finish.subtitle": "We will send the approval to your e-mail in 3 - 4 work days with further instruction. Also you can check the status via Company Status link.",
 
-        "account.registration.input": "Input required information",
-        "account.registration.result": "The status of your registration",
-        "account.registration.input.query": "Query",
-        "account.registration.result.title": "Registration Status",
-        "account.registration.status": "Registration Status",
-        "account.registration.status.description": "Status Information",
-        "account.registration.status.1": "In process",
-        "account.registration.status.1.message": "Your registration request is in process. Please give us more time.",
-        "account.registration.status.2": "Invalid",
-        "account.registration.status.2.message": "Your registration failed due to invalid business license provided.",
-        "account.registration.status.3": "Approved",
-        "account.registration.status.3.message": "Your registration request has been approved and the company account is active.",
+        "account.status.input": "Input required information",
+        "account.status.result": "The status of your company",
+        "account.status.result.notfound": "Your company record is not found",
+        "account.status.input.query": "Query",
+        "account.status.result.title": "Company Status",
+        "account.status.result.status": "Company Status",
+        "account.status.result.status.description": "Status Information",
+        "account.company.status.0": "New",
+        "account.company.status.0.message":"Your company registration is under approval. Please wait.",
+        "account.company.status.1": "Invalid",
+        "account.company.status.1.message": "Your company has invalid business license provided.",
+        "account.company.status.2": "Active",
+        "account.company.status.2.message": "Your company account is active for use.",
+        "account.company.status.3": "Expired",
+        "account.company.status.3.message": "Your company account was expired.",
+        "account.company.status.4": "Inactive",
+        "account.company.status.4.message": "Your company account is inactive and will be deleted soon.",
 
         "company.industry.ecommerce": "E-Commerce",
         "company.industry.manufacture": "Manufacture",
@@ -185,6 +191,7 @@ export default class EnUS {
         "request.error.400": "Bad Request",
         "request.error.401": "Unauthorized",
         "request.error.404": "Service is not found",
+        "request.error.406": "Duplicate record",
         "request.error.500": "Server internal error"
     }
 

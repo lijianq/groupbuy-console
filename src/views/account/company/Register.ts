@@ -12,8 +12,10 @@ import RegisterFinish from './RegisterFinish.vue'
 })
 export default class Register extends Vue {
     currentStep = 0
+    baseFormData: any = null
 
-    nextStep() {
+    nextStep(data: any) {
+        this.baseFormData = data
         if (this.currentStep < 2) {
             this.currentStep += 1
         }

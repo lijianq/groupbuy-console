@@ -1,16 +1,16 @@
 <template>
   <div>
     <a-steps class="steps" :current="currentStep">
-      <a-step :title="$t('account.registration.input')">
+      <a-step :title="$t('account.status.input')">
         <a-icon slot="icon" type="edit" />
       </a-step>
-      <a-step :title="$t('account.registration.result')">
+      <a-step :title="$t('account.status.result')">
         <a-icon slot="icon" type="info-circle" />
       </a-step>
     </a-steps>
     <div class="content">
       <query-input v-if="currentStep === 0" @nextStep="nextStep"/>
-      <query-result v-if="currentStep === 1" @finish="finish"/>
+      <query-result :queryResult="queryResult" v-if="currentStep === 1" @finish="finish"/>
     </div>
   </div>
 </template>

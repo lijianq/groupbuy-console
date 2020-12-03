@@ -6,7 +6,7 @@ export class RouterConfiguration {
 
     static loginPath = "/account/login"
 
-    static allowList = ['/account/login', '/account/forgot', '/account/register', '/account/registration']
+    static allowList = ['/account/login', '/account/forgot', '/account/register', '/account/status']
 
     static constantRoutes = [
         {
@@ -43,12 +43,12 @@ export class RouterConfiguration {
                     component: () => import('@/views/account/company/Register.vue')
                 },
                 {
-                    path: 'registration',
-                    name: 'Registration',
+                    path: 'status',
+                    name: 'Status',
                     meta: {
-                        title: 'router.account.register'
+                        title: 'router.account.status'
                     },
-                    component: () => import('@/views/account/registration/Query.vue')
+                    component: () => import('@/views/account/status/Query.vue')
                 },
             ]
         },

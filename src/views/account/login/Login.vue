@@ -82,7 +82,7 @@
       </a-form-item>
       <div class="account-register">
         <router-link :to="{path: '/account/register' }">{{ $t('account.login.register') }}</router-link>
-        <router-link class="registration" :to="{path: '/account/registration'}">{{ $t('account.login.registration') }} </router-link>
+        <router-link class="registration" :to="{path: '/account/status'}">{{ $t('account.login.registration') }} </router-link>
       </div>
     </a-form>
   </div>

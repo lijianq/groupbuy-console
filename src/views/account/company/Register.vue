@@ -12,8 +12,8 @@
       </a-step>
     </a-steps>
     <div class="content">
-      <register-base-info v-if="currentStep === 0" @nextStep="nextStep"/>
-      <register-license v-if="currentStep === 1" @nextStep="nextStep" @prevStep="prevStep"/>
+      <register-base-info :baseFormData="baseFormData" v-if="currentStep === 0" @nextStep="nextStep"/>
+      <register-license :baseFormData="baseFormData" v-if="currentStep === 1" @nextStep="nextStep" @prevStep="prevStep"/>
       <register-finish v-if="currentStep === 2" @prevStep="prevStep" @finish="finish"/>
     </div>
   </div>

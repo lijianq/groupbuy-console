@@ -79,7 +79,7 @@ export class CosAPI {
             result.targetId = tokenData.targetId
             return result
         } else {
-            return {status: 404, message: 'No file was specified.'}
+            return {}
         }
     }
 
