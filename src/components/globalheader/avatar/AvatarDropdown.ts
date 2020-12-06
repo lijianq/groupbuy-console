@@ -15,7 +15,8 @@ export default class AvatarDropdown extends Vue {
 
     created() {
         let avatarSrc: string = this.currentAccount.avatar
-        if (typeof avatarSrc !== 'undefined' && avatarSrc.trim().length > 0) {
+        console.log(avatarSrc)
+        if (avatarSrc != null) {
             avatarSrc = avatarSrc.trim()
             if (avatarSrc.toLowerCase().startsWith('http')) {
                 this.avatar = avatarSrc

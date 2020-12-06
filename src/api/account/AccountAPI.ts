@@ -35,7 +35,7 @@ class AccountAPI {
         children: []
     }
 
-    login() {
+    login(params: any) {
         // const account = {
         //     name: 'Admin',
         //     avatar: 'bluenet.png',
@@ -46,7 +46,7 @@ class AccountAPI {
         return this.request.request({
             url: '/account/login',
             method: 'post',
-            data: {}
+            data: params
         })
     }
 

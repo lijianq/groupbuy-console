@@ -14,6 +14,7 @@ export default class Request {
     }
 
     private processRequest(config: AxiosRequestConfig) {
+        config.headers['Accept-Language'] = i18n.locale
         const accessToken = AccountModule.getAccount().accessToken
         if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
             config.headers['x-platform-service-token'] = accessToken
@@ -31,7 +32,7 @@ export default class Request {
             switch (error.response.status) {
                 case 400: {
                     if (message) {
-                        error.message = `${i18n.t('request.error.400')}: ${message}`;
+                        error.message = message;
                     } else {
                         error.message = i18n.t('request.error.400');
                     }
@@ -42,7 +43,7 @@ export default class Request {
                 case 406: error.message =  i18n.t('request.error.406'); break;
                 case 500: {
                     if (message) {
-                        error.message = `${i18n.t('request.error.500')}: ${message}`;
+                        error.message = message;
                     } else {
                         error.message = i18n.t('request.error.500');
                     }

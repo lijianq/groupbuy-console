@@ -2,7 +2,7 @@
   <a-dropdown v-if="currentAccount && currentAccount.name" placement="bottomRight">
     <span class="ant-pro-account-avatar">
       <a-avatar size="small" :src="avatar" class="antd-pro-global-header-index-avatar" />
-      <span>{{ currentAccount.name }}</span>
+      <span>{{ currentAccount.fullName }}</span>
     </span>
 
     <template v-slot:overlay>

@@ -10,7 +10,7 @@ import { AccountModule } from "@/store";
 
 @Component
 export default class About extends Vue {
-    accountName = AccountModule.getAccount().name
+    accountName = AccountModule.getAccount().fullName
     // beforeRouteEnter(to: Route, from: Route, next: () => void): void {
     //     console.log('From:', from, 'To:', to)
     //     next()

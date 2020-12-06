@@ -81,7 +81,6 @@ export default  class ZhCN {
         "account.layout.copyright": "版权 @ 2021 无所谓科技有限公司",
 
         "account.login.title": "运营管理平台",
-        "account.login.error": "用户名或者密码错误",
         "account.login.tenant": "公司账号",
         "account.login.tenant.message": "请输入公司账号",
         "account.login.account": "子账号",

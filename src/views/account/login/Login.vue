@@ -15,8 +15,6 @@
         :form="form"
         @submit="handleSubmit"
     >
-      <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px;"
-               :message="$t('account.login.error')"/>
       <a-form-item>
         <a-input
             size="large"

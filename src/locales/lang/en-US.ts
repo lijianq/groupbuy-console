@@ -81,7 +81,6 @@ export default class EnUS {
         "account.layout.copyright": "Copyright @ 2021 TECHNOLOGY MATTERS LTD.",
 
         "account.login.title": "Operational Platform",
-        "account.login.error": "Invalid account name or password",
         "account.login.tenant": "Company account",
         "account.login.tenant.message": "Please input company account",
         "account.login.account": "Account",
