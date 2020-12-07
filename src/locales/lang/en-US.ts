@@ -189,6 +189,7 @@ export default class EnUS {
         "request.error.default": "Failed to setup connection, please contact admin.",
         "request.error.400": "Bad Request",
         "request.error.401": "Unauthorized",
+        "request.error.403": "Forbidden",
         "request.error.404": "Service is not found",
         "request.error.406": "Duplicate record",
         "request.error.500": "Server internal error"

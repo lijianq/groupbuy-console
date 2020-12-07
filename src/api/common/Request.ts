@@ -38,7 +38,22 @@ export default class Request {
                     }
                     break;
                 }
-                case 401: error.message =  i18n.t('request.error.401'); break;
+                case 401: {
+                    if (message) {
+                        error.message = message;
+                    } else {
+                        error.message = i18n.t('request.error.401');
+                    } 
+                    break;
+                }
+                case 403: {
+                    if (message) {
+                        error.message = message;
+                    } else {
+                        error.message = i18n.t('request.error.403');
+                    } 
+                    break;
+                }
                 case 404: error.message =  i18n.t('request.error.404'); break;
                 case 406: error.message =  i18n.t('request.error.406'); break;
                 case 500: {

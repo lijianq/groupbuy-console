@@ -191,6 +191,7 @@ export default  class ZhCN {
         "request.error.default": "连接到服务器失败，请联系管理员。",
         "request.error.400": "无效请求",
         "request.error.401": "未授权访问",
+        "request.error.403": "禁止访问",
         "request.error.404": "无法找到请求地址",
         "request.error.500": "服务器内部错误"
     }
