@@ -29,7 +29,7 @@ export default class Login extends Vue {
         }
         event.preventDefault()
         this.state.loginBtn = true
-        const validateFieldsKey = ['tenant', 'account', 'password', 'rememberMe']
+        const validateFieldsKey = ['companyId', 'accountName', 'accountPassword', 'rememberMe']
         this.form.validateFields(validateFieldsKey, { force: true }, (err, values) => {
             if (!err) {
                 const rememberMe = values.rememberMe ? values.rememberMe : false
@@ -37,23 +37,24 @@ export default class Login extends Vue {
                     AppPreferenceModule.setAutoLogin(rememberMe)
                 }
                 const params: any = {}
-                params.tenantId = values.tenant
-                params.accountName = values.account
-                params.accountPassword = md5(values.password)
+                params.companyId = values.companyId
+                params.accountName = values.accountName
+                params.accountPassword = md5(values.accountPassword)
                 accountAPI.login(params).then(response => {
                     const currentAccount = response.data
                     AccountModule.setAccount(currentAccount)
-                    console.log(currentAccount)
-                    accountAPI.loadAccountConfig()
-                    this.$router.addRoutes(AppRuntimeModule.routes)
-                    this.$router.push({ path: redirect })
-                })
-                    .catch(error => {
+                    accountAPI.loadAccountRoutes().then(() => {
+                        this.$router.addRoutes(AppRuntimeModule.routes)
+                        this.$router.push({ path: redirect })
+                    }).catch(error => {
                         this.$message.error(error.message)
-                    })
-                    .finally(() => {
                         this.state.loginBtn = false
                     })
+                }).catch(error => {
+                    this.$message.error(error.message)
+                }).finally(() => {
+                    this.state.loginBtn = false
+                })
             } else {
                 setTimeout(() => {
                     this.state.loginBtn = false

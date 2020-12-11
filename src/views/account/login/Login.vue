@@ -19,10 +19,10 @@
         <a-input
             size="large"
             type="text"
-            :placeholder="$t('account.login.tenant')"
+            :placeholder="$t('account.login.company')"
             v-decorator="[
-                'tenant',
-                {rules: [{ required: true, message: $t('account.login.tenant.message') }], validateTrigger: 'blur'}
+                'companyId',
+                {rules: [{ required: true, message: $t('account.login.company.message') }], validateTrigger: 'blur'}
               ]"
         >
           <a-icon slot="prefix" type="shop" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -35,7 +35,7 @@
             type="text"
             :placeholder="$t('account.login.account')"
             v-decorator="[
-                'account',
+                'accountName',
                 {rules: [{ required: true, message: $t('account.login.account.message') }], validateTrigger: 'blur'}
               ]"
         >
@@ -48,7 +48,7 @@
             size="large"
             :placeholder="$t('account.login.password')"
             v-decorator="[
-                'password',
+                'accountPassword',
                 {rules: [{ required: true, message: $t('account.login.password.message') }], validateTrigger: 'blur'}
               ]"
         >
