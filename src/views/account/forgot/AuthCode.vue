@@ -2,14 +2,14 @@
   <div>
     <a-form :form="form" id="authForm" style="max-width: 500px; margin: 80px auto 0;">
       <a-form-item
-          :label="$t('account.login.tenant')"
+          :label="$t('account.login.company')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
             v-decorator="[
-                'tenant',
-                {rules: [{ required: true, message: $t('account.login.tenant.message') }], validateTrigger: 'blur'}
+                'company',
+                {rules: [{ required: true, message: $t('account.login.company.message') }], validateTrigger: 'blur'}
               ]"
         >
         </a-input>

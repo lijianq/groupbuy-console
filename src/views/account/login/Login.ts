@@ -3,7 +3,6 @@ import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
 import md5 from 'md5'
 import { accountAPI } from '@/api'
 import { AppPreferenceModule, AccountModule} from '@/store'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
 import { RouterConfiguration } from '@/config'
 
 @Component
@@ -43,13 +42,7 @@ export default class Login extends Vue {
                 accountAPI.login(params).then(response => {
                     const currentAccount = response.data
                     AccountModule.setAccount(currentAccount)
-                    accountAPI.loadAccountRoutes().then(() => {
-                        this.$router.addRoutes(AppRuntimeModule.routes)
-                        this.$router.push({ path: redirect })
-                    }).catch(error => {
-                        this.$message.error(error.message)
-                        this.state.loginBtn = false
-                    })
+                    this.$router.push({ path: redirect })
                 }).catch(error => {
                     this.$message.error(error.message)
                 }).finally(() => {

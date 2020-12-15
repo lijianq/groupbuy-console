@@ -43,25 +43,7 @@ export default class EnUS {
         "app.setting.production.hint": "Copy setting works only in development environment",
         "app.setting.changcolor": "Setting new theme color",
 
-        "router.menu.home": "Home",
-        "router.menu.home.dashboard": "Dashboard",
-        "router.menu.home.analysis": "Analysis",
-        "router.menu.product": "Commodity Center",
-        "router.menu.inventory": "Inventory Center",
-        "router.menu.member": "Member Center",
-        "router.menu.about": "About",
-        "router.menu.account": "Account Center",
-        "router.menu.account.setting": "Settings",
-        "router.menu.account.roles": "Roles",
-        "router.menu.account.manage": "Accounts",
-        "router.menu.account.list": "Account List",
-        "router.menu.account.modify": "Manage Account",
-        "router.menu.account.permission": "Permissions",
-        "router.menu.system": "System Setting",
-        "router.menu.system.application": "System Application",
-        "router.menu.system.module": "System Module",
-        "router.menu.system.permission": "System Permission",
-        "router.menu.system.company": "Manage Company",
+        // HTML Title
         "router.about": 'ABOUT',
         "router.account.login": "LOGIN",
         "router.error.401": "401",
@@ -71,8 +53,19 @@ export default class EnUS {
         "router.account.forgot": "Forgot",
         "router.account.status": "Company Status",
 
-        "company.name": "TECH MATTERS",
+        // Navigation
+        "router.menu.about": "About",
+        "router.menu.account": "Account Center",
+        "router.menu.account.setting": "Settings",
+        "router.menu.system": "System Setting",
+        "router.menu.system.function": "Manage Function",
+        "router.menu.system.action": "Function Action",
+        "router.menu.system.company": "Manage Company",
+        "router.menu.system.permission": "Company Permission",
 
+
+
+        "company.name": "TECH MATTERS",
         "about.content": "Welcome",
         "account.layout.desc": "",
         "account.layout.help": "Help",

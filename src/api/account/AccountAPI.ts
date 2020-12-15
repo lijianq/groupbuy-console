@@ -1,7 +1,6 @@
 // import axios from 'axios'
 
 import { AccountModule } from '@/store'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
 import Request from '@/api/common/Request'
 
 class AccountAPI {
@@ -10,17 +9,9 @@ class AccountAPI {
 
     private routerComponents: any = {
         RouteView: () => import('@/layouts/view/RouteView'),
-        Dashboard: () => import('@/views/about/info/About.vue'),
-        Analysis: () => import('@/views/error/404.vue'),
         About: () => import('@/views/about/info/About.vue'),
         AccountSetting: () => import('@/views/about/info/About.vue'),
-        AccountRoles: () => import('@/views/error/404.vue'),
-        AccountManage: () => import('@/views/error/404.vue'),
-        AccountPermission: () =>  import('@/views/error/404.vue'),
-        SystemApplication: () => import('@/views/error/404.vue'),
-        SystemModule: () => import('@/views/error/404.vue'),
-        SystemPermission: () => import('@/views/error/404.vue'),
-        SystemTenant: () =>  import('@/views/error/404.vue'),
+        Function: () => import('@/views/system/function/Function.vue'),
     }
 
     private rootRoute: any = {
@@ -53,12 +44,11 @@ class AccountAPI {
             data: {}
         })
         const actions: any = response.data
-        AppRuntimeModule.setMenus(actions);
         const routes = this.parseAccountRoutes(actions)
         this.rootRoute.children=routes
         const accountRoutes = []
         accountRoutes.push(this.rootRoute)
-        AppRuntimeModule.setRoutes(accountRoutes)
+        return { menus: actions, routes: accountRoutes}
     }
 
     private parseAccountRoutes(actions: any[]) {

@@ -4,7 +4,7 @@ import { RegisterServiceWorker } from '@/cache'
 import router from '@/router'
 import store from '@/store'
 import i18n from '@/locales'
-import { AntdLazyLoad, RefreshLoad } from '@/core'
+import { AntdLazyLoad } from '@/core'
 import { ThemeConfiguration} from '@/config'
 import { Component } from 'vue-property-decorator'
 
@@ -12,7 +12,6 @@ import { Component } from 'vue-property-decorator'
 Vue.config.productionTip = false
 RegisterServiceWorker.doRegister()
 AntdLazyLoad.doLazyLoad()
-RefreshLoad.reloadAccountConfig()
 
 Component.registerHooks([
     'beforeRouteEnter',
