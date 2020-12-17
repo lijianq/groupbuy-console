@@ -16,10 +16,38 @@
 </template>
 
 <script lang="ts">
-import Query from "./Query"
-export default Query
+import { Component, Vue } from 'vue-property-decorator'
+import QueryInput from './QueryInput.vue'
+import QueryResult from './QueryResult.vue'
+
+@Component({
+    components : {
+        QueryInput,
+        QueryResult
+    }
+})
+export default class Query extends Vue {
+
+    currentStep = 0
+    queryResult = {}
+
+    nextStep(data: any) {
+        this.queryResult = data
+        if (this.currentStep < 1) {
+            this.currentStep += 1
+        }
+    }
+
+    finish() {
+        this.currentStep = 0
+    }
+
+}
 </script>
 
 <style lang="less" scoped>
-@import "Query";
+.steps {
+  max-width: 750px;
+  margin: 40px auto 0;
+}
 </style>

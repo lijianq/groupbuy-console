@@ -38,10 +38,27 @@
 </template>
 
 <script lang="ts">
-import QueryResult from "./QueryResult"
-export default QueryResult
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import {RouterConfiguration} from '@/config'
+
+@Component
+export default class QueryResult extends Vue {
+
+    @Prop({type: Object, default: null})
+    queryResult: any | null
+
+    backToLogin() {
+        this.$router.push({ path: RouterConfiguration.loginPath })
+    }
+}
 </script>
 
 <style lang="less" scoped>
-@import "QueryResult";
+button.finish-step-button {
+  margin-top: 25px;
+  padding: 0 15px;
+  font-size: 14px;
+  height: 35px;
+  width: 50%;
+}
 </style>

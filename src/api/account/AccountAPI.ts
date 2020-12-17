@@ -62,7 +62,7 @@ class AccountAPI {
                     icon: action.meta.icon || "desktop",
                     hiddenHeaderContent: action.meta.hiddenHeaderContent,
                     target: action.meta.target,
-                    permission: action.actionTypes
+                    permission: action.actions
                 }
             }
             if (action.meta.show === true) {

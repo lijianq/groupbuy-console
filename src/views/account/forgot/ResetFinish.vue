@@ -14,10 +14,24 @@
 </template>
 
 <script lang="ts">
-import ResetFinish from "./ResetFinish"
-export default ResetFinish
+import { Component, Vue } from 'vue-property-decorator'
+import {RouterConfiguration} from "@/config";
+
+@Component
+export default class ResetFinish extends Vue {
+
+    backToLogin() {
+        this.$router.push({ path: RouterConfiguration.loginPath })
+    }
+
+}
 </script>
 
 <style lang="less" scoped>
-@import "ResetFinish";
+button.finish-step-button {
+  padding: 0 15px;
+  font-size: 14px;
+  height: 35px;
+  width: 50%;
+}
 </style>

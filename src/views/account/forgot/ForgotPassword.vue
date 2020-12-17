@@ -20,10 +20,39 @@
 </template>
 
 <script lang="ts">
-import ForgotPassword from "./ForgotPassword"
-export default ForgotPassword
+import { Component, Vue } from 'vue-property-decorator'
+import AuthCode from './AuthCode.vue'
+import ResetPassword from './ResetPassword.vue'
+import ResetFinish from './ResetFinish.vue'
+
+@Component({
+    components: {
+        AuthCode,
+        ResetPassword,
+        ResetFinish
+    }
+})
+export default class ForgotPassword extends Vue {
+    currentStep = 0
+    nextStep() {
+        if (this.currentStep < 2) {
+            this.currentStep += 1
+        }
+    }
+    prevStep() {
+        if (this.currentStep > 0) {
+            this.currentStep -= 1
+        }
+    }
+    finish() {
+        this.currentStep = 0
+    }
+}
 </script>
 
 <style lang="less" scoped>
-@import "ForgotPassword";
+.steps {
+  max-width: 750px;
+  margin: 40px auto;
+}
 </style>
