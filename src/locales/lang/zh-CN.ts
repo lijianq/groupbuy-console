@@ -1,7 +1,7 @@
 import antd from 'ant-design-vue/es/locale-provider/zh_CN'
 import momentCN from 'moment/locale/zh-cn'
 
-export default  class ZhCN {
+export default class ZhCN {
 
     private static components = {
         antLocale: antd,
@@ -10,6 +10,8 @@ export default  class ZhCN {
     }
 
     private static messages = {
+        "modal.ok": "确认",
+        "modal.cancel": "取消",
         "address.hint": "请选择地区",
         "navBar.lang": "语言",
         "app.setting.pagestyle": "整体风格",
@@ -151,7 +153,7 @@ export default  class ZhCN {
         "account.status.result.status": "公司状态",
         "account.status.result.status.description": "状态信息",
         "account.company.status.0": "审核中",
-        "account.company.status.0.message":"您的公司注册正在审核中，请耐心等待",
+        "account.company.status.0.message": "您的公司注册正在审核中，请耐心等待",
         "account.company.status.1": "申请无效",
         "account.company.status.1.message": "公司提供的营业执照不合格，请重新注册",
         "account.company.status.2": "活动状态",
@@ -167,9 +169,6 @@ export default  class ZhCN {
 
         "main.layout.avatar.account.setting": "账号设置",
         "main.layout.avatar.account.logout": "退出",
-        "main.layout.logout.dialog.ok": "确认",
-        "main.layout.logout.dialog.cancel": "取消",
-        "main.layout.logout.dialog.title": "退出",
         "main.layout.logout.dialog.content": "确认退出登录吗?",
 
         "error.backtohome": "返回首页",

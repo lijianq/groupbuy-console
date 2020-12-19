@@ -1,6 +1,7 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
 import {AccountModule} from '@/store'
-import i18n from "@/locales";
+import i18n from "@/locales"
+import AccountAPI from '@/api/account/AccountAPI'
 
 export default class Request {
 
@@ -27,6 +28,7 @@ export default class Request {
     }
 
     private processError(error: any) {
+        console.log(error.config)
         if (error && error.response) {
             const message = error.response.data.message
             switch (error.response.status) {
@@ -47,11 +49,21 @@ export default class Request {
                     break;
                 }
                 case 403: {
-                    if (message) {
-                        error.message = message;
-                    } else {
-                        error.message = i18n.t('request.error.403');
-                    } 
+                    const params = {
+                        refreshToken: AccountModule.getAccount().refreshToken
+                    }
+                    AccountAPI.refresh(params).then((response: any) => {
+                        const account = AccountModule.getAccount();
+                        account.accessToken = response.data.accessToken
+                        account.expiredTime = response.data.expiredTime
+                        AccountModule.setAccount(account)
+                    }).catch(error => {                     
+                        if (message) {
+                            error.message = message;
+                        } else {
+                            error.message = i18n.t('request.error.403');
+                        } 
+                    })
                     break;
                 }
                 case 404: error.message =  i18n.t('request.error.404'); break;

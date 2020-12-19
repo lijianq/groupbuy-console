@@ -10,6 +10,8 @@ export default class EnUS {
     }
 
     private static messages = {
+        "modal.ok": "Confirm",
+        "modal.cancel": "Cancel",      
         "address.hint": "Please select region",
         "navBar.lang": "Lang",
         "app.setting.pagestyle": "Page style",
@@ -170,9 +172,6 @@ export default class EnUS {
 
         "main.layout.avatar.account.setting": "Setting",
         "main.layout.avatar.account.logout": "Logout",
-        "main.layout.logout.dialog.ok": "Confirm",
-        "main.layout.logout.dialog.cancel": "Cancel",
-        "main.layout.logout.dialog.title": "Logout",
         "main.layout.logout.dialog.content": "Do you confirm to logout?",
         "error.backtohome": "Back to Home",
         "error.401": "Sorry, you does not have access to this page. Please contact your administrator.",

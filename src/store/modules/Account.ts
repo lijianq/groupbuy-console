@@ -3,8 +3,6 @@ import StorageKeys from "@/config/StorageKeys"
 
 class Account {
 
-
-
     getAccount() {
         let account: string | null
         if ( AppPreferenceModule.getAutoLogin()) {

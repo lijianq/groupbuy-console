@@ -60,9 +60,9 @@ export default class AvatarDropdown extends Vue {
 
     logout() {
         Modal.confirm( {
-            okText: this.$t('main.layout.logout.dialog.ok').toString(),
-            cancelText: this.$t('main.layout.logout.dialog.cancel').toString(),
-            title: this.$t('main.layout.logout.dialog.title'),
+            okText: this.$t('modal.ok').toString(),
+            cancelText: this.$t('modal.cancel').toString(),
+            title: this.$t('main.layout.avatar.account.logout'),
             content: this.$t('main.layout.logout.dialog.content'),
             onOk: () => {
                 accountAPI.logout()
