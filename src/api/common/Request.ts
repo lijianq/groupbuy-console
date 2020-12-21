@@ -30,7 +30,6 @@ export default class Request {
     private processError(error: any) {
         if (error && error.response) {
             const message = error.response.data.message
-            const authStatus = error.response.data.authStatus
             switch (error.response.status) {
                 case 400: {
                     if (message) {
@@ -49,30 +48,22 @@ export default class Request {
                     break;
                 }
                 case 403: {
-                    if (authStatus === 3) {
-                        console.log("Start to refresh token")
-                        const params = {
-                            refreshToken: AccountModule.getAccount().refreshToken
-                        }
-                        AccountAPI.refresh(params).then((response: any) => {
-                            const account = AccountModule.getAccount();
-                            account.accessToken = response.data.accessToken
-                            account.expiredTime = response.data.expiredTime
-                            AccountModule.setAccount(account)
-                        }).catch(error => {
-                            if (message) {
-                                error.message = message;
-                            } else {
-                                error.message = i18n.t('request.error.403');
-                            }
-                        })
-                    } else {
+                    console.log("Start to refresh token")
+                    const params = {
+                        refreshToken: AccountModule.getAccount().refreshToken
+                    }
+                    AccountAPI.refresh(params).then((response: any) => {
+                        const account = AccountModule.getAccount();
+                        account.accessToken = response.data.accessToken
+                        account.expiredTime = response.data.expiredTime
+                        AccountModule.setAccount(account)
+                    }).catch(error => {
                         if (message) {
                             error.message = message;
                         } else {
                             error.message = i18n.t('request.error.403');
                         }
-                    }
+                    })
                     break;
                 }
                 case 404: error.message = i18n.t('request.error.404'); break;

@@ -3,15 +3,15 @@ import Request from '@/api/common/Request'
 class SystemAPI {
 
     private apiPaths = {
-        function: "/system/function",
+        route: "/system/route",
         company: "/system/company"
     }
     private request = Request.getDefaultInstance()
 
-    getFunctions() {
+    getRoutes() {
         return this.request.request({
-            url: this.apiPaths.function,
-            method: 'GET',
+            url: this.apiPaths.route,
+            method: 'get',
             data: {}
         })
     }

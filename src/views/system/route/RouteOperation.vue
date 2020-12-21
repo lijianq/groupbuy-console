@@ -18,11 +18,11 @@
     "
   >
     <a-spin :spinning="loading">
-      <a-form :form="form" id="functionOpForm" v-bind="formLayout">
+      <a-form :form="form" id="routeOpForm" v-bind="formLayout">
         <a-form-item v-show="model" label="主键ID">
           <a-input v-decorator="['routeId']" disabled />
         </a-form-item>
-        <a-form-item :label="$t('system.function.name')">
+        <a-form-item :label="$t('system.route.name')">
           <a-input
             v-decorator="[
               'routeName',
@@ -31,7 +31,7 @@
                   {
                     required: true,
                     max: 50,
-                    message: $t('system.function.name.required'),
+                    message: $t('system.route.name.required'),
                   },
                 ],
               },
@@ -39,7 +39,7 @@
           />
         </a-form-item>
         <a-form-item
-          :label="$t('system.function.type')"
+          :label="$t('system.route.type')"
         >
           <a-select
             @change="handleTypeChange" 
@@ -49,19 +49,19 @@
                 rules: [
                   {
                     required: true,
-                    message: $t('account.register.component.type'),
+                    message: $t('system.route.type.required'),
                   },
                 ],
               },
             ]"
           >
-            <a-select-option value="Group">{{ $t('account.register.component.group')}}</a-select-option>
-            <a-select-option value="Item">{{ $t('account.register.component.item')}}</a-select-option>
+            <a-select-option value="Group">{{ $t('system.route.group')}}</a-select-option>
+            <a-select-option value="Item">{{ $t('system.route.item')}}</a-select-option>
             <a-select-option value="API">API</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item
-          :label="$t('system.function.component')"
+          :label="$t('system.route.component')"
         >
           <a-select
             :disabled="gdisable || adisable"
@@ -71,7 +71,7 @@
                 rules: [
                   {
                     required: true,
-                    message: $t('account.register.component.required'),
+                    message: $t('system.route.component.required'),
                   },
                 ],
               },
@@ -82,7 +82,7 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item :label="$t('system.function.path')">
+        <a-form-item :label="$t('system.route.path')">
           <a-input
             :disabled="adisable"
             v-decorator="[
@@ -92,14 +92,14 @@
                   {
                     required: true,
                     max: 50,
-                    message: $t('system.function.path.required'),
+                    message: $t('system.route.path.required'),
                   },
                 ],
               },
             ]"
           />
         </a-form-item>
-        <a-form-item :label="$t('system.function.redirect')">
+        <a-form-item :label="$t('system.route.redirect')">
           <a-input
             :disabled="adisable || idisable"
             v-decorator="[
@@ -108,14 +108,14 @@
                 rules: [
                   {
                     max: 50,
-                    message: $t('system.function.redirect.max'),
+                    message: $t('system.route.redirect.required'),
                   },
                 ],
               },
             ]"
           />
         </a-form-item>
-        <a-form-item :label="$t('system.function.icon')">
+        <a-form-item :label="$t('system.route.icon')">
           <a-input
             :disabled="adisable"
             v-decorator="[
@@ -125,14 +125,14 @@
                   {
                     required: true,
                     max: 50,
-                    message: $t('system.function.icon.required'),
+                    message: $t('system.route.icon.required'),
                   },
                 ],
               },
             ]"
           />
         </a-form-item>
-        <a-form-item :label="$t('system.function.i18key')">
+        <a-form-item :label="$t('system.route.i18key')">
           <a-input
             :disabled="adisable"
             v-decorator="[
@@ -142,7 +142,7 @@
                   {
                     required: true,
                     max: 50,
-                    message: $t('system.function.i18key.required'),
+                    message: $t('system.route.i18key.required'),
                   },
                 ],
               },
@@ -161,7 +161,7 @@ import pick from "lodash.pick";
 import { ComponentConfiguration } from "@/config"
 
 @Component
-export default class FunctionOperation extends Vue {
+export default class RouteOperation extends Vue {
   fields = ["routeName", "routeId"];
 
   @Prop({ type: String, default: "" })
@@ -195,7 +195,7 @@ export default class FunctionOperation extends Vue {
   idisable = false
 
   created() {
-    this.form = this.$form.createForm(this, { name: "functionOpForm" });
+    this.form = this.$form.createForm(this, { name: "routeOpForm" });
     this.components = Object.keys(ComponentConfiguration.components)
   }
 

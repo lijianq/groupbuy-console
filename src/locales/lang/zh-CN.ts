@@ -59,10 +59,8 @@ export default class ZhCN {
         "router.menu.account": "账号中心",
         "router.menu.account.setting": "账号设置",
         "router.menu.system": "系统管理",
-        "router.menu.system.function": "功能管理",
-        "router.menu.system.action": "功能操作",
+        "router.menu.system.route": "路由配置",
         "router.menu.system.company": "公司管理",
-        "router.menu.system.permission": "公司权限",
 
         "company.name": "无所谓科技",
         "about.content": "欢迎",
@@ -182,7 +180,31 @@ export default class ZhCN {
         "request.error.401": "未授权访问",
         "request.error.403": "禁止访问",
         "request.error.404": "无法找到请求地址",
-        "request.error.500": "服务器内部错误"
+        "request.error.500": "服务器内部错误",
+        "system.route.create": "创建功能",
+        "system.route.delete": "删除",
+        "system.route.edit": "修改",
+        "system.route.actions": "操作项",
+        "system.route.child": "创建子功能",
+        "system.route.name": "功能名称",
+        "system.route.type": "类型",
+        "system.route.action": "操作",
+        "system.route.group": "功能组",
+        "system.route.item": "功能项",
+        "system.route.preset": "预置",
+        "system.route.component": "实现组件",
+        "system.route.path": "功能路径",
+        "system.route.redirect": "重定向路径",
+        "system.route.icon": "功能图标名称",
+        "system.route.i18key": "多语言主键",
+        "system.route.name.required": "请输入不超过50个字符的名称",
+        "system.route.type.required": "请选择类型",
+        "system.route.component.required": "请选择组件",
+        "system.route.path.required": "请输入不超过50个字符的功能路径",
+        "system.route.redirect.required": "请输入不超过50个字符的重定向路径",
+        "system.route.icon.required": "请输入功能图标名称",
+        "system.route.i18key.required": "请输入多语言主键"
+
     }
 
     static getMessages() {

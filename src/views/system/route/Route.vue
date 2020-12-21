@@ -6,14 +6,14 @@
         class="operation-button"
         icon="plus"
         @click="handleAdd"
-        >{{ $t('system.function.create') }}</a-button
+        >{{ $t('system.route.create') }}</a-button
       >
       <a-button
         type="danger"
         class="operation-button"
         icon="delete"
         v-if="selectedRowKeys.length > 0"
-        >{{ $t('system.function.delete') }}</a-button
+        >{{ $t('system.route.delete') }}</a-button
       >
     </div>
 
@@ -27,25 +27,30 @@
     >
       <span slot="name" slot-scope="text, record">
         <template>
-          <a-icon :type="record.routeMeta.icon" style="margin-right: 5px;"></a-icon> {{ text }}
+          <a-icon :type="record.routeMeta.icon" style="margin-right: 5px;"></a-icon> {{ $t(record.routeMeta.title) }}
+        </template>
+      </span>
+      <span slot="type" slot-scope="text">
+        <template>
+          {{ $t(`system.route.${text.toLowerCase()}`) }}
         </template>
       </span>
       <span v-if="record.routeType !== 'Preset'" slot="action" slot-scope="text, record">
         <template>
-          <a @click="handleEdit(record)">{{ $t('system.function.edit') }}</a>
+          <a @click="handleEdit(record)">{{ $t('system.route.edit') }}</a>
           <a-divider type="vertical" />
-          <a @click="handleEdit(record)">{{ $t('system.function.delete') }}</a>
+          <a @click="handleEdit(record)">{{ $t('system.route.delete') }}</a>
           <a-divider type="vertical" />
-          <a @click="handleEdit(record)">{{ $t('system.function.actions') }}</a>
+          <a @click="handleEdit(record)">{{ $t('system.route.actions') }}</a>
           <span v-if="record.routeType === 'Group'">
             <a-divider type="vertical" />
-            <a @click="handleEdit(record)">{{ $t('system.function.child') }}</a>
+            <a @click="handleEdit(record)">{{ $t('system.route.child') }}</a>
           </span>
         </template>
       </span>
     </a-table>
 
-    <function-operation
+    <route-operation
       ref="createModal"
       :visible="visible"
       :loading="confirmLoading"
@@ -59,28 +64,29 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 import STable from "@/components/table/STable"
-import FunctionOperation from "./FunctionOperation.vue"
+import RouteOperation from "./RouteOperation.vue"
 import SystemAPI from "@/api/system/SystemAPI"
 
 @Component({
   components: {
     STable,
-    FunctionOperation,
+    RouteOperation,
   },
 })
-export default class Function extends Vue {
+export default class Route extends Vue {
   columns: any[] = [
     {
-      title: "system.function.name",
+      title: this.$t('system.route.name'),
       dataIndex: "routeName",
       scopedSlots: { customRender: "name" }
     },
     {
-      title: "system.function.type",
+      title: this.$t('system.route.type'),
       dataIndex: "routeType",
+      scopedSlots: { customRender: "type" }
     },
     {
-      title: "system.function.action",
+      title: this.$t('system.route.action'),
       dataIndex: "action",
       scopedSlots: { customRender: "action" },
     },
@@ -100,7 +106,7 @@ export default class Function extends Vue {
 
   created() {
     this.dataLoading = true
-    SystemAPI.getFunctions().then(response => {
+    SystemAPI.getRoutes().then(response => {
       this.data = response.data as any[]
       console.log(this.data)
     }).catch(error => {

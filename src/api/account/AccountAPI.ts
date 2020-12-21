@@ -40,7 +40,7 @@ class AccountAPI {
     async loadAccountRoutes() {
         const response = await this.request.request({
             url: '/account/actions',
-            method: 'post',
+            method: 'get',
             data: {}
         })
         const actions: any = response.data

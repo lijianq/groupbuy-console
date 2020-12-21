@@ -60,12 +60,8 @@ export default class EnUS {
         "router.menu.account": "Account Center",
         "router.menu.account.setting": "Settings",
         "router.menu.system": "System Setting",
-        "router.menu.system.function": "Manage Function",
-        "router.menu.system.action": "Function Action",
+        "router.menu.system.route": "Route Configuration",
         "router.menu.system.company": "Manage Company",
-        "router.menu.system.permission": "Company Permission",
-
-
 
         "company.name": "TECH MATTERS",
         "about.content": "Welcome",
