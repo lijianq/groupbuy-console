@@ -1,5 +1,5 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios'
-import {AccountModule} from '@/store'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AccountModule } from '@/store'
 import i18n from "@/locales"
 import AccountAPI from '@/api/account/AccountAPI'
 
@@ -17,7 +17,7 @@ export default class Request {
     private processRequest(config: AxiosRequestConfig) {
         config.headers['Accept-Language'] = i18n.locale
         const accessToken = AccountModule.getAccount().accessToken
-        if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
+        if (typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
             config.headers['x-platform-service-token'] = accessToken
         }
         return config;
@@ -28,9 +28,9 @@ export default class Request {
     }
 
     private processError(error: any) {
-        console.log(error.config)
         if (error && error.response) {
             const message = error.response.data.message
+            const authStatus = error.response.data.authStatus
             switch (error.response.status) {
                 case 400: {
                     if (message) {
@@ -45,41 +45,52 @@ export default class Request {
                         error.message = message;
                     } else {
                         error.message = i18n.t('request.error.401');
-                    } 
+                    }
                     break;
                 }
                 case 403: {
-                    const params = {
-                        refreshToken: AccountModule.getAccount().refreshToken
-                    }
-                    AccountAPI.refresh(params).then((response: any) => {
-                        const account = AccountModule.getAccount();
-                        account.accessToken = response.data.accessToken
-                        account.expiredTime = response.data.expiredTime
-                        AccountModule.setAccount(account)
-                    }).catch(error => {                     
+                    if (authStatus === 3) {
+                        console.log("Start to refresh token")
+                        const params = {
+                            refreshToken: AccountModule.getAccount().refreshToken
+                        }
+                        AccountAPI.refresh(params).then((response: any) => {
+                            const account = AccountModule.getAccount();
+                            account.accessToken = response.data.accessToken
+                            account.expiredTime = response.data.expiredTime
+                            AccountModule.setAccount(account)
+                        }).catch(error => {
+                            if (message) {
+                                error.message = message;
+                            } else {
+                                error.message = i18n.t('request.error.403');
+                            }
+                        })
+                    } else {
                         if (message) {
                             error.message = message;
                         } else {
                             error.message = i18n.t('request.error.403');
-                        } 
-                    })
+                        }
+                    }
                     break;
                 }
-                case 404: error.message =  i18n.t('request.error.404'); break;
-                case 406: error.message =  i18n.t('request.error.406'); break;
+                case 404: error.message = i18n.t('request.error.404'); break;
+                case 406: error.message = i18n.t('request.error.406'); break;
                 case 500: {
                     if (message) {
                         error.message = message;
                     } else {
                         error.message = i18n.t('request.error.500');
                     }
-                    break; }
-                default: error.message =  i18n.t('request.error.default');
+                    break;
+                }
+                default: error.message = i18n.t('request.error.default');
             }
         } else {
             error.message = i18n.t('request.error.default');
         }
+
         return Promise.reject(error)
     }
 
@@ -97,35 +108,35 @@ export default class Request {
         return new Request(config);
     }
 
-    public getUri (config?: AxiosRequestConfig): string {
+    public getUri(config?: AxiosRequestConfig): string {
         return this.instance.getUri(config)
     }
 
-    public request<T, R = AxiosResponse<T>> (config: AxiosRequestConfig): Promise<R> {
+    public request<T, R = AxiosResponse<T>>(config: AxiosRequestConfig): Promise<R> {
         return this.instance.request(config);
     }
 
-    public get<T, R = AxiosResponse<T>> (url: string, config?: AxiosRequestConfig): Promise<R> {
+    public get<T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R> {
         return this.instance.get(url, config);
     }
 
-    public delete<T, R = AxiosResponse<T>> (url: string, config?: AxiosRequestConfig): Promise<R> {
+    public delete<T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R> {
         return this.instance.delete(url, config);
     }
 
-    public head<T, R = AxiosResponse<T>> (url: string, config?: AxiosRequestConfig): Promise<R> {
+    public head<T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R> {
         return this.instance.head(url, config);
     }
 
-    public post<T, R = AxiosResponse<T>> (url: string, data?: string, config?: AxiosRequestConfig): Promise<R> {
+    public post<T, R = AxiosResponse<T>>(url: string, data?: string, config?: AxiosRequestConfig): Promise<R> {
         return this.instance.post(url, data, config);
     }
 
-    public put<T, R = AxiosResponse<T>> (url: string, data?: string, config?: AxiosRequestConfig): Promise<R> {
+    public put<T, R = AxiosResponse<T>>(url: string, data?: string, config?: AxiosRequestConfig): Promise<R> {
         return this.instance.put(url, data, config);
     }
 
-    public patch<T, R = AxiosResponse<T>> (url: string, data?: string, config?: AxiosRequestConfig): Promise<R> {
+    public patch<T, R = AxiosResponse<T>>(url: string, data?: string, config?: AxiosRequestConfig): Promise<R> {
         return this.instance.patch(url, data, config);
     }
 }
