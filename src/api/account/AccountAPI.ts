@@ -1,6 +1,6 @@
 import { AccountModule } from '@/store'
 import Request from '@/api/common/Request'
-import { ComponentConfiguration } from '@/config'
+import { ComponentConfiguration, RouterConfiguration } from '@/config'
 
 class AccountAPI {
 
@@ -44,11 +44,16 @@ class AccountAPI {
             data: {}
         })
         const actions: any = response.data
-        const routes = this.parseAccountRoutes(actions)
+        const mallActions = RouterConfiguration.mallRoutes
+
+        //Add for mall
+        const combined = [...actions, ...mallActions]
+
+        const routes = this.parseAccountRoutes(combined)
         this.rootRoute.children=routes
         const accountRoutes = []
         accountRoutes.push(this.rootRoute)
-        return { menus: actions, routes: accountRoutes}
+        return { menus: combined, routes: accountRoutes}
     }
 
     private parseAccountRoutes(actions: any[]) {

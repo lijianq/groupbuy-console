@@ -61,6 +61,8 @@ export default class ZhCN {
         "router.menu.system": "系统管理",
         "router.menu.system.route": "路由配置",
         "router.menu.system.company": "公司管理",
+        "router.menu.home": "首页",
+        "router.menu.home.dashboard": "系统首页",
 
         "company.name": "无所谓科技",
         "about.content": "欢迎",

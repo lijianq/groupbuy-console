@@ -88,7 +88,33 @@ export class RouterConfiguration {
             redirect: '/error/404',
             hidden: true
         }
+    ]
 
+    // Add for mall
+    static mallRoutes = [
+        {
+            path: '/home',
+            component: "Home",
+            name: 'Home',
+            redirect: '/home/dashboard',
+            meta: {
+                title: 'router.menu.home',
+                icon: "home",
+                show: true
+            },
+            children: [
+                {
+                    path: 'dashboard',
+                    name: 'Dashboard',
+                    meta: {
+                        title: 'router.menu.home.dashboard',
+                        icon: "line-chart",
+                        show: true
+                    },
+                    component: "Dashboard",
+                }
+            ]
+        }
     ]
 
 }
