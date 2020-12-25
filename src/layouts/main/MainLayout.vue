@@ -32,7 +32,6 @@ import { AppPreferenceModule } from '@/store'
 import AppRuntimeModule from '@/store/modules/AppRuntime'
 import { DefaultSetting } from '@/config'
 import RightContent from '@/components/globalheader'
-import AccountAPI from '@/api/account/AccountAPI'
 
 @Component({
     components: {
@@ -68,12 +67,7 @@ export default class MainLayout extends Vue {
     }
 
     created() {
-        AccountAPI.loadAccountRoutes().then(result => {
-            this.menus = result.menus
-            this.$router.addRoutes(result.routes)
-        }).catch(error => {
-            this.$message.error(error.message)
-        })
+        this.menus = AppRuntimeModule.menus
     }
 
     mounted() {

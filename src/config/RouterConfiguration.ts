@@ -82,7 +82,10 @@ export class RouterConfiguration {
                     component: () => import('@/views/error/500.vue')
                 }
             ]
-        },
+        }
+    ]
+
+    static notfoundRoute = [
         {
             path: '*',
             redirect: '/error/404',

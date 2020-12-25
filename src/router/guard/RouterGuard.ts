@@ -4,19 +4,33 @@ import { AccountModule } from '@/store'
 import NProgress from 'nprogress'
 import '@/components/nprogress/NProgress.less'
 import { RouterConfiguration } from '@/config'
+import AppRuntimeModule from '@/store/modules/AppRuntime'
+import AccountAPI from '@/api/account/AccountAPI'
+import router from '@/router'
 
 class RouterGuard {
 
     beforeEach(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
         NProgress.start()
         const accessToken = AccountModule.getAccount().accessToken
-        if ( typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
+        if (accessToken) {
+            const routes = AppRuntimeModule.routes
+            if (routes === null) {
+                AccountAPI.loadAccountRoutes().then(result => {
+                    const menus = result.menus
+                    const routes = [...RouterConfiguration.notfoundRoute, ...result.routes]                  
+                    AppRuntimeModule.setMenus(menus)
+                    AppRuntimeModule.setRoutes(routes)
+                    router.addRoutes(routes)
+                }).catch(() => {
+                    router.addRoutes(RouterConfiguration.notfoundRoute)
+                })
+            }
             if (to.path === RouterConfiguration.loginPath ) {
                 next({path: RouterConfiguration.homePath})
             } else {
-
                 let redirect = to.path
-                if (typeof from.query.redirect !== 'undefined') {
+                if (from.query.redirect) {
                     redirect = decodeURIComponent( from.query.redirect as string)
                 }
                 if (to.path === redirect) {
@@ -25,7 +39,6 @@ class RouterGuard {
                     next( {path: redirect, replace: true, query: {}})
                 }
             }
-            /** Should Process Role based Permission **/
         } else {
             if (RouterConfiguration.allowList.includes(to.path)) {
                 next()
