@@ -225,7 +225,10 @@ export default class ZhCN {
         "system.route.action.name.required": "请输入操作名称",
         "system.route.action.name.i18key": "多语言显示",
         "system.route.save": "保存",
-        "system.route.cancel": "取消"
+        "system.route.cancel": "取消",
+
+        "home.dashboard.refresh": "刷新",
+
     }
 
     static getMessages() {

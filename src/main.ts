@@ -13,6 +13,7 @@ Vue.config.productionTip = false
 RegisterServiceWorker.doRegister()
 AntdLazyLoad.doLazyLoad()
 
+
 Component.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
