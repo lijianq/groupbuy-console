@@ -65,7 +65,6 @@ export default class ZhCN {
         "router.menu.system": "系统管理",
         "router.menu.system.route": "路由配置",
         "router.menu.system.company": "公司管理",
-<<<<<<< HEAD
         // Actions
         "route.action.show": "显示",
         "route.action.create": "创建",
@@ -73,10 +72,8 @@ export default class ZhCN {
         "route.action.modify": "修改",
         "route.action.query": "查询",
         "route.action.manage": "管理",
-=======
         "router.menu.home": "首页",
         "router.menu.home.dashboard": "系统首页",
->>>>>>> 7af94b477f5b8bdf5dd336407c4dc095b1cff933
 
         "company.name": "无所谓科技",
         "about.content": "欢迎",
