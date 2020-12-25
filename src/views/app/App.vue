@@ -111,6 +111,31 @@ ol {
   }
 }
 
+.page-common-header {
+
+  padding: 10px 10px;
+  background-color: #F3F3F3;
+  border: 1px solid #E4E4E4;
+  margin-bottom: 40px;
+  height: 55px;
+
+  .header-divider {
+    float: left;
+    width: 5px;
+    height: 20px;
+    background : #F56C6C;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .header-title {
+    font-size: 16px;
+    font-weight: 650;
+    color: #666666;
+    margin-top: 5px;
+  }
+}
+
 @media (max-width: @screen-xs) {
   .ant-table {
     width: 100%;
