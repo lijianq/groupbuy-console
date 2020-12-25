@@ -13,6 +13,14 @@ export default class Request {
         }
     }
 
+    private static mallConfig: AxiosRequestConfig = {
+        baseURL: process.env.VUE_APP_API_MALL_URL,
+        timeout: 6000,
+        headers: {
+            "content-type": "application/json;charset=UTF-8"
+        }
+    }
+
     private processRequest(config: AxiosRequestConfig) {
         config.headers['Accept-Language'] = i18n.locale
         const accessToken = AccountModule.getAccount().accessToken
@@ -97,6 +105,10 @@ export default class Request {
 
     public static getDefaultInstance() {
         return new Request(this.defaultConfig);
+    }
+
+    public static getMallInstance() {
+        return new Request(this.mallConfig);
     }
 
     public static getInstance(config: AxiosRequestConfig) {

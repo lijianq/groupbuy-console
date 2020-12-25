@@ -5,6 +5,11 @@ export class ComponentConfiguration {
         About: () => import('@/views/about/info/About.vue'),
         AccountSetting: () => import('@/views/about/info/About.vue'),
         SystemRoute: () => import('@/views/system/route/Route.vue'),
-        SystemCompany: () => import('@/views/system/company/Company.vue')
+        SystemCompany: () => import('@/views/system/company/Company.vue'),
+
+        // Mall
+        Home: () => import('@/layouts/view/RouteView'),
+        Dashboard: () => import('@/views/home/Dashboard.vue'),
+        
     }
 }
