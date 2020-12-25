@@ -1,8 +1,7 @@
 export class ComponentConfiguration {
 
     static components: any = {
-        System: () => import('@/layouts/view/RouteView'),
-        Account: () => import('@/layouts/view/RouteView'),
+        RouteGroup: () => import('@/layouts/view/RouteView'),
         About: () => import('@/views/about/info/About.vue'),
         AccountSetting: () => import('@/views/about/info/About.vue'),
         SystemRoute: () => import('@/views/system/route/Route.vue'),

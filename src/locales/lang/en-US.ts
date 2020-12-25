@@ -9,7 +9,7 @@ export default class EnUS {
         momentLocale: momentEU
     }
 
-    private static messages = {
+    static messages = {
         "modal.ok": "Confirm",
         "modal.cancel": "Cancel",      
         "address.hint": "Please select region",

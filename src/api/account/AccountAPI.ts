@@ -1,33 +1,19 @@
 import { AccountModule } from '@/store'
 import Request from '@/api/common/Request'
-import { ComponentConfiguration } from '@/config'
+import { ComponentConfiguration, RouterConfiguration } from '@/config'
 
 class AccountAPI {
 
-    private request = Request.getDefaultInstance()
-
-    private rootRoute: any = {
-        name: 'root',
-        path: '',
-        component: () => import('@/layouts/main/MainLayout.vue'),
-        redirect: '/home',
-        meta: {
-            title: 'router.menu.home'
-        },
-        children: []
+    private apiPaths = {
+        login: "/login",
+        accountActions: "/account/actions",
     }
+
+    private request = Request.getDefaultInstance()
 
     login(params: any) {
         return this.request.request({
-            url: '/login',
-            method: 'post',
-            data: params
-        })
-    }
-
-    refresh(params: any) {
-        return this.request.request({
-            url: '/refresh',
+            url: this.apiPaths.login,
             method: 'post',
             data: params
         })
@@ -38,16 +24,26 @@ class AccountAPI {
     }
 
     async loadAccountRoutes() {
+        const rootRoute: any = {
+            name: 'root',
+            path: '',
+            component: () => import('@/layouts/main/MainLayout.vue'),
+            redirect: RouterConfiguration.homePath,
+            meta: {
+                title: 'router.menu.home'
+            },
+            children: []
+        }
         const response = await this.request.request({
-            url: '/account/actions',
+            url: this.apiPaths.accountActions,
             method: 'get',
             data: {}
         })
         const actions: any = response.data
         const routes = this.parseAccountRoutes(actions)
-        this.rootRoute.children=routes
+        rootRoute.children=routes
         const accountRoutes = []
-        accountRoutes.push(this.rootRoute)
+        accountRoutes.push(rootRoute)
         return { menus: actions, routes: accountRoutes}
     }
 

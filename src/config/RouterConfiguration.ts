@@ -2,9 +2,9 @@ import {AccountLayout, MainLayout} from '@/layouts'
 
 export class RouterConfiguration {
 
-    static homePath = "/home"
+    static homePath = "/home";
 
-    static loginPath = "/account/login"
+    static loginPath = "/account/login";
 
     static allowList = ['/account/login', '/account/forgot', '/account/register', '/account/status']
 

@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="640"
+    :width="700"
     :visible="visible"
     :confirmLoading="loading"
     :okText="$t('modal.ok')"
@@ -19,8 +19,11 @@
   >
     <a-spin :spinning="loading">
       <a-form :form="form" id="routeOpForm" v-bind="formLayout">
-        <a-form-item v-show="model" label="主键ID">
+        <a-form-item v-show="model && model.routeId" label="主键">
           <a-input v-decorator="['routeId']" disabled />
+        </a-form-item>
+        <a-form-item v-show="model && model.routeParentId" label="父路由主键">
+          <a-input v-decorator="['routeParentId']" disabled />
         </a-form-item>
         <a-form-item :label="$t('system.route.name')">
           <a-input
@@ -38,11 +41,9 @@
             ]"
           />
         </a-form-item>
-        <a-form-item
-          :label="$t('system.route.type')"
-        >
+        <a-form-item :label="$t('system.route.type')">
           <a-select
-            @change="handleTypeChange" 
+            @change="handleTypeChange"
             v-decorator="[
               'routeType',
               {
@@ -55,16 +56,17 @@
               },
             ]"
           >
-            <a-select-option value="Group">{{ $t('system.route.group')}}</a-select-option>
-            <a-select-option value="Item">{{ $t('system.route.item')}}</a-select-option>
-            <a-select-option value="API">API</a-select-option>
+            <a-select-option value="Group">{{
+              $t("system.route.group")
+            }}</a-select-option>
+            <a-select-option value="Item">{{
+              $t("system.route.item")
+            }}</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item
-          :label="$t('system.route.component')"
-        >
+        <a-form-item :label="$t('system.route.component')">
           <a-select
-            :disabled="gdisable || adisable"
+            :disabled="gdisable"
             v-decorator="[
               'routeComponent',
               {
@@ -77,14 +79,18 @@
               },
             ]"
           >
-            <a-select-option v-for="component in components" :disabled="component === 'RouteView' && idisable" :key="component" :value="component">
+            <a-select-option
+              v-for="component in components"
+              :disabled="component === 'RouteGroup' && idisable"
+              :key="component"
+              :value="component"
+            >
               {{ component }}
             </a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :label="$t('system.route.path')">
           <a-input
-            :disabled="adisable"
             v-decorator="[
               'routePath',
               {
@@ -99,25 +105,8 @@
             ]"
           />
         </a-form-item>
-        <a-form-item :label="$t('system.route.redirect')">
-          <a-input
-            :disabled="adisable || idisable"
-            v-decorator="[
-              'routeRedirect',
-              {
-                rules: [
-                  {
-                    max: 50,
-                    message: $t('system.route.redirect.required'),
-                  },
-                ],
-              },
-            ]"
-          />
-        </a-form-item>
         <a-form-item :label="$t('system.route.icon')">
-          <a-input
-            :disabled="adisable"
+          <a-select
             v-decorator="[
               'routeIcon',
               {
@@ -130,11 +119,14 @@
                 ],
               },
             ]"
-          />
+          >
+            <a-select-option v-for="icon in icons" :key="icon" :value="icon">
+              <a-icon :type="icon" style="margin-right: 5px;" /> {{ icon }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item :label="$t('system.route.i18key')">
-          <a-input
-            :disabled="adisable"
+          <a-select
             v-decorator="[
               'routeI18Key',
               {
@@ -147,7 +139,15 @@
                 ],
               },
             ]"
-          />
+          >
+            <a-select-option
+              v-for="i18nkey in i18nKeys"
+              :key="i18nkey"
+              :value="i18nkey"
+            >
+              {{ `${i18nkey}:  [${$t(i18nkey)}]` }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -158,11 +158,21 @@
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { WrappedFormUtils } from "ant-design-vue/types/form/form";
 import pick from "lodash.pick";
-import { ComponentConfiguration } from "@/config"
+import { ComponentConfiguration, Icons } from "@/config";
+import ZhCN from "@/locales/lang/zh-CN";
 
 @Component
 export default class RouteOperation extends Vue {
-  fields = ["routeName", "routeId"];
+  fields = [
+    "routeId",
+    "routeParentId",
+    "routeName",
+    "routeType",
+    "routeComponent",
+    "routePath",
+    "routeIcon",
+    "routeI18Key",
+  ];
 
   @Prop({ type: String, default: "" })
   title: string | undefined;
@@ -176,67 +186,63 @@ export default class RouteOperation extends Vue {
   @Prop({ type: Object, default: null })
   model: any | {};
 
-  components: any[] = []
+  components: string[] = [];
+  icons: string[] = [];
+  i18nKeys: string[] = [];
 
   formLayout: any = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 7 },
+      sm: { span: 5 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 13 },
+      sm: { span: 16 },
     },
   };
 
-  form!: WrappedFormUtils
-  gdisable = false
-  adisable = false
-  idisable = false
+  form!: WrappedFormUtils;
+  gdisable = false;
+  idisable = false;
 
   created() {
     this.form = this.$form.createForm(this, { name: "routeOpForm" });
-    this.components = Object.keys(ComponentConfiguration.components)
+    this.components = Object.keys(ComponentConfiguration.components);
+    this.icons = Icons.icons;
+    this.i18nKeys = Object.keys(ZhCN.messages).filter((str: string) =>
+      str.startsWith("router.menu.")
+    );
   }
 
   @Watch("model")
   modelChanged() {
-    this.fields.forEach((v) => this.form.getFieldDecorator(v, {}));
-    if (this.model) {
-      this.form.setFieldsValue(pick(this.model, this.fields));
+    this.gdisable = false;
+    this.idisable = false;  
+    if (this.model && Object.keys(this.model).length > 0) {
+      this.fields.forEach((v) => this.form.getFieldDecorator(v, {}))
+      this.handleTypeChange(this.model.routeType)
+      this.form.setFieldsValue(pick(this.model, this.fields))
+      if (this.model.routeMeta) {
+        this.form.setFieldsValue({routeIcon: this.model.routeMeta.icon,routeI18Key: this.model.routeMeta.title})
+      }
     } else {
       this.form.resetFields();
     }
   }
 
   handleTypeChange(value: string) {
-    console.log(value)
-    if (value === 'Group') {
-      this.gdisable = true
-      this.idisable = false
-      this.adisable = false
+    if (value === "Group") {
+      this.gdisable = true;
+      this.idisable = false;
       this.form.setFieldsValue({
-        routeComponent: 'RouteView'
-      })
-    } else if (value === 'Item') {
-      this.gdisable = false
-      this.idisable = true
-      this.adisable = false
-      this.form.setFieldsValue({
-        routeComponent: null,
-        routeRedirect: null
-      })
+        routeComponent: "RouteGroup",
+      });
     } else {
-      this.gdisable = false
-      this.idisable = false
-      this.adisable = true
+      this.gdisable = false;
+      this.idisable = true;
       this.form.setFieldsValue({
         routeComponent: null,
-        routePath: null,
-        routeRedirect: null,
-        routeIcon: null,
-        routeI18Key: null
-      })
+      });
     }
   }
 }

@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { AccountModule } from '@/store'
 import i18n from "@/locales"
-import AccountAPI from '@/api/account/AccountAPI'
 
 export default class Request {
 
@@ -23,7 +22,23 @@ export default class Request {
         return config;
     }
 
-    private processResponse(response: AxiosResponse) {
+    private processResponse(response: any) {
+        if (response.data.authStatus === 3) {
+            const params = { refreshToken: AccountModule.getAccount().refreshToken }
+            const config = response.config
+            const requester  = axios.create(response.config)
+            return requester.post('/refresh', params).then(res => {
+                const account = AccountModule.getAccount();
+                account.accessToken = res.data.accessToken
+                account.expiredTime = res.data.expiredTime
+                AccountModule.setAccount(account)
+                config.headers['x-platform-service-token'] = account.accessToken
+                return requester.request(config)               
+            }).catch(() => {
+                AccountModule.setAccount({})
+                window.location.href = '/'
+            })
+        } 
         return response
     }
 
@@ -43,27 +58,16 @@ export default class Request {
                     if (message) {
                         error.message = message;
                     } else {
-                        error.message = i18n.t('request.error.401');
+                        error.message = i18n.t("request.error.401");
                     }
                     break;
                 }
                 case 403: {
-                    console.log("Start to refresh token")
-                    const params = {
-                        refreshToken: AccountModule.getAccount().refreshToken
+                    if (message) {
+                        error.message = message;
+                    } else {
+                        error.message = i18n.t('request.error.403');
                     }
-                    AccountAPI.refresh(params).then((response: any) => {
-                        const account = AccountModule.getAccount();
-                        account.accessToken = response.data.accessToken
-                        account.expiredTime = response.data.expiredTime
-                        AccountModule.setAccount(account)
-                    }).catch(error => {
-                        if (message) {
-                            error.message = message;
-                        } else {
-                            error.message = i18n.t('request.error.403');
-                        }
-                    })
                     break;
                 }
                 case 404: error.message = i18n.t('request.error.404'); break;

@@ -295,6 +295,6 @@ button.operation-button {
   padding: 0 15px;
   font-size: 14px;
   height: 35px;
-  width: 15%;
+  width: 160px;
 }
 </style>

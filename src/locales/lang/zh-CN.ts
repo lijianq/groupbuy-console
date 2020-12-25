@@ -9,9 +9,13 @@ export default class ZhCN {
         momentLocale: momentCN
     }
 
-    private static messages = {
+    static messages = {
+        "yes": "是",
+        "no": "否",
         "modal.ok": "确认",
         "modal.cancel": "取消",
+        "common.cancel.message": "确认取消修改吗?",
+        "common.delete.message": "确认要删除吗?",
         "address.hint": "请选择地区",
         "navBar.lang": "语言",
         "app.setting.pagestyle": "整体风格",
@@ -61,6 +65,13 @@ export default class ZhCN {
         "router.menu.system": "系统管理",
         "router.menu.system.route": "路由配置",
         "router.menu.system.company": "公司管理",
+        // Actions
+        "route.action.show": "显示",
+        "route.action.create": "创建",
+        "route.action.delete": "删除",
+        "route.action.modify": "修改",
+        "route.action.query": "查询",
+        "route.action.manage": "管理",
 
         "company.name": "无所谓科技",
         "about.content": "欢迎",
@@ -181,30 +192,38 @@ export default class ZhCN {
         "request.error.403": "禁止访问",
         "request.error.404": "无法找到请求地址",
         "request.error.500": "服务器内部错误",
-        "system.route.create": "创建功能",
+        "system.route.create": "创建路由",
         "system.route.delete": "删除",
         "system.route.edit": "修改",
         "system.route.actions": "操作项",
-        "system.route.child": "创建子功能",
-        "system.route.name": "功能名称",
-        "system.route.type": "类型",
+        "system.route.child": "创建子路由",
+        "system.route.name": "路由名称",
+        "system.route.display.name": "多语言显示",
+        "system.route.type": "路由类型",
         "system.route.action": "操作",
-        "system.route.group": "功能组",
-        "system.route.item": "功能项",
+        "system.route.group": "路由组",
+        "system.route.item": "路由项",
         "system.route.preset": "预置",
         "system.route.component": "实现组件",
-        "system.route.path": "功能路径",
+        "system.route.path": "路由路径",
         "system.route.redirect": "重定向路径",
-        "system.route.icon": "功能图标名称",
+        "system.route.icon": "路由图标",
         "system.route.i18key": "多语言主键",
         "system.route.name.required": "请输入不超过50个字符的名称",
         "system.route.type.required": "请选择类型",
         "system.route.component.required": "请选择组件",
         "system.route.path.required": "请输入不超过50个字符的功能路径",
         "system.route.redirect.required": "请输入不超过50个字符的重定向路径",
-        "system.route.icon.required": "请输入功能图标名称",
-        "system.route.i18key.required": "请输入多语言主键"
-
+        "system.route.icon.required": "请选择路由图标名称",
+        "system.route.i18key.required": "请选择多语言主键",
+        "system.route.delete.title": "删除路由配置",
+        "system.route.delete.content": "该操作会删除所选路由以及它的子路由, 确认删除吗?",
+        "system.route.add": "添加操作",
+        "system.route.action.name": "操作名称",
+        "system.route.action.name.required": "请输入操作名称",
+        "system.route.action.name.i18key": "多语言显示",
+        "system.route.save": "保存",
+        "system.route.cancel": "取消"
     }
 
     static getMessages() {
