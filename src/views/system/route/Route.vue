@@ -263,8 +263,17 @@ export default class Route extends Vue {
         route.routeParentId = values.routeParentId || "0";
         route.routeName = values.routeName;
         route.routeComponent = values.routeComponent;
-        route.routePath = values.routePath;
         route.routeType = values.routeType;
+        if (route.routeParentId === "0") {
+          route.routePath = `/${values.routePath}`;
+        } else {
+          route.routePath = values.routePath;
+        }
+        if (values.routeRedirect) {
+          route.routeRedirect = `/${values.routeRedirect}`;
+        } else {
+          route.routeRedirect = values.routeRedirect;
+        }
         meta.icon = values.routeIcon;
         meta.title = values.routeI18Key;
         route.routeMeta = JSON.stringify(meta);

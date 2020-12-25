@@ -18,7 +18,7 @@ class RouterGuard {
             if (routes === null) {
                 AccountAPI.loadAccountRoutes().then(result => {
                     const menus = result.menus
-                    const routes = [...RouterConfiguration.notfoundRoute, ...result.routes]                  
+                    const routes = [...result.routes, ...RouterConfiguration.notfoundRoute]                  
                     AppRuntimeModule.setMenus(menus)
                     AppRuntimeModule.setRoutes(routes)
                     router.addRoutes(routes)

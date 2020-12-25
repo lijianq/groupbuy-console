@@ -91,6 +91,7 @@
         </a-form-item>
         <a-form-item :label="$t('system.route.path')">
           <a-input
+            addon-before="/"
             v-decorator="[
               'routePath',
               {
@@ -102,6 +103,15 @@
                   },
                 ],
               },
+            ]"
+          />
+        </a-form-item>
+        <a-form-item :label="$t('system.route.redirect')">
+          <a-input
+            addon-before="/"
+            :disabled="idisable"
+            v-decorator="[
+              'routeRedirect'
             ]"
           />
         </a-form-item>
@@ -157,7 +167,6 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { WrappedFormUtils } from "ant-design-vue/types/form/form";
-import pick from "lodash.pick";
 import { ComponentConfiguration, Icons } from "@/config";
 import ZhCN from "@/locales/lang/zh-CN";
 
@@ -167,11 +176,12 @@ export default class RouteOperation extends Vue {
     "routeId",
     "routeParentId",
     "routeName",
+    "routePath",
+    "routeRedirect",
     "routeType",
     "routeComponent",
-    "routePath",
     "routeIcon",
-    "routeI18Key",
+    "routeI18Key"
   ];
 
   @Prop({ type: String, default: "" })
@@ -221,7 +231,28 @@ export default class RouteOperation extends Vue {
     if (this.model && Object.keys(this.model).length > 0) {
       this.fields.forEach((v) => this.form.getFieldDecorator(v, {}))
       this.handleTypeChange(this.model.routeType)
-      this.form.setFieldsValue(pick(this.model, this.fields))
+      let routePath = ""
+      if (this.model.routePath && this.model.routePath.startsWith('/')) {
+        routePath = this.model.routePath.substring(1)
+      } else {
+        routePath = this.model.routePath
+      }
+      let routeRedirect = ""
+      if ( this.model.routeRedirect && this.model.routeRedirect.startsWith('/')) {
+        routeRedirect = this.model.routeRedirect.substring(1)
+      } else {
+        routeRedirect = this.model.routeRedirect
+      }
+      this.form.setFieldsValue({
+        routeId: this.model.routeId,
+        routeParentId: this.model.routeParentId,
+        routeName: this.model.routeName,
+        routePath: routePath,
+        routeRedirect: routeRedirect,
+        routeType: this.model.routeType,
+        routeComponent: this.model.routeComponent
+      })
+
       if (this.model.routeMeta) {
         this.form.setFieldsValue({routeIcon: this.model.routeMeta.icon,routeI18Key: this.model.routeMeta.title})
       }
@@ -229,6 +260,7 @@ export default class RouteOperation extends Vue {
       this.form.resetFields();
     }
   }
+  
 
   handleTypeChange(value: string) {
     if (value === "Group") {
@@ -237,7 +269,7 @@ export default class RouteOperation extends Vue {
       this.form.setFieldsValue({
         routeComponent: "RouteGroup",
       });
-    } else {
+    } else if (value === "Item") {
       this.gdisable = false;
       this.idisable = true;
       this.form.setFieldsValue({
