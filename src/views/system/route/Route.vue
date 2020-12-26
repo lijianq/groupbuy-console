@@ -87,7 +87,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import STable from "@/components/table/STable";
 import RouteOperation from "./RouteOperation.vue";
 import RouteAction from "./RouteAction.vue";
 import SystemAPI from "@/api/system/SystemAPI";
@@ -96,7 +95,6 @@ import { Modal } from "ant-design-vue";
 
 @Component({
   components: {
-    STable,
     RouteOperation,
     RouteAction
   },
