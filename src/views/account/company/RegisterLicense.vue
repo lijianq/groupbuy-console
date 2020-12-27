@@ -55,7 +55,7 @@
 
       <a-form-item>
         <a-button type="primary" class="in-step-button" @click="prevStep">{{
-            $t('company.license.prev')
+            $t('common.prev')
           }}
         </a-button>
         <a-button :loading="loading" type="primary" class="submit-step-button" @click="nextStep">{{
@@ -63,7 +63,7 @@
           }}
         </a-button>
         <a-button type="primary" class="in-step-button" @click="backToLogin">{{
-            $t('company.back')
+            $t('common.back.login')
           }}
         </a-button>
       </a-form-item>

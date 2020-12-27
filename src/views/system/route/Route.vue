@@ -14,7 +14,7 @@
         icon="delete"
         v-if="rowSelection.selectedRowKeys.length > 0"
         @click="handleDelete(rowSelection.selectedRowKeys)"
-        >{{ $t("system.route.delete") }}</a-button
+        >{{ $t("route.action.delete") }}</a-button
       >
     </div>
 
@@ -51,10 +51,10 @@
         slot-scope="text, record"
       >
         <template>
-          <a @click="handleEdit(record)">{{ $t("system.route.edit") }}</a>
+          <a @click="handleEdit(record)">{{ $t("route.action.modify") }}</a>
           <a-divider type="vertical" />
           <a @click="handleDelete([record.routeId])">{{
-            $t("system.route.delete")
+            $t("route.action.delete")
           }}</a>
           <span v-if="record.routeType !== 'Group'">
             <a-divider type="vertical" />
@@ -117,7 +117,7 @@ export default class Route extends Vue {
       scopedSlots: { customRender: "type" },
     },
     {
-      title: this.$t("system.route.action"),
+      title: this.$t("route.action"),
       dataIndex: "action",
       scopedSlots: { customRender: "action" },
     },
@@ -302,8 +302,8 @@ export default class Route extends Vue {
 
   handleDelete(ids: string[]) {
     Modal.confirm({
-      okText: this.$t("modal.ok").toString(),
-      cancelText: this.$t("modal.cancel").toString(),
+      okText: this.$t("common.ok").toString(),
+      cancelText: this.$t("common.cancel").toString(),
       icon: () =>
         this.$createElement("a-icon", {
           props: {
@@ -312,8 +312,8 @@ export default class Route extends Vue {
             twoToneColor: "#FF0000",
           },
         }),
-      title: this.$t("system.route.delete.title"),
-      content: this.$t("system.route.delete.content"),
+      title: this.$t("system.route.action.delete.title"),
+      content: this.$t("system.route.action.delete.content"),
       onOk: () => {
         this.dataLoading = true;
         SystemAPI.deleteRoutes(ids)

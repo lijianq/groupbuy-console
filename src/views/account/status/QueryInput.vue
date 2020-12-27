@@ -7,7 +7,7 @@
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyEmail', {rules: [{required: true, message: $t('company.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('company.email.invalid')},{max: 100, message: $t('company.email.max')}]}]"/>
+            v-decorator="['companyEmail', {rules: [{required: true, message: $t('company.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('common.email.invalid')},{max: 100, message: $t('company.email.max')}]}]"/>
       </a-form-item>
 
       <a-form-item
@@ -21,11 +21,11 @@
 
       <a-form-item>
         <a-button :loading="loading" type="primary" class="step-button" @click="query">{{
-            $t('account.status.input.query')
+            $t('route.action.query')
           }}
         </a-button>
         <a-button type="primary" class="step-button" @click="backToLogin">{{
-            $t('company.back')
+            $t('common.back.login')
           }}
         </a-button>
       </a-form-item>

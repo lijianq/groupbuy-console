@@ -3,26 +3,26 @@
     <a-form :form="form" id="resetForm" style="max-width: 500px; margin: 40px auto 0;">
 
       <a-form-item
-          :label="$t('account.forgot.reset.authcode')"
+          :label="$t('account.auth.code')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['authCode', {rules: [{required: true, message: $t('account.forgot.reset.authcode.required')}]}]"/>
+            v-decorator="['authCode', {rules: [{required: true, message: $t('account.auth.code.required')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.forgot.reset.password1')"
+          :label="$t('account.password')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input-password
-          v-decorator="['password1', {rules: [{ required: true, message: $t('account.forgot.reset.password.required') },{min: 8, message: $t('account.forgot.reset.password.min')}, {max: 30, message: $t('account.forgot.reset.password.max')}]}]">
+          v-decorator="['password1', {rules: [{ required: true, message: $t('account.password.message') },{min: 8, message: $t('account.password.min')}, {max: 30, message: $t('account.password.max')}]}]">
         </a-input-password>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.forgot.reset.password2')"
+          :label="$t('account.password.confirm')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
@@ -33,15 +33,15 @@
 
       <a-form-item>
         <a-button type="primary" class="in-step-button" @click="prevStep">{{
-            $t('account.forgot.reset.prev')
+            $t('common.prev')
           }}
         </a-button>
         <a-button :loading="loading" type="primary" class="submit-step-button" @click="resetPassword">{{
-            $t('account.forgot.reset.reset')
+            $t('account.reset')
           }}
         </a-button>
         <a-button type="primary" class="in-step-button" @click="backToLogin">{{
-            $t('company.back')
+            $t('common.back.login')
           }}
         </a-button>
       </a-form-item>
@@ -87,7 +87,7 @@ export default class ResetPassword extends Vue {
     checkConfirmPassword(rules: ValidationRule, value: string, callback: Function){
         const password1 = this.form.getFieldValue('password1');
         if(password1 && password1 !== value){
-            callback(new Error(this.$t('account.forgot.reset.password.mismatch') as string))
+            callback(new Error(this.$t('account.password.mismatch') as string))
         }else{
             callback();
         }

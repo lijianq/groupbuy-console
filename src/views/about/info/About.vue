@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>{{$t("about.content")}} {{ accountName }}</h1>
+    <h1>{{$t("common.welcome")}} {{ accountName }}</h1>
   </div>
 </template>
 <script lang="ts">

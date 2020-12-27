@@ -9,12 +9,12 @@
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
         <a-menu-item v-if="menu" key="settings" @click="goSettings">
           <a-icon type="setting" />
-          {{$t('main.layout.avatar.account.setting')}}
+          {{$t('account.setting')}}
         </a-menu-item>
         <a-menu-divider v-if="menu" />
         <a-menu-item key="logout" @click="logout">
           <a-icon type="logout" />
-          {{$t('main.layout.avatar.account.logout')}}
+          {{$t('account.logout')}}
         </a-menu-item>
       </a-menu>
     </template>
@@ -60,10 +60,10 @@ export default class AvatarDropdown extends Vue {
 
     logout() {
         Modal.confirm( {
-            okText: this.$t('modal.ok').toString(),
-            cancelText: this.$t('modal.cancel').toString(),
-            title: this.$t('main.layout.avatar.account.logout'),
-            content: this.$t('main.layout.logout.dialog.content'),
+            okText: this.$t('common.ok').toString(),
+            cancelText: this.$t('common.cancel').toString(),
+            title: this.$t('account.logout'),
+            content: this.$t('account.logout.confirm.message'),
             onOk: () => {
                 accountAPI.logout()
                 this.$router.push({path: RouterConfiguration.loginPath}).then(() => {

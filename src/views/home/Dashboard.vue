@@ -7,7 +7,7 @@
                     <div class="header-title">{{$t('router.menu.home.dashboard')}}</div>
                 </a-col>
                 <a-col :offset="16" :span="2">
-                    <a-button icon="reload">{{$t('home.dashboard.refresh')}}</a-button>
+                    <a-button icon="reload">{{$t('common.refresh')}}</a-button>
                 </a-col>
             </a-row>
         </div>

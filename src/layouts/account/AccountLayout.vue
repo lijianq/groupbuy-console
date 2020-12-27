@@ -7,7 +7,7 @@
       <router-view />
       <div class="footer">
         <div class="copyright">
-          {{ $t('account.layout.copyright')}}
+          {{ $t('common.copyright')}}
         </div>
       </div>
     </div>

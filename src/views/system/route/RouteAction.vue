@@ -1,7 +1,7 @@
 <template>
   <a-modal
     title=""
-    :width="800"
+    :width="880"
     :visible="visible"
     :footer="null"
     @cancel="
@@ -60,10 +60,10 @@
         </template>
         <template slot="routeActionType" slot-scope="text">
           <template v-if="text === 'Preset'">
-            {{ $t("yes") }}
+            {{ $t("common.yes") }}
           </template>
           <template v-else>
-            {{ $t("no") }}
+            {{ $t("common.no") }}
           </template>
         </template>
         <template
@@ -73,33 +73,33 @@
         >
           <span v-if="record.editable">
             <a @click="() => handleSave(record)">{{
-              $t("system.route.save")
+              $t("common.save")
             }}</a>
             <a-divider type="vertical" />
             <a-popconfirm
-              :okText="$t('modal.ok')"
-              :cancelText="$t('modal.cancel')"
+              :okText="$t('common.ok')"
+              :cancelText="$t('common.cancel')"
               :title="$t('common.cancel.message')"
               @confirm="() => handleCancel(record)"
             >
-              <a>{{ $t("system.route.cancel") }}</a>
+              <a>{{ $t("common.cancel") }}</a>
             </a-popconfirm>
           </span>
           <span v-else>
             <a
               :disabled="editingKey !== ''"
               @click="() => handleEdit(record)"
-              >{{ $t("system.route.edit") }}</a
+              >{{ $t("route.action.modify") }}</a
             >
             <a-divider type="vertical" />
             <a-popconfirm
-              :okText="$t('modal.ok')"
-              :cancelText="$t('modal.cancel')"
+              :okText="$t('common.ok')"
+              :cancelText="$t('common.cancel')"
               :title="$t('common.delete.message')"
               @confirm="() => handleDelete(record.routeActionId)"
             >
               <a :disabled="editingKey !== ''">{{
-                $t("system.route.delete")
+                $t("route.action.delete")
               }}</a>
             </a-popconfirm>
           </span>
@@ -134,7 +134,7 @@ export default class RouteAction extends Vue {
     {
       title: this.$t("system.route.action.name.i18key"),
       dataIndex: "routeActionNameI18key",
-      width: "45%",
+      width: "40%",
       scopedSlots: { customRender: "routeActionNameI18key" },
     },
     {

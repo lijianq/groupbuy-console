@@ -4,7 +4,7 @@
     <div class="top">
       <div class="header">
           <img src="~@/assets/logo.svg" class="logo" alt="logo">
-          <span class="title">{{ $t('account.login.title')}}</span>
+          <span class="title">{{ $t('common.platform.name')}}</span>
       </div>
     </div>
 
@@ -19,10 +19,10 @@
         <a-input
             size="large"
             type="text"
-            :placeholder="$t('account.login.company')"
+            :placeholder="$t('account.company')"
             v-decorator="[
                 'companyId',
-                {rules: [{ required: true, message: $t('account.login.company.message') }], validateTrigger: 'blur'}
+                {rules: [{ required: true, message: $t('account.company.message') }], validateTrigger: 'blur'}
               ]"
         >
           <a-icon slot="prefix" type="shop" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -33,10 +33,10 @@
         <a-input
             size="large"
             type="text"
-            :placeholder="$t('account.login.account')"
+            :placeholder="$t('account.sub.account')"
             v-decorator="[
                 'accountName',
-                {rules: [{ required: true, message: $t('account.login.account.message') }], validateTrigger: 'blur'}
+                {rules: [{ required: true, message: $t('account.sub.account.message') }], validateTrigger: 'blur'}
               ]"
         >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -46,10 +46,10 @@
       <a-form-item>
         <a-input-password
             size="large"
-            :placeholder="$t('account.login.password')"
+            :placeholder="$t('account.password')"
             v-decorator="[
                 'accountPassword',
-                {rules: [{ required: true, message: $t('account.login.password.message') }], validateTrigger: 'blur'}
+                {rules: [{ required: true, message: $t('account.password.message') }], validateTrigger: 'blur'}
               ]"
         >
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -57,12 +57,12 @@
       </a-form-item>
 
       <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{$t('account.login.autologin')}}</a-checkbox>
+        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">{{$t('account.autologin')}}</a-checkbox>
         <div style="float: right;">
           <router-link
               :to="{ path: '/account/forgot' }"
               class="forge-password"
-          >{{ $t('account.login.forgot') }}
+          >{{ $t('account.forgot') }}
           </router-link>
         </div>
       </a-form-item>
@@ -75,12 +75,12 @@
             class="login-button"
             :loading="state.loginBtn"
             :disabled="state.loginBtn"
-        >{{$t('account.login.confirm')}}
+        >{{$t('common.confirm')}}
         </a-button>
       </a-form-item>
       <div class="account-register">
-        <router-link :to="{path: '/account/register' }">{{ $t('account.login.register') }}</router-link>
-        <router-link class="registration" :to="{path: '/account/status'}">{{ $t('account.login.registration') }} </router-link>
+        <router-link :to="{path: '/account/register' }">{{ $t('account.register') }}</router-link>
+        <router-link class="registration" :to="{path: '/account/status'}">{{ $t('account.registration') }} </router-link>
       </div>
     </a-form>
   </div>

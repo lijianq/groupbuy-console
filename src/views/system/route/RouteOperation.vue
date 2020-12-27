@@ -4,13 +4,13 @@
     :width="700"
     :visible="visible"
     :confirmLoading="loading"
-    :okText="$t('modal.ok')"
+    :okText="$t('common.ok')"
     @ok="
       () => {
         $emit('ok');
       }
     "
-    :cancelText="$t('modal.cancel')"
+    :cancelText="$t('common.cancel')"
     @cancel="
       () => {
         $emit('cancel');
@@ -19,10 +19,10 @@
   >
     <a-spin :spinning="loading">
       <a-form :form="form" id="routeOpForm" v-bind="formLayout">
-        <a-form-item v-show="model && model.routeId" label="主键">
+        <a-form-item v-show="model && model.routeId" :label="$t('system.route.id')">
           <a-input v-decorator="['routeId']" disabled />
         </a-form-item>
-        <a-form-item v-show="model && model.routeParentId" label="父路由主键">
+        <a-form-item v-show="model && model.routeParentId" :label="$t('system.route.parent.id')">
           <a-input v-decorator="['routeParentId']" disabled />
         </a-form-item>
         <a-form-item :label="$t('system.route.name')">

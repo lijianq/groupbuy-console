@@ -1,13 +1,13 @@
 <template>
   <div>
     <a-steps class="steps" :current="currentStep">
-      <a-step :title="$t('account.forgot.authcode')">
+      <a-step :title="$t('account.auth.code')">
         <a-icon slot="icon" type="right-circle" />
       </a-step>
-      <a-step :title="$t('account.forgot.reset')">
+      <a-step :title="$t('account.reset')">
         <a-icon slot="icon" type="lock" />
       </a-step>
-      <a-step :title="$t('account.forgot.finish')">
+      <a-step :title="$t('account.finish')">
         <a-icon slot="icon" type="check-circle" />
       </a-step>
     </a-steps>

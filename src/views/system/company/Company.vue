@@ -7,18 +7,18 @@
             <a-form-item :label="$t('company.name')">
               <a-input
                 v-model="queryParam.companyName"
-                :placeholder="$t('input.search.hint')"
+                :placeholder="$t('common.input.search.hint')"
               />
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="24">
-            <a-form-item :label="$t('account.status.result.status')">
-              <a-select v-model="queryParam.companyStatus" :placeholder="$t('select.search.hint')">
-                <a-select-option value="New">{{$t('system.company.status.new')}}</a-select-option>
-                <a-select-option value="Invalid">{{$t('system.company.status.invalid')}}</a-select-option>
-                <a-select-option value="Active">{{$t('system.company.status.active')}}</a-select-option>
-                <a-select-option value="Expired">{{$t('system.company.status.expired')}}</a-select-option>
-                <a-select-option value="Inactive">{{$t('system.company.status.inactive')}}</a-select-option>
+            <a-form-item :label="$t('company.status')">
+              <a-select v-model="queryParam.companyStatus" :placeholder="$t('common.select.search.hint')">
+                <a-select-option value="New">{{$t('company.status.new')}}</a-select-option>
+                <a-select-option value="Invalid">{{$t('company.status.invalid')}}</a-select-option>
+                <a-select-option value="Active">{{$t('company.status.active')}}</a-select-option>
+                <a-select-option value="Expired">{{$t('company.status.expired')}}</a-select-option>
+                <a-select-option value="Inactive">{{$t('company.status.inactive')}}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -26,7 +26,7 @@
             <a-form-item :label="$t('company.industry')">
               <a-select
                 v-model="queryParam.companyIndustry"
-                :placeholder="$t('select.search.hint')"
+                :placeholder="$t('common.select.search.hint')"
               >
                 <a-select-option
                   v-for="industry in industries"
@@ -42,7 +42,7 @@
             <a-form-item :label="$t('company.region')">
               <a-cascader
                 :options="addressOptions"
-                :placeholder="$t('select.address.hint')"
+                :placeholder="$t('common.select.address.hint')"
                 v-model="queryParam.companyRegion"
               />
             </a-form-item>
@@ -51,14 +51,14 @@
             <a-form-item :label="$t('company.address')">
               <a-input
                 v-model="queryParam.companyAddress"
-                :placeholder="$t('input.search.hint')"
+                :placeholder="$t('common.input.search.hint')"
               />
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="24">
             <a-form-item :label="$t('company.email')">
               <a-input
-                :placeholder="$t('input.email.hint')"
+                :placeholder="$t('common.input.email.hint')"
                 v-model="queryParam.companyEmail"
               />
             </a-form-item>
@@ -69,7 +69,7 @@
 
     <div class="table-operator">
       <a-button type="primary" class="operation-button">{{ $t('route.action.query') }}</a-button>
-      <a-button class="operation-button">{{ $t('button.reset') }}</a-button>
+      <a-button class="operation-button">{{ $t('common.reset') }}</a-button>
       <a-button
         type="danger"
         class="operation-button"
@@ -93,7 +93,7 @@
           <a-divider type="vertical" />
         </template>
         <a-dropdown>
-          <a class="ant-dropdown-link"> {{ $t('link.more')}} <a-icon type="down" /> </a>
+          <a class="ant-dropdown-link"> {{ $t('common.more')}} <a-icon type="down" /> </a>
           <a-menu slot="overlay">
             <a-menu-item>
               <a>{{ $t('route.action.company.appoval') }}</a>
@@ -121,7 +121,7 @@ export default class Company extends Vue {
   queryParam: any = {};
   columns: any[] = [
     {
-      title: this.$t('system.company.id'),
+      title: this.$t('company.id'),
       dataIndex: "companyId",
     },
     {
@@ -141,7 +141,7 @@ export default class Company extends Vue {
       dataIndex: "companyPhone",
     },
     {
-      title: this.$t('account.status.result.status'),
+      title: this.$t('company.status'),
       dataIndex: "companyStatus",
     },
     {

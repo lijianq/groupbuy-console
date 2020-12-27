@@ -58,7 +58,7 @@ export default class Request {
                     if (message) {
                         error.message = message;
                     } else {
-                        error.message = i18n.t('request.error.400');
+                        error.message = i18n.t('error.400');
                     }
                     break;
                 }
@@ -66,7 +66,7 @@ export default class Request {
                     if (message) {
                         error.message = message;
                     } else {
-                        error.message = i18n.t("request.error.401");
+                        error.message = i18n.t("error.401");
                     }
                     break;
                 }
@@ -74,24 +74,24 @@ export default class Request {
                     if (message) {
                         error.message = message;
                     } else {
-                        error.message = i18n.t('request.error.403');
+                        error.message = i18n.t('error.403');
                     }
                     break;
                 }
-                case 404: error.message = i18n.t('request.error.404'); break;
-                case 406: error.message = i18n.t('request.error.406'); break;
+                case 404: error.message = i18n.t('error.404'); break;
+                case 406: error.message = i18n.t('error.406'); break;
                 case 500: {
                     if (message) {
                         error.message = message;
                     } else {
-                        error.message = i18n.t('request.error.500');
+                        error.message = i18n.t('error.500');
                     }
                     break;
                 }
-                default: error.message = i18n.t('request.error.default');
+                default: error.message = i18n.t('error.default');
             }
         } else {
-            error.message = i18n.t('request.error.default');
+            error.message = i18n.t('error.default');
         }
 
         return Promise.reject(error)

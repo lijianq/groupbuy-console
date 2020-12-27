@@ -8,7 +8,7 @@
       <h1>{{ types[type].title }}</h1>
       <div class="desc">{{ $t(types[type].desc) }}</div>
       <div class="actions">
-        <a-button type="primary" @click="goHome">{{ $t("error.backtohome") }}</a-button>
+        <a-button type="primary" @click="goHome">{{ $t("common.back.home") }}</a-button>
       </div>
     </div>
   </div>

@@ -2,35 +2,35 @@
   <div>
     <a-form :form="form" id="authForm" style="max-width: 500px; margin: 80px auto 0;">
       <a-form-item
-          :label="$t('account.login.company')"
+          :label="$t('account.company')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
             v-decorator="[
                 'company',
-                {rules: [{ required: true, message: $t('account.login.company.message') }], validateTrigger: 'blur'}
+                {rules: [{ required: true, message: $t('account.company.message') }], validateTrigger: 'blur'}
               ]"
         >
         </a-input>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.forgot.auth.email')"
+          :label="$t('account.auth.email')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['accountEmail', {rules: [{required: true, message: $t('account.forgot.auth.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('account.forgot.auth.email.invalid')}]}]"/>
+            v-decorator="['accountEmail', {rules: [{required: true, message: $t('account.auth.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('account.auth.email.invalid')}]}]"/>
       </a-form-item>
 
       <a-form-item>
         <a-button type="primary" class="step-button" @click="sendAuthCode">{{
-            $t('account.forgot.auth.code')
+            $t('account.auth.code.send')
           }}
         </a-button>
         <a-button type="primary" class="step-button" @click="backToLogin">{{
-            $t('company.back')
+            $t('common.back.login')
           }}
         </a-button>
       </a-form-item>

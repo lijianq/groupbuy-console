@@ -1,10 +1,10 @@
 <template>
   <div>
     <a-steps class="steps" :current="currentStep">
-      <a-step :title="$t('account.status.input')">
+      <a-step :title="$t('company.base.input')">
         <a-icon slot="icon" type="edit" />
       </a-step>
-      <a-step :title="$t('account.status.result')">
+      <a-step :title="$t('company.status')">
         <a-icon slot="icon" type="info-circle" />
       </a-step>
     </a-steps>

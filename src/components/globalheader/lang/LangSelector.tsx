@@ -56,7 +56,7 @@ export default class LangSelector extends Vue {
         return (
             <a-dropdown overlay={this.renderLangMenu()} placement="bottomRight">
                 <span class={this.prefixCls}>
-                    <a-icon type="global" title={this.$t('navBar.lang')} />
+                    <a-icon type="global" title={this.$t('common.lang')} />
                 </span>
             </a-dropdown>
         )
