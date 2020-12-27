@@ -116,7 +116,7 @@ ol {
   padding: 10px 10px;
   background-color: #F3F3F3;
   border: 1px solid #E4E4E4;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   height: 55px;
 
   .header-divider {
