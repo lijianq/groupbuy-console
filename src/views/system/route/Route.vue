@@ -58,7 +58,9 @@
           }}</a>
           <span v-if="record.routeType !== 'Group'">
             <a-divider type="vertical" />
-            <a @click="handleAction(record)">{{ $t("system.route.actions") }}</a>
+            <a @click="handleAction(record)">{{
+              $t("system.route.actions")
+            }}</a>
           </span>
           <span v-if="record.routeType === 'Group'">
             <a-divider type="vertical" />
@@ -96,32 +98,35 @@ import { Modal } from "ant-design-vue";
 @Component({
   components: {
     RouteOperation,
-    RouteAction
+    RouteAction,
   },
 })
 export default class Route extends Vue {
-  columns: any[] = [
-    {
-      title: this.$t("system.route.name"),
-      dataIndex: "routeName",
-      scopedSlots: { customRender: "name" },
-    },
-    {
-      title: this.$t("system.route.display.name"),
-      dataIndex: "routeMeta.title",
-      scopedSlots: { customRender: "display" },
-    },
-    {
-      title: this.$t("system.route.type"),
-      dataIndex: "routeType",
-      scopedSlots: { customRender: "type" },
-    },
-    {
-      title: this.$t("route.action"),
-      dataIndex: "action",
-      scopedSlots: { customRender: "action" },
-    },
-  ];
+  get columns() {
+    return [
+      {
+        title: this.$t("system.route.name"),
+        dataIndex: "routeName",
+        scopedSlots: { customRender: "name" },
+      },
+      {
+        title: this.$t("system.route.display.name"),
+        dataIndex: "routeMeta.title",
+        scopedSlots: { customRender: "display" },
+      },
+      {
+        title: this.$t("system.route.type"),
+        dataIndex: "routeType",
+        scopedSlots: { customRender: "type" },
+      },
+      {
+        title: this.$t("route.action"),
+        dataIndex: "action",
+        scopedSlots: { customRender: "action" },
+      },
+    ];
+  }
+
   data: any[] = [];
   dataLoading = false;
 
@@ -148,7 +153,7 @@ export default class Route extends Vue {
     SystemAPI.getRoutes()
       .then((response) => {
         this.data = response.data as any[];
-        this.rowSelection.selectedRowKeys = []
+        this.rowSelection.selectedRowKeys = [];
       })
       .catch((error) => {
         this.$message.error(error.message);
@@ -167,7 +172,7 @@ export default class Route extends Vue {
       this.selectChildren(record);
     } else {
       this.unselectChildren(record);
-      this.unselectParents(record, selectedRows)
+      this.unselectParents(record, selectedRows);
     }
   }
 
@@ -183,12 +188,14 @@ export default class Route extends Vue {
   }
 
   fetchSelectedPIds(record: any, selectedRows: any[], pids: string[]) {
-    const parentId: string = record.routeParentId
-    if (parentId !== '0') {
-      pids.push(parentId)
-      const parents: any[] = selectedRows.filter(item => item.routeId === parentId)
-      if ( parents && parents.length > 0) {
-        this.fetchSelectedPIds(parents[0], selectedRows, pids)
+    const parentId: string = record.routeParentId;
+    if (parentId !== "0") {
+      pids.push(parentId);
+      const parents: any[] = selectedRows.filter(
+        (item) => item.routeId === parentId
+      );
+      if (parents && parents.length > 0) {
+        this.fetchSelectedPIds(parents[0], selectedRows, pids);
       }
     }
   }
@@ -207,15 +214,19 @@ export default class Route extends Vue {
   }
 
   unselectChildren(record: any) {
-    const cids: string[] = []
-    this.fetchChidrenIds(record, cids)
-    this.rowSelection.selectedRowKeys = this.rowSelection.selectedRowKeys.filter((item: string) => !cids.includes(item))
+    const cids: string[] = [];
+    this.fetchChidrenIds(record, cids);
+    this.rowSelection.selectedRowKeys = this.rowSelection.selectedRowKeys.filter(
+      (item: string) => !cids.includes(item)
+    );
   }
 
   unselectParents(record: any, selectedRows: any[]) {
-    const pids: string[] = []
-    this.fetchSelectedPIds(record, selectedRows, pids)
-    this.rowSelection.selectedRowKeys = this.rowSelection.selectedRowKeys.filter((item: string) => !pids.includes(item))
+    const pids: string[] = [];
+    this.fetchSelectedPIds(record, selectedRows, pids);
+    this.rowSelection.selectedRowKeys = this.rowSelection.selectedRowKeys.filter(
+      (item: string) => !pids.includes(item)
+    );
   }
 
   canSelected(record: any) {
@@ -334,13 +345,13 @@ export default class Route extends Vue {
   }
 
   handleActionCancel() {
-    this.currentRoute = null
-    this.actionVisible = false
+    this.currentRoute = null;
+    this.actionVisible = false;
   }
 
   handleAction(record: any) {
-    this.actionVisible = true
-    this.currentRoute = record  
+    this.actionVisible = true;
+    this.currentRoute = record;
   }
 }
 </script>

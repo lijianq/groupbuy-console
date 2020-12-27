@@ -70,7 +70,7 @@ export default class EnUS {
         "route.action.edit": "Edit",
         "route.action.query": "Query",
         "route.action.manage": "Manage",
-        "route.action.info": "Info",
+        "route.action.info": "Detail",
         "route.action.reset": "Reset",
         "route.action.company.appoval": "Approve",
         "route.action.company.permission": "Permission",

@@ -72,9 +72,7 @@
           v-if="record.routeActionType !== 'Preset'"
         >
           <span v-if="record.editable">
-            <a @click="() => handleSave(record)">{{
-              $t("common.save")
-            }}</a>
+            <a @click="() => handleSave(record)">{{ $t("common.save") }}</a>
             <a-divider type="vertical" />
             <a-popconfirm
               :okText="$t('common.ok')"
@@ -124,29 +122,31 @@ export default class RouteAction extends Vue {
 
   tempKey = 0;
 
-  columns: any[] = [
-    {
-      title: this.$t("system.route.action.name"),
-      dataIndex: "routeActionName",
-      width: "25%",
-      scopedSlots: { customRender: "routeActionName" },
-    },
-    {
-      title: this.$t("system.route.action.name.i18key"),
-      dataIndex: "routeActionNameI18key",
-      width: "40%",
-      scopedSlots: { customRender: "routeActionNameI18key" },
-    },
-    {
-      title: this.$t("system.route.preset"),
-      dataIndex: "routeActionType",
-      scopedSlots: { customRender: "routeActionType" },
-    },
-    {
-      dataIndex: "operation",
-      scopedSlots: { customRender: "operation" },
-    },
-  ];
+  get columns() {
+    return [
+      {
+        title: this.$t("system.route.action.name"),
+        dataIndex: "routeActionName",
+        width: "25%",
+        scopedSlots: { customRender: "routeActionName" },
+      },
+      {
+        title: this.$t("system.route.action.name.i18key"),
+        dataIndex: "routeActionNameI18key",
+        width: "40%",
+        scopedSlots: { customRender: "routeActionNameI18key" },
+      },
+      {
+        title: this.$t("system.route.preset"),
+        dataIndex: "routeActionType",
+        scopedSlots: { customRender: "routeActionType" },
+      },
+      {
+        dataIndex: "operation",
+        scopedSlots: { customRender: "operation" },
+      },
+    ];
+  }
 
   data: any[] = [];
   editingKey = "";

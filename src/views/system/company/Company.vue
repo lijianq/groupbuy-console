@@ -13,12 +13,25 @@
           </a-col>
           <a-col :md="8" :sm="24">
             <a-form-item :label="$t('company.status')">
-              <a-select v-model="queryParam.companyStatus" :placeholder="$t('common.select.search.hint')">
-                <a-select-option value="New">{{$t('company.status.new')}}</a-select-option>
-                <a-select-option value="Invalid">{{$t('company.status.invalid')}}</a-select-option>
-                <a-select-option value="Active">{{$t('company.status.active')}}</a-select-option>
-                <a-select-option value="Expired">{{$t('company.status.expired')}}</a-select-option>
-                <a-select-option value="Inactive">{{$t('company.status.inactive')}}</a-select-option>
+              <a-select
+                v-model="queryParam.companyStatus"
+                :placeholder="$t('common.select.search.hint')"
+              >
+                <a-select-option value="New">{{
+                  $t("company.status.new")
+                }}</a-select-option>
+                <a-select-option value="Invalid">{{
+                  $t("company.status.invalid")
+                }}</a-select-option>
+                <a-select-option value="Active">{{
+                  $t("company.status.active")
+                }}</a-select-option>
+                <a-select-option value="Expired">{{
+                  $t("company.status.expired")
+                }}</a-select-option>
+                <a-select-option value="Inactive">{{
+                  $t("company.status.inactive")
+                }}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -68,14 +81,16 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" class="operation-button">{{ $t('route.action.query') }}</a-button>
-      <a-button class="operation-button">{{ $t('common.reset') }}</a-button>
+      <a-button type="primary" class="operation-button">{{
+        $t("route.action.query")
+      }}</a-button>
+      <a-button class="operation-button">{{ $t("common.reset") }}</a-button>
       <a-button
         type="danger"
         class="operation-button"
         icon="delete"
         v-if="rowSelection.selectedRowKeys.length > 0"
-        >{{ $t('route.action.delete') }}</a-button
+        >{{ $t("route.action.delete") }}</a-button
       >
     </div>
 
@@ -87,25 +102,29 @@
       :data-source="data"
       :rowSelection="rowSelection"
     >
-      <span slot="action" slot-scope="">
+      <span slot="action" slot-scope="text, record">
         <template>
-          <a>{{$t('route.action.info')}}</a>
+          <a v-if="record">{{ $t("route.action.info") }}</a>
           <a-divider type="vertical" />
         </template>
-        <a-dropdown>
-          <a class="ant-dropdown-link"> {{ $t('common.more')}} <a-icon type="down" /> </a>
-          <a-menu slot="overlay">
-            <a-menu-item>
-              <a>{{ $t('route.action.company.appoval') }}</a>
-            </a-menu-item>
-            <a-menu-item>
-              <a>{{ $t('route.action.company.permission') }}</a>
-            </a-menu-item>
-            <a-menu-item>
-              <a>{{ $t('route.action.company.status') }}</a>
-            </a-menu-item>
-          </a-menu>
-        </a-dropdown>
+        <template>
+          <a-dropdown>
+            <a class="ant-dropdown-link">
+              {{ $t("common.more") }} <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item>
+                <a>{{ $t("route.action.company.appoval") }}</a>
+              </a-menu-item>
+              <a-menu-item>
+                <a>{{ $t("route.action.company.permission") }}</a>
+              </a-menu-item>
+              <a-menu-item>
+                <a>{{ $t("route.action.company.status") }}</a>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </template>
       </span>
     </a-table>
   </div>
@@ -119,37 +138,39 @@ import systemAPI from "@/api/system/SystemAPI";
 @Component
 export default class Company extends Vue {
   queryParam: any = {};
-  columns: any[] = [
-    {
-      title: this.$t('company.id'),
-      dataIndex: "companyId",
-    },
-    {
-      title: this.$t('company.name'),
-      dataIndex: "companyName",
-    },
-    {
-      title: this.$t('company.contact'),
-      dataIndex: "companyContact",
-    },
-    {
-      title: this.$t('company.email'),
-      dataIndex: "companyEmail",
-    },
-    {
-      title: this.$t('company.phone'),
-      dataIndex: "companyPhone",
-    },
-    {
-      title: this.$t('company.status'),
-      dataIndex: "companyStatus",
-    },
-    {
-      title: "",
-      dataIndex: "action",
-      scopedSlots: { customRender: "action" },
-    },
-  ];
+  get columns() {
+    return [
+      {
+        title: this.$t("company.id"),
+        dataIndex: "companyId",
+      },
+      {
+        title: this.$t("company.name"),
+        dataIndex: "companyName",
+      },
+      {
+        title: this.$t("company.contact"),
+        dataIndex: "companyContact",
+      },
+      {
+        title: this.$t("company.email"),
+        dataIndex: "companyEmail",
+      },
+      {
+        title: this.$t("company.phone"),
+        dataIndex: "companyPhone",
+      },
+      {
+        title: this.$t("company.status"),
+        dataIndex: "companyStatus",
+      },
+      {
+        title: "",
+        dataIndex: "action",
+        scopedSlots: { customRender: "action" },
+      },
+    ];
+  }
 
   data: any[] = [];
 
@@ -164,8 +185,8 @@ export default class Company extends Vue {
   pagination: any = {
     defaultCurrent: 1,
     defaultPageSize: 10,
-    pageSizeOptions: ['10', '30', '50', '100'],
-    showSizeChanger: true
+    pageSizeOptions: ["10", "30", "50", "100"],
+    showSizeChanger: true,
   };
 
   created() {
@@ -182,17 +203,21 @@ export default class Company extends Vue {
 
   getCompanies(queryParam: any) {
     this.loading = true;
-    systemAPI.getCompanies(queryParam).then(result => {
-      const records: any = result.data
-      const pagination = { ...this.pagination };
-      pagination.total = parseInt(records.totalCount);
-      this.data = records.resultSet
-      this.pagination = pagination;
-    }).catch(error => {
-      this.$message.error(error.message)
-    }).finally(() => {
-      this.loading = false
-    })
+    systemAPI
+      .getCompanies(queryParam)
+      .then((result) => {
+        const records: any = result.data;
+        const pagination = { ...this.pagination };
+        pagination.total = parseInt(records.totalCount);
+        this.data = records.resultSet;
+        this.pagination = pagination;
+      })
+      .catch((error) => {
+        this.$message.error(error.message);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 }
 </script>
