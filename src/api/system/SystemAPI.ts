@@ -66,6 +66,14 @@ class SystemAPI {
             data: queryParam
         })
     }
+
+    deleteCompanies(companyIds: string[]) {
+        return this.request.request({
+            url: this.apiPaths.company,
+            method: 'delete',
+            data: companyIds
+        })
+    }
 }
 
 const systemAPI = new SystemAPI()

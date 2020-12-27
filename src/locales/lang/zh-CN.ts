@@ -72,7 +72,7 @@ export default class ZhCN {
         "route.action.manage": "管理",
         "route.action.info": "详情",
         "route.action.reset": "重置",
-        "route.action.company.appoval": "公司审批",
+        "route.action.company.appoval": "审批",
         "route.action.company.permission": "公司权限",
         "route.action.company.status": "状态变更",
 
@@ -194,6 +194,8 @@ export default class ZhCN {
         "company.status.active": "正常",
         "company.status.expired": "过期",
         "company.status.inactive": "失效",
+        "company.delete.title": "删除公司",
+        "company.delete.content": "确认要删除所选公司吗?",
         
         // System Route
 

@@ -118,7 +118,7 @@ export default class  RegisterLicense extends Vue {
                     }
                     uploads.push(new CosUpload(this.licenseFileList[0].originFileObj, 'license'))
                     cosAPI.uploadFiles(uploads).then( (result: any) => {
-                        baseFormData.id = result.targetId
+                        baseFormData.companyId = result.targetId
                         if (result.logo) {
                             baseFormData.companyLogo = result.logo.Location
                         }

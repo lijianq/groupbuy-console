@@ -81,15 +81,16 @@
     </div>
 
     <div class="table-operator">
-      <a-button type="primary" class="operation-button">{{
+      <a-button type="primary" class="operation-button" @click="handleQuery">{{
         $t("route.action.query")
       }}</a-button>
-      <a-button class="operation-button">{{ $t("common.reset") }}</a-button>
+      <a-button class="operation-button" @click="handleReset">{{ $t("common.reset") }}</a-button>
       <a-button
         type="danger"
         class="operation-button"
         icon="delete"
         v-if="rowSelection.selectedRowKeys.length > 0"
+        @click="handleDelete(rowSelection.selectedRowKeys)"
         >{{ $t("route.action.delete") }}</a-button
       >
     </div>
@@ -101,21 +102,25 @@
       :columns="columns"
       :data-source="data"
       :rowSelection="rowSelection"
+      @change="handleChange"
     >
+      <span slot="companyStatus" slot-scope="text">
+        <template>
+          {{ $t(`company.status.${text.toLowerCase()}`)}}
+        </template>
+      </span>
       <span slot="action" slot-scope="text, record">
         <template>
-          <a v-if="record">{{ $t("route.action.info") }}</a>
-          <a-divider type="vertical" />
+          <a v-if="record.companyStatus === 'New'">{{ $t("route.action.company.appoval") }}</a>
+          <a v-else>{{ $t("route.action.info") }}</a>
         </template>
-        <template>
+        <template v-if="record.companyStatus !== 'New'">
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">
               {{ $t("common.more") }} <a-icon type="down" />
             </a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a>{{ $t("route.action.company.appoval") }}</a>
-              </a-menu-item>
               <a-menu-item>
                 <a>{{ $t("route.action.company.permission") }}</a>
               </a-menu-item>
@@ -134,6 +139,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Address, Industry } from "@/config";
 import systemAPI from "@/api/system/SystemAPI";
+import { Modal } from "ant-design-vue";
 
 @Component
 export default class Company extends Vue {
@@ -163,6 +169,7 @@ export default class Company extends Vue {
       {
         title: this.$t("company.status"),
         dataIndex: "companyStatus",
+        scopedSlots: { customRender: "companyStatus" },
       },
       {
         title: "",
@@ -184,7 +191,9 @@ export default class Company extends Vue {
   loading = false;
   pagination: any = {
     defaultCurrent: 1,
+    current: 1,
     defaultPageSize: 10,
+    pageSize: 10,
     pageSizeOptions: ["10", "30", "50", "100"],
     showSizeChanger: true,
   };
@@ -192,19 +201,17 @@ export default class Company extends Vue {
   created() {
     this.industries = Industry.industries;
     this.addressOptions = Address.options;
-    this.queryParam.pageNumber = this.pagination.defaultCurrent;
-    this.queryParam.pageSize = this.pagination.defaultPageSize;
-    this.getCompanies(this.queryParam);
+    this.processQuery();
   }
 
   onSelectChange(selectedRowKeys: any[]) {
     this.rowSelection.selectedRowKeys = selectedRowKeys;
   }
 
-  getCompanies(queryParam: any) {
+  getCompanies(query: any) {
     this.loading = true;
     systemAPI
-      .getCompanies(queryParam)
+      .getCompanies(query)
       .then((result) => {
         const records: any = result.data;
         const pagination = { ...this.pagination };
@@ -218,6 +225,69 @@ export default class Company extends Vue {
       .finally(() => {
         this.loading = false;
       });
+  }
+
+  processQuery() {
+    const query: any = {...this.queryParam}
+    if (query.companyRegion) {
+      query.companyRegion = query.companyRegion.toString()
+    }
+    query.pageNumber = this.pagination.current
+    query.pageSize = this.pagination.pageSize
+    this.getCompanies(query)
+  }
+
+  handleQuery() {
+    this.pagination.current = 1;
+    this.processQuery();
+  }
+
+  handleChange(pagination: any) {
+    if (this.pagination.pageSize !== pagination.pageSize) {
+      this.pagination.current = 1;
+    } else {
+      this.pagination.current = pagination.current;
+    }
+    this.pagination.pageSize = pagination.pageSize;
+    this.processQuery();
+  }
+
+  handleReset() {
+    this.queryParam = {}
+  }
+
+  handleDelete(ids: string[]) {
+    Modal.confirm({
+      okText: this.$t("common.ok").toString(),
+      cancelText: this.$t("common.cancel").toString(),
+      icon: () =>
+        this.$createElement("a-icon", {
+          props: {
+            type: "exclamation-circle",
+            theme: "twoTone",
+            twoToneColor: "#FF0000",
+          },
+      }),
+      title: this.$t("company.delete.title"),
+      content: this.$t("company.delete.content"),
+      onOk: () => {
+        this.loading = true;
+        systemAPI.deleteCompanies(ids)
+          .then(() => {
+            this.rowSelection.selectedRowKeys = [];
+            this.handleQuery();
+          })
+          .catch((error) => {
+            this.$message.error(error.message);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      },
+      onCancel: () => {
+        // do nothing
+      },
+    });
   }
 }
 </script>
