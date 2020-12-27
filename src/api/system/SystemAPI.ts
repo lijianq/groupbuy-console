@@ -58,6 +58,14 @@ class SystemAPI {
             method: 'delete'
         })
     }
+
+    getCompanies(queryParam: any) {
+        return this.request.request({
+            url: this.apiPaths.company,
+            method: "post",
+            data: queryParam
+        })
+    }
 }
 
 const systemAPI = new SystemAPI()

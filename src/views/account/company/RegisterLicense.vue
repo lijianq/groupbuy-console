@@ -3,7 +3,7 @@
     <a-form :form="form" id="licenseForm" style="max-width: 500px; margin: 40px auto 0;">
 
       <a-form-item
-          :label="$t('account.register.license.logo')"
+          :label="$t('company.license.logo')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
@@ -17,28 +17,28 @@
         >
           <a-button>
             <a-icon type="upload"/>
-            {{ $t('account.register.license.logo.upload') }}
+            {{ $t('company.license.logo.upload') }}
           </a-button>
         </a-upload>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.license.no')"
+          :label="$t('company.license.no')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyLicenseNo', {rules: [{required: true, message: $t('account.register.license.no.required')}, {pattern: /(^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$)|(^\d{15}$)/, message:$t('account.register.license.no.invalid')}]}]"/>
+            v-decorator="['companyLicenseNo', {rules: [{required: true, message: $t('company.license.no.required')}, {pattern: /(^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$)|(^\d{15}$)/, message:$t('company.license.no.invalid')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.license.license')"
+          :label="$t('company.license.license')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-upload-dragger
             :before-upload="beforeUpload"
-            v-decorator="['companyLicense', {getValueFromEvent: this.checkFile, rules: [{required: true, message: $t('account.register.license.license.required')}]}]"
+            v-decorator="['companyLicense', {getValueFromEvent: this.checkFile, rules: [{required: true, message: $t('company.license.license.required')}]}]"
             :multiple="false"
             accept="image/*"
             :file-list="licenseFileList"
@@ -48,22 +48,22 @@
             <a-icon type="copy" />
           </p>
           <p class="ant-upload-text">
-            {{ $t('account.register.license.license.upload') }}
+            {{ $t('company.license.license.upload') }}
           </p>
         </a-upload-dragger>
       </a-form-item>
 
       <a-form-item>
         <a-button type="primary" class="in-step-button" @click="prevStep">{{
-            $t('account.register.license.prev')
+            $t('company.license.prev')
           }}
         </a-button>
         <a-button :loading="loading" type="primary" class="submit-step-button" @click="nextStep">{{
-            $t('account.register.license.next')
+            $t('company.license.next')
           }}
         </a-button>
         <a-button type="primary" class="in-step-button" @click="backToLogin">{{
-            $t('account.register.back')
+            $t('company.back')
           }}
         </a-button>
       </a-form-item>
@@ -170,7 +170,7 @@ export default class  RegisterLicense extends Vue {
         if (fileList.length > 0) {
             const file = fileList[0].originFileObj
             if (this.isLarge(file, 1)) {
-                this.$message.error(`${this.$t('account.register.license.logo.limit')}`)
+                this.$message.error(`${this.$t('company.license.logo.limit')}`)
                 fileList.pop()
             }
         }
@@ -187,7 +187,7 @@ export default class  RegisterLicense extends Vue {
         if (fileList.length > 0) {
             const file = fileList[0].originFileObj
             if (this.isLarge(file, 10)) {
-                this.$message.error(`${this.$t('account.register.license.license.limit')}`)
+                this.$message.error(`${this.$t('company.license.license.limit')}`)
                 fileList.pop()
             }
         }

@@ -4,7 +4,7 @@
       <a-result status="success" :title="$t('account.forgot.reset.finish')" style="max-width: 500px; margin: 40px auto 0;">
         <template #extra>
           <a-button type="primary" class="finish-step-button" @click="backToLogin">{{
-              $t('account.register.back')
+              $t('company.back')
             }}
           </a-button>
         </template>

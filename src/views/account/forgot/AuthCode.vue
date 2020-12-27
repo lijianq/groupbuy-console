@@ -30,7 +30,7 @@
           }}
         </a-button>
         <a-button type="primary" class="step-button" @click="backToLogin">{{
-            $t('account.register.back')
+            $t('company.back')
           }}
         </a-button>
       </a-form-item>

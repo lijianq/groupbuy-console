@@ -1,10 +1,10 @@
 <template>
   <div>
     <a-form>
-      <a-result status="info" :title="$t('account.register.finish.title')" :sub-title="$t('account.register.finish.subtitle')" style="max-width: 500px; margin: 40px auto 0;">
+      <a-result status="info" :title="$t('company.finish.title')" :sub-title="$t('company.finish.subtitle')" style="max-width: 500px; margin: 40px auto 0;">
         <template #extra>
           <a-button type="primary" class="finish-step-button" @click="backToLogin">{{
-              $t('account.register.back')
+              $t('company.back')
             }}
           </a-button>
         </template>

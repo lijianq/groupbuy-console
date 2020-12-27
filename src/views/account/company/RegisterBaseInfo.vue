@@ -2,79 +2,83 @@
   <div>
     <a-form :form="form" id="baseInfoForm" style="max-width: 500px; margin: 40px auto 0;">
       <a-form-item
-          :label="$t('account.register.base.name')"
+          :label="$t('company.name')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyName', {rules: [{required: true, message: $t('account.register.base.name.required')},{max: 100, message: $t('account.register.base.name.max')}]}]"/>
+            v-decorator="['companyName', {rules: [{required: true, message: $t('company.name.required')},{max: 100, message: $t('company.name.max')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.base.industry')"
+          :label="$t('company.industry')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-select
-            v-decorator="['companyIndustry', {rules: [{required: true, message: $t('account.register.base.industry.required')}]}]">
-          <a-select-option value="ecommerce">{{ $t('company.industry.ecommerce') }}</a-select-option>
-          <a-select-option value="manufacture">{{ $t('company.industry.manufacture') }}</a-select-option>
-          <a-select-option value="trade">{{ $t('company.industry.trade') }}</a-select-option>
+            v-decorator="['companyIndustry', {rules: [{required: true, message: $t('company.industry.required')}]}]">
+           <a-select-option
+              v-for="industry in industries"
+              :key="industry.value"
+              :value="industry.value"
+            >
+              {{ $t(industry.label) }}
+            </a-select-option>
         </a-select>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.base.contact')"
+          :label="$t('company.contact')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyContact', {rules: [{required: true, message: $t('account.register.base.contact.required')},{max: 30, message: $t('account.register.base.contact.max')}]}]"/>
+            v-decorator="['companyContact', {rules: [{required: true, message: $t('company.contact.required')},{max: 30, message: $t('company.contact.max')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.base.email')"
+          :label="$t('company.email')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyEmail', {rules: [{required: true, message: $t('account.register.base.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('account.register.base.email.invalid')},{max: 100, message: $t('account.register.base.email.max')}]}]"/>
+            v-decorator="['companyEmail', {rules: [{required: true, message: $t('company.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('company.email.invalid')},{max: 100, message: $t('company.email.max')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.base.phone')"
+          :label="$t('company.phone')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyPhone', {rules: [{required: true, message: $t('account.register.base.phone.required')},{pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, message: $t('account.register.base.phone.invalid')},{max: 20, message: $t('account.register.base.phone.max')}]}]"/>
+            v-decorator="['companyPhone', {rules: [{required: true, message: $t('company.phone.required')},{pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, message: $t('company.phone.invalid')},{max: 20, message: $t('company.phone.max')}]}]"/>
       </a-form-item>
 
       <a-form-item
-          :label="$t('account.register.base.region')"
+          :label="$t('company.region')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
-        <a-cascader :options="addressOptions" :placeholder="$t('address.hint')"
-                    v-decorator="['companyRegion', {rules: [{required: true, message: $t('account.register.base.region.required')}]}]"
+        <a-cascader :options="addressOptions" :placeholder="$t('select.address.hint')"
+                    v-decorator="['companyRegion', {rules: [{required: true, message: $t('company.region.required')}]}]"
         />
       </a-form-item>
       <a-form-item
-          :label="$t('account.register.base.address')"
+          :label="$t('company.address')"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyAddress', {rules: [{required: true, message: $t('account.register.base.address.required')},{max: 200, message: $t('account.register.base.address.max')}]}]"/>
+            v-decorator="['companyAddress', {rules: [{required: true, message: $t('company.address.required')},{max: 200, message: $t('company.address.max')}]}]"/>
       </a-form-item>
 
       <a-form-item>
         <a-button type="primary" class="step-button" @click="nextStep">{{
-            $t('account.register.base.next')
+            $t('company.next')
           }}
         </a-button>
         <a-button type="primary" class="step-button" @click="backToLogin">{{
-            $t('account.register.back')
+            $t('company.back')
           }}
         </a-button>
       </a-form-item>
@@ -85,7 +89,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import {WrappedFormUtils} from 'ant-design-vue/types/form/form'
-import {RouterConfiguration, Address} from '@/config'
+import {RouterConfiguration, Address, Industry} from '@/config'
 
 @Component
 export default class RegisterBaseInfo extends Vue {
@@ -94,11 +98,13 @@ export default class RegisterBaseInfo extends Vue {
     wrapperCol = { lg: { span: 19 }, sm: { span: 19 } }
     form!: WrappedFormUtils
     addressOptions = Address.options
+    industries: any[] = []
 
     @Prop({type: Object, default: null})
     baseFormData: any | null
 
     created() {
+        this.industries = Industry.industries;
         this.form = this.$form.createForm(this, {name: 'baseInfoForm'})
         const { baseFormData } = this
         if (baseFormData) {

@@ -1,13 +1,13 @@
 <template>
   <div>
     <a-steps class="steps" :current="currentStep">
-      <a-step :title="$t('account.register.base')">
+      <a-step :title="$t('company.base')">
         <a-icon slot="icon" type="form" />
       </a-step>
-      <a-step :title="$t('account.register.license')">
+      <a-step :title="$t('company.license')">
         <a-icon slot="icon" type="file" />
       </a-step>
-      <a-step :title="$t('account.register.finish')">
+      <a-step :title="$t('company.finish')">
         <a-icon slot="icon" type="check-circle" />
       </a-step>
     </a-steps>

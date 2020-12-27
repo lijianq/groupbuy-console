@@ -3,7 +3,8 @@ import Request from '@/api/common/Request'
 class RegisterAPI {
 
     private apiPaths = {
-        register: "/company/register"
+        register: "/register",
+        status: "/status"
     }
     private request = Request.getDefaultInstance()
 
@@ -17,7 +18,7 @@ class RegisterAPI {
 
     getRegistration(params: any) {
         return this.request.request({
-            url: this.apiPaths.register,
+            url: this.apiPaths.status,
             method: 'POST',
             data: params
         })

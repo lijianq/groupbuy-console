@@ -5,7 +5,7 @@
         <a-icon slot="icon" type="question-circle" style="font-size: 40px;"/>
         <template #extra>
           <a-button type="primary" class="finish-step-button" @click="backToLogin">{{
-              $t('account.register.back')
+              $t('company.back')
             }}
           </a-button>
         </template>
@@ -15,8 +15,8 @@
         <template #extra>
           <div style="text-align: left;">
             <a-descriptions :column="{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }">
-              <a-descriptions-item :label="$t('account.register.base.name')">
-                {{ queryResult.result.companyName }}
+              <a-descriptions-item :label="$t('company.name')">
+                {{ queryResult.companyName }}
               </a-descriptions-item>
               <a-descriptions-item :label="$t('account.status.result.status')">
                 {{ $t(queryResult.status) }}
@@ -28,7 +28,7 @@
           </div>
 
           <a-button type="primary" class="finish-step-button" @click="backToLogin">{{
-              $t('account.register.back')
+              $t('company.back')
             }}
           </a-button>
         </template>
