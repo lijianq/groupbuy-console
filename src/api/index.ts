@@ -1,2 +1,6 @@
 import accountAPI from './account/AccountAPI'
-export { accountAPI }
+import dashboardAPI from './home/DashboardAPI'
+export { 
+    accountAPI,
+    dashboardAPI,
+}
