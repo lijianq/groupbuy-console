@@ -5,7 +5,8 @@ class SystemAPI {
     private apiPaths = {
         route: "/system/route",
         routeAction: "/system/route/action",
-        company: "/system/company"
+        company: "/system/company",
+        permission: "/system/company/permission"
     }
     private request = Request.getDefaultInstance()
 
@@ -72,6 +73,13 @@ class SystemAPI {
             url: this.apiPaths.company,
             method: 'delete',
             data: companyIds
+        })
+    }
+
+    getCompanyPermission(companyId: string) {
+        return this.request.request({
+            url: `${this.apiPaths.permission}/${companyId}`,
+            method: 'get'
         })
     }
 }

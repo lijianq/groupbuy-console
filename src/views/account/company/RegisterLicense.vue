@@ -38,7 +38,7 @@
       >
         <a-upload-dragger
             :before-upload="beforeUpload"
-            v-decorator="['companyLicense', {getValueFromEvent: this.checkFile, rules: [{required: true, message: $t('company.license.license.required')}]}]"
+            v-decorator="['companyLicense', {getValueFromEvent: this.checkFile, rules: [{required: true, message: $t('company.license.required')}]}]"
             :multiple="false"
             accept="image/*"
             :file-list="licenseFileList"
@@ -48,7 +48,7 @@
             <a-icon type="copy" />
           </p>
           <p class="ant-upload-text">
-            {{ $t('company.license.license.upload') }}
+            {{ $t('company.license.upload') }}
           </p>
         </a-upload-dragger>
       </a-form-item>
@@ -187,7 +187,7 @@ export default class  RegisterLicense extends Vue {
         if (fileList.length > 0) {
             const file = fileList[0].originFileObj
             if (this.isLarge(file, 10)) {
-                this.$message.error(`${this.$t('company.license.license.limit')}`)
+                this.$message.error(`${this.$t('company.license.limit')}`)
                 fileList.pop()
             }
         }

@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
 
 // base library
 import {
@@ -102,5 +104,7 @@ export default class AntdLazyLoad {
         Vue.prototype.$success = Modal.success
         Vue.prototype.$error = Modal.error
         Vue.prototype.$warning = Modal.warning
+
+        Vue.use(Viewer)
     }
 }

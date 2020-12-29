@@ -111,27 +111,24 @@
       </span>
       <span slot="action" slot-scope="text, record">
         <template>
-          <a v-if="record.companyStatus === 'New'">{{ $t("route.action.company.appoval") }}</a>
-          <a v-else>{{ $t("route.action.info") }}</a>
-        </template>
-        <template v-if="record.companyStatus !== 'New'">
-          <a-divider type="vertical" />
-          <a-dropdown>
-            <a class="ant-dropdown-link">
-              {{ $t("common.more") }} <a-icon type="down" />
-            </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a>{{ $t("route.action.company.permission") }}</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a>{{ $t("route.action.company.status") }}</a>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <div v-if="record.companyStatus === 'New'">
+            <a @click="handleApprove(record)">{{ $t("route.action.examine") }}</a>
+          </div>
+          <div v-else>
+            <a @click="handleDetail(record)">{{ $t("route.action.detail") }}</a>
+            <a-divider type="vertical" />
+            <a @click="handlePermission(record)">{{ $t("route.action.permission") }}</a>
+          </div>
         </template>
       </span>
     </a-table>
+
+    <company-detail
+      ref="companyDetail"
+      :visible="visible"
+      :record="currentRecord"
+      @cancel="handleCancel"
+    />
   </div>
 </template>
 
@@ -140,8 +137,13 @@ import { Component, Vue } from "vue-property-decorator";
 import { Address, Industry } from "@/config";
 import systemAPI from "@/api/system/SystemAPI";
 import { Modal } from "ant-design-vue";
+import CompanyDetail from "./CompanyDetail.vue";
 
-@Component
+@Component({
+  components: {
+    CompanyDetail
+  }
+})
 export default class Company extends Vue {
   queryParam: any = {};
   get columns() {
@@ -198,6 +200,10 @@ export default class Company extends Vue {
     showSizeChanger: true,
   };
 
+  // operation modal
+  visible = false;
+  currentRecord: any = null;
+
   created() {
     this.industries = Industry.industries;
     this.addressOptions = Address.options;
@@ -228,6 +234,7 @@ export default class Company extends Vue {
   }
 
   processQuery() {
+    this.rowSelection.selectedRowKeys = []
     const query: any = {...this.queryParam}
     if (query.companyRegion) {
       query.companyRegion = query.companyRegion.toString()
@@ -289,6 +296,31 @@ export default class Company extends Vue {
       },
     });
   }
+
+  handleCancel() {
+    this.visible = false;
+    setTimeout(() => {
+       this.currentRecord = null;
+    }, 150)
+  }
+
+  handleDetail(record: any) {
+    record.type = "detail";
+    this.currentRecord = record;
+    this.visible = true;
+  }
+
+  handlePermission(record: any) {
+    record.type = "permission";
+    this.currentRecord = record;
+    this.visible = true;
+  }
+
+  handleApprove(record: any) {
+    record.type = "approval";
+    this.currentRecord = record;
+    this.visible = true;
+  }
 }
 </script>
 
@@ -297,6 +329,6 @@ button.operation-button {
   padding: 0 15px;
   font-size: 14px;
   height: 35px;
-  width: 160px;
+  width: 120px;
 }
 </style>

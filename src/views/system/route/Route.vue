@@ -345,8 +345,10 @@ export default class Route extends Vue {
   }
 
   handleActionCancel() {
-    this.currentRoute = null;
     this.actionVisible = false;
+    setTimeout(() => {
+      this.currentRoute = null;
+    }, 150)
   }
 
   handleAction(record: any) {

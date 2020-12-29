@@ -165,8 +165,8 @@ export default class RouteAction extends Vue {
     this.data = [];
     if (this.route && this.route.routeId) {
       SystemAPI.getRouteActions(this.route.routeId)
-        .then((result) => {
-          this.data = result.data as any[];
+        .then((result: any) => {
+          this.data = result.data;
         })
         .catch((error) => {
           this.$message.error(error.message);
