@@ -21,7 +21,8 @@ const vueConfig = {
         plugins: [
             new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
             createThemeColorReplacerPlugin()
-        ]
+        ],
+        devtool: "source-map"
     },
     chainWebpack: (config) => {
         config.resolve.alias.set('@$', resolve('src'))

@@ -17,7 +17,8 @@ export default class Request {
         baseURL: process.env.VUE_APP_API_MALL_URL,
         timeout: 6000,
         headers: {
-            "content-type": "application/json;charset=UTF-8"
+            "content-type": "application/json;charset=UTF-8",
+            "x-platform-company-id" : AccountModule.getAccount().companyId
         }
     }
 
