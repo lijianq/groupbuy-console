@@ -40,16 +40,11 @@ class AccountAPI {
             data: {}
         })
         const actions: any = response.data
-        const mallActions = RouterConfiguration.mallRoutes
-
-        //Add for mall
-        const combined = [...actions, ...mallActions]
-
-        const routes = this.parseAccountRoutes(combined)
+        const routes = this.parseAccountRoutes(actions)
         rootRoute.children=routes
         const accountRoutes = []
         accountRoutes.push(rootRoute)
-        return { menus: combined, routes: accountRoutes}
+        return { menus: actions, routes: accountRoutes}
     }
 
     private parseAccountRoutes(actions: any[]) {

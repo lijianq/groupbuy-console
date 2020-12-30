@@ -6,7 +6,8 @@ class SystemAPI {
         route: "/system/route",
         routeAction: "/system/route/action",
         company: "/system/company",
-        permission: "/system/company/permission"
+        permission: "/system/company/permission",
+        status: "/system/company/status"
     }
     private request = Request.getDefaultInstance()
 
@@ -80,6 +81,29 @@ class SystemAPI {
         return this.request.request({
             url: `${this.apiPaths.permission}/${companyId}`,
             method: 'get'
+        })
+    }
+
+    setCompanyPermission(companyId: string, actions: string[]) {
+        return this.request.request({
+            url: `${this.apiPaths.permission}/${companyId}`,
+            method: 'put',
+            data: actions
+        })
+    }
+
+    rejectCompany(companyId: string) {
+        return this.request.request({
+            url: `${this.apiPaths.status}/${companyId}`,
+            method: 'delete'
+        })
+    }
+
+    approveCompany(companyId: string, request: any) {
+        return this.request.request({
+            url: `${this.apiPaths.status}/${companyId}`,
+            method: 'put',
+            data: request
         })
     }
 }

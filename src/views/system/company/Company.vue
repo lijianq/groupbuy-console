@@ -117,7 +117,7 @@
           <div v-else>
             <a @click="handleDetail(record)">{{ $t("route.action.detail") }}</a>
             <a-divider type="vertical" />
-            <a @click="handlePermission(record)">{{ $t("route.action.permission") }}</a>
+            <a v-if="record.companyStatus === 'Active'" @click="handlePermission(record)">{{ $t("route.action.permission") }}</a>
           </div>
         </template>
       </span>
@@ -297,8 +297,16 @@ export default class Company extends Vue {
     });
   }
 
-  handleCancel() {
+  handleCancel(result: any) {
     this.visible = false;
+    if (result) {
+      if (result.companyStatus) {
+        this.currentRecord.companyStatus = result.companyStatus;
+      }
+      if (result.companyExpiredTime) {
+        this.currentRecord.companyExpiredTime = result.companyExpiredTime;
+      }
+    }
     setTimeout(() => {
        this.currentRecord = null;
     }, 150)

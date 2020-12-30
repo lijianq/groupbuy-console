@@ -111,7 +111,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import SystemAPI from "@/api/system/SystemAPI";
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 
 @Component
 export default class CompanyDetail extends Vue {
@@ -147,7 +147,7 @@ export default class CompanyDetail extends Vue {
   treeData: any[] = [];
   checkedKeys: any[] = [];
   halfCheckedKeys: any[] = [];
-  expiredDate: any = null;
+  expiredDate: Moment = moment();
   
   @Watch("record")
   modelChanged() {
@@ -159,9 +159,8 @@ export default class CompanyDetail extends Vue {
       if (this.isPermission || this.isApproval) {
         this.loading = true;
         SystemAPI.getCompanyPermission(this.record.companyId).then((result: any) => {
-          this.treeData = result.data.treeData;
-          this.setTitles(this.treeData);
-          this.defaultCheckedKeys = result.data.defaultCheckedKeys;   
+          this.treeData = result.data;
+          this.setTreeData(this.treeData);
           this.checkedKeys = this.defaultCheckedKeys;
         }).catch(error => {
           this.$message.error(error.message);
@@ -178,7 +177,7 @@ export default class CompanyDetail extends Vue {
     this.treeData = [];
     this.checkedKeys = [];
     this.halfCheckedKeys = [];
-    this.expiredDate = null;
+    this.expiredDate = moment();
     this.isPermission = false;
     this.isApproval = false;
     this.isDetail = false;
@@ -205,13 +204,20 @@ export default class CompanyDetail extends Vue {
     }
   }
 
-  setTitles(records: any[]) {
+  setTreeData(records: any[]) {
     for (let i = 0; i < records.length; i++) {
       const record = records[i];
       record.title = this.$t(record.i18nKey);
       const children = record.children;
       if (children) {
-        this.setTitles(children);
+        if (record.disableCheckbox) {
+          this.defaultCheckedKeys.push(record.key)
+        }
+        this.setTreeData(children);
+      } else {
+        if (record.hasPermission) {
+          this.defaultCheckedKeys.push(record.key)
+        }
       }
     }
   }
@@ -221,7 +227,7 @@ export default class CompanyDetail extends Vue {
     this.halfCheckedKeys = info.halfCheckedKeys;
   }
 
-  onDateChange(date: string) {
+  onDateChange(date: Moment) {
     this.expiredDate = date;
   }
 
@@ -250,16 +256,44 @@ export default class CompanyDetail extends Vue {
   }
 
   handleReject() {
-    this.$emit('cancel');
+    this.loading = true;
+    SystemAPI.rejectCompany(this.record.companyId).then((response: any) => {
+      this.$emit('cancel', response.data);
+    }).catch(error => {
+      this.$message.error(error.message);
+    }).finally(() => {
+      this.loading = false;
+    })
   }
 
   handleApprove() {
-    this.$emit('cancel');
+    this.loading = true;
+    const selectedKeys: string[] = [...this.checkedKeys, ...this.halfCheckedKeys];
+    const expiredDate = this.expiredDate.format('YYYY-MM-DD');
+    const request: any = {
+      actions: selectedKeys,
+      expiredDate: expiredDate,
+      email: this.record.companyEmail
+    }
+    SystemAPI.approveCompany(this.record.companyId, request).then((response: any) => {
+      this.$emit('cancel', response.data);
+    }).catch(error => {
+      this.$message.error(error.message);
+    }).finally(() => {
+      this.loading = false;
+    })
   }
 
   handleSetPermission() {
-    this.$message.success("权限设置成功");
-    this.$emit('cancel');
+    this.loading = true;
+    const selectedKeys: string[] = [...this.checkedKeys, ...this.halfCheckedKeys];
+    SystemAPI.setCompanyPermission(this.record.companyId, selectedKeys).then(() => {
+      this.$emit('cancel');
+    }).catch(error => {
+      this.$message.error(error.message);
+    }).finally (() => {
+      this.loading = false;
+    })
   }
 }
 </script>
