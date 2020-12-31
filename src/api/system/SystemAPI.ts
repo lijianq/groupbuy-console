@@ -92,10 +92,11 @@ class SystemAPI {
         })
     }
 
-    rejectCompany(companyId: string) {
+    rejectCompany(companyId: string, request: any) {
         return this.request.request({
             url: `${this.apiPaths.status}/${companyId}`,
-            method: 'delete'
+            method: 'delete',
+            data: request
         })
     }
 

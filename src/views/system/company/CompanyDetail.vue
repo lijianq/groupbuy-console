@@ -210,7 +210,7 @@ export default class CompanyDetail extends Vue {
       record.title = this.$t(record.i18nKey);
       const children = record.children;
       if (children) {
-        if (record.disableCheckbox) {
+        if (record.disableCheckbox && record.hasPermission) {
           this.defaultCheckedKeys.push(record.key)
         }
         this.setTreeData(children);
@@ -257,7 +257,11 @@ export default class CompanyDetail extends Vue {
 
   handleReject() {
     this.loading = true;
-    SystemAPI.rejectCompany(this.record.companyId).then((response: any) => {
+    const request: any = {
+      email: this.record.companyEmail,
+      companyName: this.record.companyName
+    }
+    SystemAPI.rejectCompany(this.record.companyId, request).then((response: any) => {
       this.$emit('cancel', response.data);
     }).catch(error => {
       this.$message.error(error.message);
@@ -273,7 +277,8 @@ export default class CompanyDetail extends Vue {
     const request: any = {
       actions: selectedKeys,
       expiredDate: expiredDate,
-      email: this.record.companyEmail
+      email: this.record.companyEmail,
+      companyName: this.record.companyName
     }
     SystemAPI.approveCompany(this.record.companyId, request).then((response: any) => {
       this.$emit('cancel', response.data);

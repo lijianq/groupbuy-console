@@ -42,7 +42,7 @@
           :wrapperCol="wrapperCol"
       >
         <a-input
-            v-decorator="['companyEmail', {rules: [{required: true, message: $t('company.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('common.email.invalid')},{max: 100, message: $t('company.email.max')}]}]"/>
+            v-decorator="['companyEmail', {rules: [{required: true, message: $t('company.email.required')},{pattern: /^[A-Za-z0-9\u4e00-\u9fa5-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:$t('common.email.invalid')},{max: 100, message: $t('company.email.max')}]}]"/>
       </a-form-item>
 
       <a-form-item
