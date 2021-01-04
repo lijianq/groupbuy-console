@@ -1,9 +1,6 @@
 <template>
   <div>
     <a-steps class="steps" :current="currentStep">
-      <a-step :title="$t('account.auth.code')">
-        <a-icon slot="icon" type="right-circle" />
-      </a-step>
       <a-step :title="$t('account.reset')">
         <a-icon slot="icon" type="lock" />
       </a-step>
@@ -12,22 +9,19 @@
       </a-step>
     </a-steps>
     <div class="content">
-      <auth-code v-if="currentStep === 0" @nextStep="nextStep"/>
-      <reset-password v-if="currentStep === 1" @nextStep="nextStep" @prevStep="prevStep"/>
-      <reset-finish v-if="currentStep === 2" @prevStep="prevStep" @finish="finish"/>
+      <reset-password v-if="currentStep === 0" @nextStep="nextStep"/>
+      <reset-finish v-if="currentStep === 1" @prevStep="prevStep" @finish="finish"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import AuthCode from './AuthCode.vue'
 import ResetPassword from './ResetPassword.vue'
 import ResetFinish from './ResetFinish.vue'
 
 @Component({
     components: {
-        AuthCode,
         ResetPassword,
         ResetFinish
     }
@@ -35,7 +29,7 @@ import ResetFinish from './ResetFinish.vue'
 export default class ForgotPassword extends Vue {
     currentStep = 0
     nextStep() {
-        if (this.currentStep < 2) {
+        if (this.currentStep < 1) {
             this.currentStep += 1
         }
     }

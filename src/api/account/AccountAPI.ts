@@ -7,6 +7,8 @@ class AccountAPI {
     private apiPaths = {
         login: "/login",
         accountActions: "/account/actions",
+        authcode: "/authcode",
+        reset: "/reset"
     }
 
     private request = Request.getDefaultInstance()
@@ -14,6 +16,22 @@ class AccountAPI {
     login(params: any) {
         return this.request.request({
             url: this.apiPaths.login,
+            method: 'post',
+            data: params
+        })
+    }
+
+    sendAuthCode(params: any) {
+        return this.request.request({
+            url: this.apiPaths.authcode,
+            method: 'post',
+            data: params
+        })
+    }
+
+    resetPassword(params: any) {
+        return this.request.request({
+            url: this.apiPaths.reset,
             method: 'post',
             data: params
         })
