@@ -42,6 +42,9 @@ export default class ZhCN {
         "app.setting.production.hint": "拷贝设置仅用于开发环境。",
         "app.setting.changcolor": "正在设置主色调",
 
+        // API Resource
+        "api.resource": "资源",
+
         // HTML Title
         "router.account.login": "登录",
         "router.error.401": "401",
@@ -60,10 +63,14 @@ export default class ZhCN {
         "router.menu.system.company": "公司管理",
         "router.menu.home": "首页",
         "router.menu.home.dashboard": "系统首页",
+        "router.menu.company": "公司设置",
+        "router.menu.company.role": "角色管理",
+        "router.menu.company.account": "账号管理",
 
-        // Page Action
+        // Page Action Type
         "route.action": "操作",
         "route.action.show": "显示",
+        "route.action.add": "添加",
         "route.action.create": "创建",
         "route.action.delete": "删除",
         "route.action.edit": "编辑",
@@ -79,7 +86,7 @@ export default class ZhCN {
         "route.action.permission": "权限",
         "route.action.complete": "完成",
         "route.action.permission.set": "设置权限",
-        "route.action.company.approve": "设置并同意",
+        "route.action.save": "保存",
 
         // Common Label
         "common.yes": "是",
@@ -206,7 +213,7 @@ export default class ZhCN {
         "company.status.inactive": "失效",
         "company.delete.title": "删除公司",
         "company.delete.content": "确认要删除所选公司吗?",
-        
+
         // System Route
 
         "system.route.create": "创建路由",
@@ -237,7 +244,15 @@ export default class ZhCN {
         "system.route.add": "添加操作",
         "system.route.action.name": "操作名称",
         "system.route.action.name.required": "请输入操作名称",
-        "system.route.action.name.i18key": "多语言显示",  
+        "system.route.action.name.i18key": "多语言显示",
+
+        // role
+        "role.name": "角色名称",
+        "role.name.required": "请输入不多于30个字符的名称",
+        "role.add": "添加角色",
+        "role.id": "角色编号",
+        "role.delete.title": "删除角色",
+        "role.delete.content": "确认要删除所选角色吗?",
     }
 
     static getMessages() {

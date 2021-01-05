@@ -18,15 +18,17 @@ export default class Request {
         timeout: 6000,
         headers: {
             "content-type": "application/json;charset=UTF-8",
-            "x-platform-company-id" : AccountModule.getAccount().companyId
+            "x-platform-company-id": AccountModule.getAccount().companyId
         }
     }
 
     private processRequest(config: AxiosRequestConfig) {
         config.headers['Accept-Language'] = i18n.locale
         const accessToken = AccountModule.getAccount().accessToken
+        const companyId = AccountModule.getAccount().companyId;
         if (typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
             config.headers['x-platform-service-token'] = accessToken
+            config.headers["x-platform-company-id"] = companyId
         }
         return config;
     }
@@ -35,19 +37,19 @@ export default class Request {
         if (response.data.authStatus === 3) {
             const params = { refreshToken: AccountModule.getAccount().refreshToken }
             const config = response.config
-            const requester  = axios.create(response.config)
+            const requester = axios.create(response.config)
             return requester.post('/refresh', params).then(res => {
                 const account = AccountModule.getAccount();
                 account.accessToken = res.data.accessToken
                 account.expiredTime = res.data.expiredTime
                 AccountModule.setAccount(account)
                 config.headers['x-platform-service-token'] = account.accessToken
-                return requester.request(config)               
+                return requester.request(config)
             }).catch(() => {
                 AccountModule.setAccount({})
                 window.location.href = '/'
             })
-        } 
+        }
         return response
     }
 
