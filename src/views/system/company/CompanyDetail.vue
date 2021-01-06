@@ -141,8 +141,8 @@
         <div v-if="isPermission">
           <a-tree
             checkable
+            :checkStrictly="true"
             v-model="checkedKeys"
-            :autoExpandParent="false"
             :selectable="false"
             :tree-data="treeData"
             @check="onCheck"
@@ -180,8 +180,8 @@ export default class CompanyDetail extends Vue {
 
   defaultCheckedKeys: any[] = [];
   treeData: any[] = [];
+  listData: any[] = [];
   checkedKeys: any[] = [];
-  halfCheckedKeys: any[] = [];
   expiredDate: Moment = moment();
 
   @Watch("record")
@@ -212,9 +212,9 @@ export default class CompanyDetail extends Vue {
   resetData() {
     this.defaultCheckedKeys = [];
     this.images = [];
+    this.listData = [];
     this.treeData = [];
     this.checkedKeys = [];
-    this.halfCheckedKeys = [];
     this.expiredDate = moment();
     this.isPermission = false;
     this.isApproval = false;
@@ -224,7 +224,6 @@ export default class CompanyDetail extends Vue {
 
   resetChecked() {
     this.checkedKeys = this.defaultCheckedKeys;
-    this.halfCheckedKeys = [];
   }
 
   resetExpiredDate() {
@@ -246,23 +245,52 @@ export default class CompanyDetail extends Vue {
     for (let i = 0; i < records.length; i++) {
       const record = records[i];
       record.title = this.$t(record.i18nKey);
-      const children = record.children;
-      if (children) {
-        if (record.disableCheckbox && record.hasPermission) {
-          this.defaultCheckedKeys.push(record.key);
-        }
+      if (record.hasPermission) {
+        this.defaultCheckedKeys.push(record.key);
+      }
+      this.listData.push(record);
+      const children: any[] = record.children;
+      if (children && children.length > 0) {
         this.setTreeData(children);
-      } else {
-        if (record.hasPermission) {
-          this.defaultCheckedKeys.push(record.key);
-        }
       }
     }
   }
 
-  onCheck(checkedKeys: any[], info: any) {
-    this.checkedKeys = checkedKeys;
-    this.halfCheckedKeys = info.halfCheckedKeys;
+  onCheck(checkedKeys: any, event: any) {
+    this.checkedKeys = checkedKeys.checked;
+    if (event.checked) {
+      this.checkParent(event.node.dataRef);
+    } else {
+      this.uncheckChildren(event.node.dataRef);
+    }
+  }
+
+  checkParent(record: any) {
+    const parentKey: string = record.parentKey;
+    if (parentKey) {
+      if (!this.checkedKeys.includes(parentKey)) {
+        this.checkedKeys.push(parentKey);
+      }
+      const parent: any = this.listData.filter(
+        (item) => item.key === parentKey
+      );
+      this.checkParent(parent[0]);
+    }
+  }
+
+  uncheckChildren(record: any) {
+    const children = record.children;
+    if (children && children.length > 0) {
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (this.checkedKeys.includes(child.key)) {
+          this.checkedKeys = this.checkedKeys.filter(
+            (key: string) => key !== child.key
+          );
+        }
+        this.uncheckChildren(child);
+      }
+    }
   }
 
   onDateChange(date: Moment) {
@@ -313,13 +341,9 @@ export default class CompanyDetail extends Vue {
 
   handleApprove() {
     this.loading = true;
-    const selectedKeys: string[] = [
-      ...this.checkedKeys,
-      ...this.halfCheckedKeys,
-    ];
     const expiredDate = this.expiredDate.format("YYYY-MM-DD");
     const request: any = {
-      actions: selectedKeys,
+      actions: this.checkedKeys,
       expiredDate: expiredDate,
       email: this.record.companyEmail,
       companyName: this.record.companyName,
@@ -338,11 +362,10 @@ export default class CompanyDetail extends Vue {
 
   handleSetPermission() {
     this.loading = true;
-    const selectedKeys: string[] = [
-      ...this.checkedKeys,
-      ...this.halfCheckedKeys,
-    ];
-    SystemAPI.setCompanyPermission(this.record.companyId, selectedKeys)
+    const request: any = {};
+    request.newIds = this.checkedKeys;
+    request.oldIds = this.defaultCheckedKeys;
+    SystemAPI.setCompanyPermission(this.record.companyId, request)
       .then(() => {
         this.$emit("cancel");
       })

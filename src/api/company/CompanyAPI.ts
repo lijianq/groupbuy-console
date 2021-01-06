@@ -41,11 +41,11 @@ class CompanyAPI {
         })
     }
 
-    setRolePermission(roleId: string, permissionIds: string[]) {
+    setRolePermission(roleId: string, request: any) {
         return this.request.request({
             url: `${this.apiPaths.permission}/${roleId}`,
             method: 'put',
-            data: permissionIds
+            data: request
         })
     }
 

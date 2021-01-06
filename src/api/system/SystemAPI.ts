@@ -42,7 +42,7 @@ class SystemAPI {
             params: {
                 routeId: routeId
             }
-                
+
         })
     }
 
@@ -84,11 +84,11 @@ class SystemAPI {
         })
     }
 
-    setCompanyPermission(companyId: string, actions: string[]) {
+    setCompanyPermission(companyId: string, request: any) {
         return this.request.request({
             url: `${this.apiPaths.permission}/${companyId}`,
             method: 'put',
-            data: actions
+            data: request
         })
     }
 

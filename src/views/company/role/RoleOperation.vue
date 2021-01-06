@@ -33,7 +33,7 @@
           <a-tree
             checkable
             v-model="checkedKeys"
-            :autoExpandParent="false"
+            :checkStrictly="true"
             :selectable="false"
             :tree-data="treeData"
             @check="onCheck"
@@ -107,8 +107,8 @@ export default class RoleOperation extends Vue {
   loading = false;
   defaultCheckedKeys: any[] = [];
   treeData: any[] = [];
+  listData: any[] = [];
   checkedKeys: any[] = [];
-  halfCheckedKeys: any[] = [];
 
   created() {
     this.form = this.$form.createForm(this, { name: "roleOpForm" });
@@ -147,8 +147,8 @@ export default class RoleOperation extends Vue {
   resetData() {
     this.defaultCheckedKeys = [];
     this.treeData = [];
+    this.listData = [];
     this.checkedKeys = [];
-    this.halfCheckedKeys = [];
     this.isAdd = false;
     this.isEdit = false;
     this.isPermission = false;
@@ -166,30 +166,58 @@ export default class RoleOperation extends Vue {
 
   resetChecked() {
     this.checkedKeys = this.defaultCheckedKeys;
-    this.halfCheckedKeys = [];
   }
 
   setTreeData(records: any[]) {
     for (let i = 0; i < records.length; i++) {
       const record = records[i];
       record.title = this.$t(record.i18nKey);
+      if (record.hasPermission) {
+        this.defaultCheckedKeys.push(record.key);
+      }
+      this.listData.push(record);
       const children = record.children;
       if (children) {
-        if (record.hasPermission) {
-          this.defaultCheckedKeys.push(record.key);
-        }
         this.setTreeData(children);
-      } else {
-        if (record.hasPermission) {
-          this.defaultCheckedKeys.push(record.key);
-        }
       }
     }
   }
 
-  onCheck(checkedKeys: any[], info: any) {
-    this.checkedKeys = checkedKeys;
-    this.halfCheckedKeys = info.halfCheckedKeys;
+  onCheck(checkedKeys: any, event: any) {
+    this.checkedKeys = checkedKeys.checked;
+    if (event.checked) {
+      this.checkParent(event.node.dataRef);
+    } else {
+      this.uncheckChildren(event.node.dataRef);
+    }
+  }
+
+  checkParent(record: any) {
+    const parentKey: string = record.parentKey;
+    if (parentKey) {
+      if (!this.checkedKeys.includes(parentKey)) {
+        this.checkedKeys.push(parentKey);
+      }
+      const parent: any = this.listData.filter(
+        (item) => item.key === parentKey
+      );
+      this.checkParent(parent[0]);
+    }
+  }
+
+  uncheckChildren(record: any) {
+    const children = record.children;
+    if (children && children.length > 0) {
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (this.checkedKeys.includes(child.key)) {
+          this.checkedKeys = this.checkedKeys.filter(
+            (key: string) => key !== child.key
+          );
+        }
+        this.uncheckChildren(child);
+      }
+    }
   }
 
   handleClose() {
@@ -202,12 +230,11 @@ export default class RoleOperation extends Vue {
 
   handleSetPermission() {
     this.loading = true;
-    const selectedKeys: string[] = [
-      ...this.checkedKeys,
-      ...this.halfCheckedKeys,
-    ];
+    const request: any = {};
+    request.newIds = this.checkedKeys;
+    request.oldIds = this.defaultCheckedKeys;
     companyAPI
-      .setRolePermission(this.record.roleId, selectedKeys)
+      .setRolePermission(this.record.roleId, request)
       .then(() => {
         this.handleClose();
       })
