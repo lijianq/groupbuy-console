@@ -87,6 +87,7 @@ export default class ZhCN {
         "route.action.complete": "完成",
         "route.action.permission.set": "设置权限",
         "route.action.save": "保存",
+        "route.action.view": "查看",
 
         // Common Label
         "common.yes": "是",

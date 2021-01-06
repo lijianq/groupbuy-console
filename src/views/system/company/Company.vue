@@ -194,6 +194,7 @@ export default class Company extends Vue {
   rowSelection: any = {
     selectedRowKeys: [],
     onChange: this.onSelectChange,
+    getCheckboxProps: this.canSelected,
   };
 
   industries: any[] = [];
@@ -216,6 +217,17 @@ export default class Company extends Vue {
     this.industries = Industry.industries;
     this.addressOptions = Address.options;
     this.processQuery();
+  }
+
+  canSelected(record: any) {
+    if (record.companyId < "100000") {
+      return {
+        props: {
+          disabled: true,
+        },
+      };
+    }
+    return { props: {} };
   }
 
   onSelectChange(selectedRowKeys: any[]) {
