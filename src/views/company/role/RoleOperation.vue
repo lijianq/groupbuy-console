@@ -237,6 +237,8 @@ export default class RoleOperation extends Vue {
           .finally(() => {
             this.loading = false;
           });
+      } else {
+        this.loading = false;
       }
     });
   }
@@ -244,6 +246,7 @@ export default class RoleOperation extends Vue {
 </script>
 <style lang="less" scoped>
 button.right-button {
+  margin-top: 10px;
   margin-left: 10px;
   padding: 0 15px;
   font-size: 14px;

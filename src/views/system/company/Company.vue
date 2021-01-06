@@ -84,7 +84,9 @@
       <a-button type="primary" class="operation-button" @click="handleQuery">{{
         $t("route.action.query")
       }}</a-button>
-      <a-button class="operation-button" @click="handleReset">{{ $t("common.reset") }}</a-button>
+      <a-button class="operation-button" @click="handleReset">{{
+        $t("common.reset")
+      }}</a-button>
       <a-button
         type="danger"
         class="operation-button"
@@ -106,18 +108,24 @@
     >
       <span slot="companyStatus" slot-scope="text">
         <template>
-          {{ $t(`company.status.${text.toLowerCase()}`)}}
+          {{ $t(`company.status.${text.toLowerCase()}`) }}
         </template>
       </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <div v-if="record.companyStatus === 'New'">
-            <a @click="handleApprove(record)">{{ $t("route.action.examine") }}</a>
+            <a @click="handleApprove(record)">{{
+              $t("route.action.examine")
+            }}</a>
           </div>
           <div v-else>
             <a @click="handleDetail(record)">{{ $t("route.action.detail") }}</a>
             <a-divider type="vertical" />
-            <a v-if="record.companyStatus === 'Active'" @click="handlePermission(record)">{{ $t("route.action.permission") }}</a>
+            <a
+              v-if="record.companyStatus === 'Active'"
+              @click="handlePermission(record)"
+              >{{ $t("route.action.permission") }}</a
+            >
           </div>
         </template>
       </span>
@@ -141,8 +149,8 @@ import CompanyDetail from "./CompanyDetail.vue";
 
 @Component({
   components: {
-    CompanyDetail
-  }
+    CompanyDetail,
+  },
 })
 export default class Company extends Vue {
   queryParam: any = {};
@@ -234,14 +242,14 @@ export default class Company extends Vue {
   }
 
   processQuery() {
-    this.rowSelection.selectedRowKeys = []
-    const query: any = {...this.queryParam}
+    this.rowSelection.selectedRowKeys = [];
+    const query: any = { ...this.queryParam };
     if (query.companyRegion) {
-      query.companyRegion = query.companyRegion.toString()
+      query.companyRegion = query.companyRegion.toString();
     }
-    query.pageNumber = this.pagination.current
-    query.pageSize = this.pagination.pageSize
-    this.getCompanies(query)
+    query.pageNumber = this.pagination.current;
+    query.pageSize = this.pagination.pageSize;
+    this.getCompanies(query);
   }
 
   handleQuery() {
@@ -260,7 +268,7 @@ export default class Company extends Vue {
   }
 
   handleReset() {
-    this.queryParam = {}
+    this.queryParam = {};
   }
 
   handleDelete(ids: string[]) {
@@ -274,12 +282,13 @@ export default class Company extends Vue {
             theme: "twoTone",
             twoToneColor: "#FF0000",
           },
-      }),
+        }),
       title: this.$t("company.delete.title"),
       content: this.$t("company.delete.content"),
       onOk: () => {
         this.loading = true;
-        systemAPI.deleteCompanies(ids)
+        systemAPI
+          .deleteCompanies(ids)
           .then(() => {
             this.rowSelection.selectedRowKeys = [];
             this.handleQuery();
@@ -308,8 +317,8 @@ export default class Company extends Vue {
       }
     }
     setTimeout(() => {
-       this.currentRecord = null;
-    }, 150)
+      this.currentRecord = null;
+    }, 150);
   }
 
   handleDetail(record: any) {
@@ -334,6 +343,7 @@ export default class Company extends Vue {
 
 <style lang="less" scoped>
 button.operation-button {
+  margin-top: 10px;
   padding: 0 15px;
   font-size: 14px;
   height: 35px;

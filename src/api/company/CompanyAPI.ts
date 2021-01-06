@@ -4,7 +4,9 @@ class CompanyAPI {
 
     private apiPaths = {
         role: "/company/role",
-        permission: "/company/role/permission"
+        permission: "/company/role/permission",
+        account: "/company/account",
+        accountRole: "/company/account/role"
     }
     private request = Request.getDefaultInstance()
 
@@ -46,6 +48,46 @@ class CompanyAPI {
             data: permissionIds
         })
     }
+
+    getCompanyAccounts(query: any) {
+        return this.request.request({
+            url: this.apiPaths.account,
+            method: 'post',
+            data: query
+        })
+    }
+
+    saveCompanyAccount(account: any) {
+        return this.request.request({
+            url: this.apiPaths.account,
+            method: 'put',
+            data: account
+        })
+    }
+
+    deleteCompanyAccounts(accountIds: string[]) {
+        return this.request.request({
+            url: this.apiPaths.account,
+            method: 'delete',
+            data: accountIds
+        })
+    }
+
+    getAccountRoles(accountId: string) {
+        return this.request.request({
+            url: `${this.apiPaths.accountRole}/${accountId}`,
+            method: 'get'
+        })
+    }
+
+    setAccountRoles(accountId: string, roleIds: string[]) {
+        return this.request.request({
+            url: `${this.apiPaths.accountRole}/${accountId}`,
+            method: 'put',
+            data: roleIds
+        })
+    }
+
 }
 
 const companyAPI = new CompanyAPI()

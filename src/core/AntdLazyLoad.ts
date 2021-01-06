@@ -48,7 +48,8 @@ import {
     Cascader,
     message,
     notification,
-    Tree
+    Tree,
+    Transfer
 } from 'ant-design-vue'
 
 export default class AntdLazyLoad {
@@ -96,6 +97,7 @@ export default class AntdLazyLoad {
         Vue.use(Descriptions)
         Vue.use(Cascader)
         Vue.use(Tree)
+        Vue.use(Transfer)
 
         Vue.prototype.$confirm = Modal.confirm
         Vue.prototype.$message = message

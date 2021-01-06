@@ -39,7 +39,7 @@
         class="operation-button"
         icon="delete"
         v-if="rowSelection.selectedRowKeys.length > 0"
-        @click="handleDelete(rowSelection.selectedRowKeys)"
+        @click="handleDelete()"
         >{{ $t("route.action.delete") }}</a-button
       >
     </div>
@@ -259,6 +259,7 @@ export default class RoleManage extends Vue {
 
 <style lang="less" scoped>
 button.operation-button {
+  margin-top: 10px;
   margin-right: 12px;
   padding: 0 15px;
   font-size: 14px;
