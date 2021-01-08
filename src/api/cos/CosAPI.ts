@@ -53,7 +53,7 @@ export class CosAPI {
         }
     }
 
-    async uploadFile(file: File, targetName?: string, targetId?: string) {
+    async uploadFile(file: File, targetId?: string, targetName?: string) {
         if (file) {
             const params: any = {}
             params.bucket = CosConfig.bucket
@@ -83,9 +83,9 @@ export class CosAPI {
         }
     }
 
-    private async putFile(cos: any, file: File, targetId: string, targetName?: string ) {
+    private async putFile(cos: any, file: File, targetId: string, targetName?: string) {
         let fileName = file.name
-        if ( targetName ) {
+        if (targetName) {
             fileName = targetName
         }
         return new Promise<any>((resolve, reject) => {

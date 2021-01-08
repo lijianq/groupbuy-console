@@ -1,7 +1,14 @@
 <template>
-  <a-dropdown v-if="currentAccount && currentAccount.accountId" placement="bottomRight">
+  <a-dropdown
+    v-if="currentAccount && currentAccount.accountId"
+    placement="bottomRight"
+  >
     <span class="ant-pro-account-avatar">
-      <a-avatar size="small" :src="avatar" class="antd-pro-global-header-index-avatar" />
+      <a-avatar
+        size="small"
+        :src="avatar"
+        class="antd-pro-global-header-index-avatar"
+      />
       <span>{{ currentAccount.accountFullName }}</span>
     </span>
 
@@ -9,12 +16,12 @@
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
         <a-menu-item v-if="menu" key="settings" @click="goSettings">
           <a-icon type="setting" />
-          {{$t('account.setting')}}
+          {{ $t("account.setting") }}
         </a-menu-item>
         <a-menu-divider v-if="menu" />
         <a-menu-item key="logout" @click="logout">
           <a-icon type="logout" />
-          {{$t('account.logout')}}
+          {{ $t("account.logout") }}
         </a-menu-item>
       </a-menu>
     </template>
@@ -25,54 +32,65 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { AccountModule } from '@/store'
-import { Modal } from 'ant-design-vue'
-import { accountAPI } from '@/api'
-import { RouterConfiguration} from '@/config'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { AccountModule } from "@/store";
+import { Modal } from "ant-design-vue";
+import { accountAPI } from "@/api";
+import { RouterConfiguration } from "@/config";
 
 @Component
 export default class AvatarDropdown extends Vue {
+  @Prop({ type: Boolean, default: true })
+  menu: boolean | undefined;
 
-    @Prop({type: Boolean, default: true})
-    public menu: boolean | undefined
+  currentAccount: any = {};
+  avatar: string = "";
 
-    public currentAccount = AccountModule.getAccount()
-    avatar: string = ''
+  created() {
+    this.$eventBus.$on("currentAccountChanged", this.currentAccountChanged);
+    this.setData();
+  }
 
-    created() {
-        let avatarSrc: string = this.currentAccount.accountAvatar
-        if (avatarSrc != null) {
-            avatarSrc = avatarSrc.trim()
-            if (avatarSrc.toLowerCase().startsWith('http')) {
-                this.avatar = avatarSrc
-            } else {
-                this.avatar = require('@/assets/avatars/' + avatarSrc)
-            }
-        } else {
-            this.avatar = require('@/assets/avatars/default.png')
-        }
+  setData() {
+    this.currentAccount = AccountModule.getAccount();
+    let avatarSrc: string = this.currentAccount.accountAvatar;
+    if (avatarSrc != null) {
+      avatarSrc = avatarSrc.trim();
+      if (avatarSrc.toLowerCase().startsWith("http")) {
+        this.avatar = `${avatarSrc}?${Date.now()}`;
+      } else {
+        this.avatar = `http://${avatarSrc}?${Date.now()}`;
+      }
+    } else {
+      this.avatar = require("@/assets/avatars/default.png");
     }
+  }
 
-    goSettings() {
-        this.$router.push({path: '/account/setting'})
-    }
+  currentAccountChanged() {
+    this.setData();
+  }
 
-    logout() {
-        Modal.confirm( {
-            okText: this.$t('common.ok').toString(),
-            cancelText: this.$t('common.cancel').toString(),
-            title: this.$t('account.logout'),
-            content: this.$t('account.logout.confirm.message'),
-            onOk: () => {
-                accountAPI.logout()
-                this.$router.push({path: RouterConfiguration.loginPath}).then(() => {
-                    location.reload()
-                })
-            },
-            onCancel: () => { console.log("Cancel logout.")}
-        })
-    }
+  goSettings() {
+    this.$router.push({ path: "/account/setting" });
+  }
+
+  logout() {
+    Modal.confirm({
+      okText: this.$t("common.ok").toString(),
+      cancelText: this.$t("common.cancel").toString(),
+      title: this.$t("account.logout"),
+      content: this.$t("account.logout.confirm.message"),
+      onOk: () => {
+        accountAPI.logout();
+        this.$router.push({ path: RouterConfiguration.loginPath }).then(() => {
+          location.reload();
+        });
+      },
+      onCancel: () => {
+        console.log("Cancel logout.");
+      },
+    });
+  }
 }
 </script>
 

@@ -76,7 +76,7 @@
                     rules: [
                       {
                         required: true,
-                        max: 100,
+                        max: 50,
                         message: $t('account.full.name.required'),
                       },
                     ],

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
+import VueCropper from 'vue-cropper'
 
 // base library
 import {
@@ -98,6 +99,7 @@ export default class AntdLazyLoad {
         Vue.use(Cascader)
         Vue.use(Tree)
         Vue.use(Transfer)
+        Vue.use(VueCropper)
 
         Vue.prototype.$confirm = Modal.confirm
         Vue.prototype.$message = message
@@ -106,6 +108,7 @@ export default class AntdLazyLoad {
         Vue.prototype.$success = Modal.success
         Vue.prototype.$error = Modal.error
         Vue.prototype.$warning = Modal.warning
+        Vue.prototype.$eventBus = new Vue();
 
         Vue.use(Viewer)
     }
