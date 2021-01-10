@@ -43,7 +43,7 @@
           type="primary"
           class="right-button"
           @click="handleSetPermission()"
-          >{{ $t("route.action.permission.set") }}</a-button
+          >{{ $t("permission.set") }}</a-button
         >
         <a-button class="right-button" @click="resetChecked()">{{
           $t("route.action.reset")
@@ -244,7 +244,7 @@ export default class CompanyDetail extends Vue {
   setTreeData(records: any[]) {
     for (let i = 0; i < records.length; i++) {
       const record = records[i];
-      record.title = this.$t(record.i18nKey);
+      record.title = this.$t(record.name);
       if (record.hasPermission) {
         this.defaultCheckedKeys.push(record.key);
       }

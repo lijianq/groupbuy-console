@@ -26,18 +26,14 @@
       :loading="dataLoading"
       rowKey="routeId"
     >
-      <span slot="name" slot-scope="text, record">
-        <template>
-          <a-icon
-            :type="record.routeMeta.icon"
-            style="margin-right: 5px;"
-          ></a-icon>
-          {{ text }}
-        </template>
-      </span>
-      <span slot="display" slot-scope="text">
+      <span slot="name" slot-scope="text">
         <template>
           {{ $t(text) }}
+        </template>
+      </span>
+      <span slot="icon" slot-scope="text">
+        <template>
+          <a-icon :type="text" style="margin-right: 5px;"></a-icon>
         </template>
       </span>
       <span slot="type" slot-scope="text">
@@ -110,9 +106,9 @@ export default class Route extends Vue {
         scopedSlots: { customRender: "name" },
       },
       {
-        title: this.$t("system.route.display.name"),
-        dataIndex: "routeMeta.title",
-        scopedSlots: { customRender: "display" },
+        title: this.$t("system.route.icon"),
+        dataIndex: "routeMeta.icon",
+        scopedSlots: { customRender: "icon" },
       },
       {
         title: this.$t("system.route.type"),
@@ -120,7 +116,7 @@ export default class Route extends Vue {
         scopedSlots: { customRender: "type" },
       },
       {
-        title: this.$t("route.action"),
+        title: "",
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
       },
@@ -284,7 +280,7 @@ export default class Route extends Vue {
           route.routeRedirect = values.routeRedirect;
         }
         meta.icon = values.routeIcon;
-        meta.title = values.routeI18Key;
+        meta.title = values.routeName;
         route.routeMeta = JSON.stringify(meta);
         SystemAPI.createRoute(route)
           .then(() => {
@@ -348,7 +344,7 @@ export default class Route extends Vue {
     this.actionVisible = false;
     setTimeout(() => {
       this.currentRoute = null;
-    }, 150)
+    }, 150);
   }
 
   handleAction(record: any) {

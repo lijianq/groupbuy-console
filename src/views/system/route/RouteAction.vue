@@ -25,26 +25,12 @@
         :pagination="false"
         rowKey="routeActionId"
       >
-        <template slot="routeActionName" slot-scope="text, record">
-          <a-input
-            v-if="record.editable"
-            style="margin: -5px 0"
-            :maxLength="30"
-            :value="text"
-            @change="
-              (e) => handleChange(e.target.value, record, 'routeActionName')
-            "
-          />
-          <template v-else>
-            {{ text }}
-          </template>
-        </template>
-        <template slot="routeActionNameI18key" slot-scope="text, record">
+        <template slot="routeActionType" slot-scope="text, record">
           <a-select
             v-if="record.editable"
             style="margin: -5px 0; width: 350px;"
             :defaultValue="text"
-            @change="(e) => handleChange(e, record, 'routeActionNameI18key')"
+            @change="(e) => handleChange(e, record, 'routeActionType')"
           >
             <a-select-option
               v-for="i18nkey in i18nKeys"
@@ -58,18 +44,24 @@
             {{ `${text}:  [${$t(text)}]` }}
           </template>
         </template>
-        <template slot="routeActionType" slot-scope="text">
-          <template v-if="text === 'Preset'">
-            {{ $t("common.yes") }}
-          </template>
+        <template slot="routeActionResource" slot-scope="text, record">
+          <a-input
+            v-if="record.editable"
+            style="margin: -5px 0"
+            :maxLength="30"
+            :value="text"
+            @change="
+              (e) => handleChange(e.target.value, record, 'routeActionResource')
+            "
+          />
           <template v-else>
-            {{ $t("common.no") }}
+            {{ text }}
           </template>
         </template>
         <template
           slot="operation"
           slot-scope="text, record"
-          v-if="record.routeActionType !== 'Preset'"
+          v-if="record.routeActionPreset !== 0"
         >
           <span v-if="record.editable">
             <a @click="() => handleSave(record)">{{ $t("common.save") }}</a>
@@ -125,21 +117,16 @@ export default class RouteAction extends Vue {
   get columns() {
     return [
       {
-        title: this.$t("system.route.action.name"),
-        dataIndex: "routeActionName",
-        width: "25%",
-        scopedSlots: { customRender: "routeActionName" },
-      },
-      {
-        title: this.$t("system.route.action.name.i18key"),
-        dataIndex: "routeActionNameI18key",
-        width: "40%",
-        scopedSlots: { customRender: "routeActionNameI18key" },
-      },
-      {
-        title: this.$t("system.route.preset"),
+        title: this.$t("system.route.action.type"),
         dataIndex: "routeActionType",
+        width: "40%",
         scopedSlots: { customRender: "routeActionType" },
+      },
+      {
+        title: this.$t("system.route.action.resource"),
+        dataIndex: "routeActionResource",
+        width: "40%",
+        scopedSlots: { customRender: "routeActionResource" },
       },
       {
         dataIndex: "operation",
@@ -178,9 +165,8 @@ export default class RouteAction extends Vue {
     this.editingRecord = {};
     this.editingRecord.routeActionId = record.routeActionId;
     this.editingRecord.routeId = record.routeId;
-    this.editingRecord.routeActionName = record.routeActionName;
-    this.editingRecord.routeActionNameI18key = record.routeActionNameI18key;
     this.editingRecord.routeActionType = record.routeActionType;
+    this.editingRecord.routeActionResource = record.routeActionResource;
   }
 
   resetEditing(record?: any) {
@@ -196,9 +182,8 @@ export default class RouteAction extends Vue {
     const key = this.tempKey.toString();
     const record: any = {
       routeActionId: key,
-      routeActionName: "",
-      routeActionNameI18key: "",
       routeActionType: "",
+      routeActionResource: "",
       routeId: this.route.routeId,
       editable: true,
     };
@@ -228,16 +213,16 @@ export default class RouteAction extends Vue {
 
   handleSave(record: any) {
     const { editingRecord } = this;
-    if (editingRecord.routeActionName === "") {
+    if (editingRecord.routeActionType === "") {
       this.$message.warn(
-        this.$t("system.route.action.name.required").toString()
+        this.$t("system.route.action.type.required").toString()
       );
       return;
     }
 
     if (
-      editingRecord.routeActionName === record.routeActionName &&
-      editingRecord.routeActionNameI18key === record.routeActionNameI18key
+      editingRecord.routeActionType === record.routeActionType &&
+      editingRecord.routeActionResource === record.routeActionResource
     ) {
       // no change
       this.resetEditing(record);
@@ -247,11 +232,9 @@ export default class RouteAction extends Vue {
     SystemAPI.createRouteAction(editingRecord)
       .then((result) => {
         const newRecord: any = result.data;
-        console.log(newRecord);
         record.routeActionId = newRecord.routeActionId;
-        record.routeActionName = newRecord.routeActionName;
-        record.routeActionNameI18key = newRecord.routeActionNameI18key;
         record.routeActionType = newRecord.routeActionType;
+        record.routeActionResource = newRecord.routeActionResource;
         this.resetEditing(record);
       })
       .catch((error) => {

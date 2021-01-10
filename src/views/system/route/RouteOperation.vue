@@ -19,14 +19,20 @@
   >
     <a-spin :spinning="loading">
       <a-form :form="form" id="routeOpForm" v-bind="formLayout">
-        <a-form-item v-show="model && model.routeId" :label="$t('system.route.id')">
+        <a-form-item
+          v-show="model && model.routeId"
+          :label="$t('system.route.id')"
+        >
           <a-input v-decorator="['routeId']" disabled />
         </a-form-item>
-        <a-form-item v-show="model && model.routeParentId" :label="$t('system.route.parent.id')">
+        <a-form-item
+          v-show="model && model.routeParentId"
+          :label="$t('system.route.parent.id')"
+        >
           <a-input v-decorator="['routeParentId']" disabled />
         </a-form-item>
         <a-form-item :label="$t('system.route.name')">
-          <a-input
+          <a-select
             v-decorator="[
               'routeName',
               {
@@ -39,7 +45,15 @@
                 ],
               },
             ]"
-          />
+          >
+            <a-select-option
+              v-for="i18nkey in i18nKeys"
+              :key="i18nkey"
+              :value="i18nkey"
+            >
+              {{ `${i18nkey}:  [${$t(i18nkey)}]` }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item :label="$t('system.route.type')">
           <a-select
@@ -110,9 +124,7 @@
           <a-input
             addon-before="/"
             :disabled="idisable"
-            v-decorator="[
-              'routeRedirect'
-            ]"
+            v-decorator="['routeRedirect']"
           />
         </a-form-item>
         <a-form-item :label="$t('system.route.icon')">
@@ -132,30 +144,6 @@
           >
             <a-select-option v-for="icon in icons" :key="icon" :value="icon">
               <a-icon :type="icon" style="margin-right: 5px;" /> {{ icon }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item :label="$t('system.route.i18key')">
-          <a-select
-            v-decorator="[
-              'routeI18Key',
-              {
-                rules: [
-                  {
-                    required: true,
-                    max: 50,
-                    message: $t('system.route.i18key.required'),
-                  },
-                ],
-              },
-            ]"
-          >
-            <a-select-option
-              v-for="i18nkey in i18nKeys"
-              :key="i18nkey"
-              :value="i18nkey"
-            >
-              {{ `${i18nkey}:  [${$t(i18nkey)}]` }}
             </a-select-option>
           </a-select>
         </a-form-item>
@@ -181,7 +169,6 @@ export default class RouteOperation extends Vue {
     "routeType",
     "routeComponent",
     "routeIcon",
-    "routeI18Key"
   ];
 
   @Prop({ type: String, default: "" })
@@ -227,21 +214,24 @@ export default class RouteOperation extends Vue {
   @Watch("model")
   modelChanged() {
     this.gdisable = false;
-    this.idisable = false;  
+    this.idisable = false;
     if (this.model && Object.keys(this.model).length > 0) {
-      this.fields.forEach((v) => this.form.getFieldDecorator(v, {}))
-      this.handleTypeChange(this.model.routeType)
-      let routePath = ""
-      if (this.model.routePath && this.model.routePath.startsWith('/')) {
-        routePath = this.model.routePath.substring(1)
+      this.fields.forEach((v) => this.form.getFieldDecorator(v, {}));
+      this.handleTypeChange(this.model.routeType);
+      let routePath = "";
+      if (this.model.routePath && this.model.routePath.startsWith("/")) {
+        routePath = this.model.routePath.substring(1);
       } else {
-        routePath = this.model.routePath
+        routePath = this.model.routePath;
       }
-      let routeRedirect = ""
-      if ( this.model.routeRedirect && this.model.routeRedirect.startsWith('/')) {
-        routeRedirect = this.model.routeRedirect.substring(1)
+      let routeRedirect = "";
+      if (
+        this.model.routeRedirect &&
+        this.model.routeRedirect.startsWith("/")
+      ) {
+        routeRedirect = this.model.routeRedirect.substring(1);
       } else {
-        routeRedirect = this.model.routeRedirect
+        routeRedirect = this.model.routeRedirect;
       }
       this.form.setFieldsValue({
         routeId: this.model.routeId,
@@ -250,17 +240,18 @@ export default class RouteOperation extends Vue {
         routePath: routePath,
         routeRedirect: routeRedirect,
         routeType: this.model.routeType,
-        routeComponent: this.model.routeComponent
-      })
+        routeComponent: this.model.routeComponent,
+      });
 
       if (this.model.routeMeta) {
-        this.form.setFieldsValue({routeIcon: this.model.routeMeta.icon,routeI18Key: this.model.routeMeta.title})
+        this.form.setFieldsValue({
+          routeIcon: this.model.routeMeta.icon,
+        });
       }
     } else {
       this.form.resetFields();
     }
   }
-  
 
   handleTypeChange(value: string) {
     if (value === "Group") {

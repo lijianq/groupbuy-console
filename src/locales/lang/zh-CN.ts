@@ -68,8 +68,8 @@ export default class ZhCN {
         "router.menu.company.account": "账号管理",
 
         // Page Action Type
-        "route.action": "操作",
-        "route.action.show": "显示",
+        "route.preset.action.show": "显示",
+        "route.action.all": "全部",
         "route.action.add": "添加",
         "route.action.create": "创建",
         "route.action.delete": "删除",
@@ -85,7 +85,6 @@ export default class ZhCN {
         "route.action.examine": "审批",
         "route.action.permission": "权限",
         "route.action.complete": "完成",
-        "route.action.permission.set": "设置权限",
         "route.action.save": "保存",
         "route.action.view": "查看",
 
@@ -125,6 +124,7 @@ export default class ZhCN {
         "common.phone.max": "电话号码超过20个字符",
         "common.email.max": "邮件地址超过100个字符",
         "common.image.select": "选择图片",
+        "permission.set": "设置权限",
 
         // common error
         "error.400": "无效请求",
@@ -253,7 +253,6 @@ export default class ZhCN {
         "system.route.id": "路由编号",
         "system.route.parent.id": "父路由编号",
         "system.route.name": "路由名称",
-        "system.route.display.name": "本地语言名称",
         "system.route.type": "路由类型",
         "system.route.group": "路由组",
         "system.route.item": "路由项",
@@ -262,20 +261,18 @@ export default class ZhCN {
         "system.route.path": "路由路径",
         "system.route.redirect": "重定向路径",
         "system.route.icon": "路由图标",
-        "system.route.i18key": "多语言主键",
         "system.route.name.required": "请输入不超过50个字符的名称",
         "system.route.type.required": "请选择类型",
         "system.route.component.required": "请选择组件",
         "system.route.path.required": "请输入不超过50个字符的路径",
         "system.route.redirect.required": "请输入不超过50个字符的路径",
         "system.route.icon.required": "请选择路由图标名称",
-        "system.route.i18key.required": "请选择多语言主键",
         "system.route.action.delete.title": "删除路由配置",
         "system.route.action.delete.content": "该操作会删除所选路由以及它的子路由, 确认删除吗?",
         "system.route.add": "添加操作",
-        "system.route.action.name": "操作名称",
-        "system.route.action.name.required": "请输入操作名称",
-        "system.route.action.name.i18key": "多语言显示",
+        "system.route.action.type": "操作类型",
+        "system.route.action.type.required": "请选择操作类型",
+        "system.route.action.resource": "关联资源",
 
         // role
         "role.name": "角色名称",

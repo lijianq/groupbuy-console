@@ -323,7 +323,6 @@ export default class AccountOperation extends Vue {
 
   handleChange(targetKeys: any[]) {
     this.selectedKeys = targetKeys;
-    console.log(this.selectedKeys);
   }
 
   renderItem(record: any) {
