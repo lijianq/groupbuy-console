@@ -50,6 +50,7 @@ import {
     message,
     notification,
     Tree,
+    TreeSelect,
     Transfer
 } from 'ant-design-vue'
 
@@ -98,6 +99,7 @@ export default class AntdLazyLoad {
         Vue.use(Descriptions)
         Vue.use(Cascader)
         Vue.use(Tree)
+        Vue.use(TreeSelect)
         Vue.use(Transfer)
         Vue.use(VueCropper)
 

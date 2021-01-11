@@ -28,7 +28,7 @@
         <template slot="routeActionType" slot-scope="text, record">
           <a-select
             v-if="record.editable"
-            style="margin: -5px 0; width: 350px;"
+            style="margin: -5px 0; width: 250px;"
             :defaultValue="text"
             @change="(e) => handleChange(e, record, 'routeActionType')"
           >
@@ -45,18 +45,14 @@
           </template>
         </template>
         <template slot="routeActionResource" slot-scope="text, record">
-          <a-input
-            v-if="record.editable"
-            style="margin: -5px 0"
-            :maxLength="30"
-            :value="text"
-            @change="
-              (e) => handleChange(e.target.value, record, 'routeActionResource')
-            "
+          <a-tree-select
+            :disabled="!record.editable"
+            v-model="checkedValues"
+            style="width: 100%"
+            :tree-data="treeData"
+            tree-checkable
+            search-placeholder="Please select"
           />
-          <template v-else>
-            {{ text }}
-          </template>
         </template>
         <template
           slot="operation"
@@ -114,18 +110,52 @@ export default class RouteAction extends Vue {
 
   tempKey = 0;
 
+  treeData: any[] = [
+    {
+      title: "Node1",
+      value: "0-0",
+      key: "0-0",
+      children: [
+        {
+          title: "Child Node1",
+          value: "0-0-0",
+          key: "0-0-0",
+        },
+      ],
+    },
+    {
+      title: "Node2",
+      value: "0-1",
+      key: "0-1",
+      children: [
+        {
+          title: "Child Node3",
+          value: "0-1-0",
+          key: "0-1-0",
+        },
+        {
+          title: "Child Node4",
+          value: "0-1-1",
+          key: "0-1-1",
+        },
+      ],
+    },
+  ];
+
+  checkedValues: any[] = ["0-0-0"];
+
   get columns() {
     return [
       {
         title: this.$t("system.route.action.type"),
         dataIndex: "routeActionType",
-        width: "40%",
+        width: "30%",
         scopedSlots: { customRender: "routeActionType" },
       },
       {
         title: this.$t("system.route.action.resource"),
         dataIndex: "routeActionResource",
-        width: "40%",
+        width: "50%",
         scopedSlots: { customRender: "routeActionResource" },
       },
       {

@@ -1,38 +1,12 @@
 <template>
   <div>
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="48">
-          <a-col :md="8" :sm="24">
-            <a-form-item :label="$t('role.name')">
-              <a-input
-                v-model="queryParam.roleName"
-                :placeholder="$t('common.input.search.hint')"
-              />
-            </a-form-item>
-          </a-col>
-          <a-col :md="8" :sm="24">
-            <a-button
-              type="primary"
-              class="operation-button"
-              @click="handleQuery"
-              >{{ $t("route.action.query") }}</a-button
-            >
-            <a-button class="operation-button" @click="handleReset">{{
-              $t("common.reset")
-            }}</a-button>
-          </a-col>
-        </a-row>
-      </a-form>
-    </div>
-
     <div class="table-operator">
       <a-button
         type="primary"
         class="operation-button"
-        @click="handleAdd"
         icon="plus"
-        >{{ $t("role.add") }}</a-button
+        @click="handleAdd"
+        >{{ $t("system.resource.create") }}</a-button
       >
       <a-button
         type="danger"
@@ -45,31 +19,35 @@
     </div>
 
     <a-table
-      rowKey="roleId"
-      :loading="loading"
-      :pagination="pagination"
       :columns="columns"
       :data-source="data"
-      :rowSelection="rowSelection"
-      @change="handleChange"
+      :row-selection="rowSelection"
+      :pagination="false"
+      :loading="dataLoading"
+      rowKey="resourceId"
     >
-      <span slot="action" slot-scope="text, record">
+      <span slot="type" slot-scope="text">
         <template>
-          <div>
-            <a @click="handleEdit(record)">{{ $t("route.action.edit") }}</a>
-            <a-divider type="vertical" />
-            <a @click="handlePermission(record)">{{
-              $t("route.action.permission")
-            }}</a>
-          </div>
+          {{ $t(`system.resource.${text.toLowerCase()}`) }}
+        </template>
+      </span>
+      <span slot="action" slot-scope="text, record">
+        <template v-if="record.resourceType !== 'Preset'">
+          <a @click="handleEdit(record)">{{ $t("route.action.modify") }}</a>
+          <a-divider type="vertical" />
+
+          <a v-if="record.resourceType === 'Group'" @click="addChild(record)">{{
+            $t("system.resource.child")
+          }}</a>
         </template>
       </span>
     </a-table>
 
     <resource-operation
-      ref="resourceOperation"
+      ref="createModal"
       :visible="visible"
-      :record="currentRecord"
+      :loading="confirmLoading"
+      :model="mdl"
       @cancel="handleCancel"
       @ok="handleOk"
     />
@@ -78,9 +56,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import companyAPI from "@/api/company/CompanyAPI";
-import { Modal } from "ant-design-vue";
 import ResourceOperation from "./ResourceOperation.vue";
+import SystemAPI from "@/api/system/SystemAPI";
+import { WrappedFormUtils } from "ant-design-vue/types/form/form";
+import { Modal } from "ant-design-vue";
 
 @Component({
   components: {
@@ -88,16 +67,24 @@ import ResourceOperation from "./ResourceOperation.vue";
   },
 })
 export default class ResourceManage extends Vue {
-  queryParam: any = {};
   get columns() {
     return [
       {
-        title: this.$t("role.id"),
-        dataIndex: "roleId",
+        title: this.$t("system.resource.name"),
+        dataIndex: "resourceName",
       },
       {
-        title: this.$t("role.name"),
-        dataIndex: "roleName",
+        title: this.$t("system.resource.method"),
+        dataIndex: "resourceMethod",
+      },
+      {
+        title: this.$t("system.resource.path"),
+        dataIndex: "resourcePath",
+      },
+      {
+        title: this.$t("system.resource.type"),
+        dataIndex: "resourceType",
+        scopedSlots: { customRender: "type" },
       },
       {
         title: "",
@@ -108,78 +95,181 @@ export default class ResourceManage extends Vue {
   }
 
   data: any[] = [];
+  dataLoading = false;
 
   rowSelection: any = {
     selectedRowKeys: [],
-    onChange: this.onSelectChange,
+    onChange: this.onChange,
+    getCheckboxProps: this.canSelected,
+    onSelect: this.onSelect,
   };
 
-  loading = false;
-  pagination: any = {
-    defaultCurrent: 1,
-    current: 1,
-    defaultPageSize: 10,
-    pageSize: 10,
-    pageSizeOptions: ["10", "30", "50", "100"],
-    showSizeChanger: true,
-  };
-
-  // operation modal
+  mdl: any = null;
   visible = false;
-  currentRecord: any = null;
+  confirmLoading = false;
 
   created() {
-    this.processQuery();
+    this.refreshData();
   }
 
-  onSelectChange(selectedRowKeys: any[]) {
-    this.rowSelection.selectedRowKeys = selectedRowKeys;
-  }
-
-  getCompanyRoles(query: any) {
-    this.loading = true;
-    companyAPI
-      .getCompanyRoles(query)
-      .then((result: any) => {
-        const records: any = result.data;
-        const pagination = { ...this.pagination };
-        pagination.total = parseInt(records.totalCount);
-        this.data = records.resultSet;
-        this.pagination = pagination;
+  refreshData() {
+    this.dataLoading = true;
+    SystemAPI.getResources()
+      .then((response) => {
+        this.data = response.data as any[];
+        this.rowSelection.selectedRowKeys = [];
       })
       .catch((error) => {
         this.$message.error(error.message);
       })
       .finally(() => {
-        this.loading = false;
+        this.dataLoading = false;
       });
   }
 
-  processQuery() {
-    this.rowSelection.selectedRowKeys = [];
-    const query: any = { ...this.queryParam };
-    query.pageNumber = this.pagination.current;
-    query.pageSize = this.pagination.pageSize;
-    this.getCompanyRoles(query);
+  onChange(selectedRowKeys: any[]) {
+    this.rowSelection.selectedRowKeys = selectedRowKeys;
   }
 
-  handleQuery() {
-    this.pagination.current = 1;
-    this.processQuery();
-  }
-
-  handleChange(pagination: any) {
-    if (this.pagination.pageSize !== pagination.pageSize) {
-      this.pagination.current = 1;
+  onSelect(record: any, selected: boolean, selectedRows: any[]) {
+    if (selected) {
+      this.selectChildren(record);
     } else {
-      this.pagination.current = pagination.current;
+      this.unselectChildren(record);
+      this.unselectParents(record, selectedRows);
     }
-    this.pagination.pageSize = pagination.pageSize;
-    this.processQuery();
   }
 
-  handleReset() {
-    this.queryParam = {};
+  fetchChidrenIds(record: any, cids: string[]) {
+    const children = record.children;
+    if (children && children.length > 0) {
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        cids.push(child.resourceId);
+        this.fetchChidrenIds(child, cids);
+      }
+    }
+  }
+
+  fetchSelectedPIds(record: any, selectedRows: any[], pids: string[]) {
+    const parentId: string = record.resourceParentId;
+    if (parentId !== "0") {
+      pids.push(parentId);
+      const parents: any[] = selectedRows.filter(
+        (item) => item.resourceId === parentId
+      );
+      if (parents && parents.length > 0) {
+        this.fetchSelectedPIds(parents[0], selectedRows, pids);
+      }
+    }
+  }
+
+  selectChildren(record: any) {
+    const children = record.children;
+    if (children && children.length > 0) {
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (!this.rowSelection.selectedRowKeys.includes(child.resourceId)) {
+          this.rowSelection.selectedRowKeys.push(child.resourceId);
+        }
+        this.selectChildren(child);
+      }
+    }
+  }
+
+  unselectChildren(record: any) {
+    const cids: string[] = [];
+    this.fetchChidrenIds(record, cids);
+    this.rowSelection.selectedRowKeys = this.rowSelection.selectedRowKeys.filter(
+      (item: string) => !cids.includes(item)
+    );
+  }
+
+  unselectParents(record: any, selectedRows: any[]) {
+    const pids: string[] = [];
+    this.fetchSelectedPIds(record, selectedRows, pids);
+    this.rowSelection.selectedRowKeys = this.rowSelection.selectedRowKeys.filter(
+      (item: string) => !pids.includes(item)
+    );
+  }
+
+  canSelected(record: any) {
+    if (record.resourceType === "Preset") {
+      return {
+        props: {
+          disabled: true,
+        },
+      };
+    }
+    return { props: {} };
+  }
+
+  handleEdit(record: any) {
+    this.visible = true;
+    this.mdl = { ...record };
+  }
+
+  handleAdd() {
+    this.mdl = {};
+    this.visible = true;
+  }
+
+  addChild(record: any) {
+    this.mdl = {
+      resourceParentId: record.resourceId,
+    };
+    this.visible = true;
+  }
+
+  handleOk() {
+    const ref: any = this.$refs.createModal;
+    const form: WrappedFormUtils = ref.form;
+    this.confirmLoading = true;
+    const fields: string[] = [
+      "resourceId",
+      "resourceParentId",
+      "resourceName",
+      "resourceType",
+    ];
+    const type = form.getFieldValue("resourceType");
+    if (type && type === "Item") {
+      fields.push("resourceMethod");
+      fields.push("resourcePath");
+    }
+    form.validateFields(fields, (err, values) => {
+      if (!err) {
+        const resource: any = {};
+        resource.resourceId = values.resourceId || "-1";
+        resource.resourceParentId = values.resourceParentId || "0";
+        resource.resourceName = values.resourceName;
+        resource.resourceType = values.resourceType;
+        if (values.resourceType === "Item") {
+          resource.resourceMethod = values.resourceMethod;
+          resource.resourcePath = `/**${values.resourcePath}`;
+        }
+        SystemAPI.createResource(resource)
+          .then(() => {
+            this.visible = false;
+            this.refreshData();
+          })
+          .catch((error) => {
+            this.$message.error(error.message);
+          })
+          .finally(() => {
+            form.resetFields();
+            this.confirmLoading = false;
+            this.visible = false;
+          });
+      } else {
+        this.confirmLoading = false;
+      }
+    });
+  }
+  handleCancel() {
+    const ref: any = this.$refs.createModal;
+    const form: WrappedFormUtils = ref.form;
+    form.resetFields();
+    this.visible = false;
   }
 
   handleDelete() {
@@ -194,21 +284,19 @@ export default class ResourceManage extends Vue {
             twoToneColor: "#FF0000",
           },
         }),
-      title: this.$t("role.delete.title"),
-      content: this.$t("role.delete.content"),
+      title: this.$t("system.resource.delete.title"),
+      content: this.$t("system.resource.delete.content"),
       onOk: () => {
-        this.loading = true;
-        companyAPI
-          .deleteCompanyRoles(this.rowSelection.selectedRowKeys)
+        this.dataLoading = true;
+        SystemAPI.deleteResources(this.rowSelection.selectedRowKeys)
           .then(() => {
-            this.rowSelection.selectedRowKeys = [];
-            this.handleQuery();
+            this.refreshData();
           })
           .catch((error) => {
             this.$message.error(error.message);
           })
           .finally(() => {
-            this.loading = false;
+            this.dataLoading = false;
           });
       },
       onCancel: () => {
@@ -216,52 +304,5 @@ export default class ResourceManage extends Vue {
       },
     });
   }
-
-  handleOk(result: any) {
-    this.visible = false;
-    if (this.currentRecord.roleId) {
-      this.currentRecord.roleName = result.roleName;
-    } else {
-      this.rowSelection.selectedRowKeys = [];
-      this.handleQuery();
-    }
-    setTimeout(() => {
-      this.currentRecord = null;
-    }, 150);
-  }
-
-  handleCancel() {
-    this.visible = false;
-    setTimeout(() => {
-      this.currentRecord = null;
-    }, 150);
-  }
-
-  handlePermission(record: any) {
-    this.currentRecord = record;
-    this.currentRecord.type = "permission";
-    this.visible = true;
-  }
-
-  handleAdd() {
-    this.currentRecord = {};
-    this.currentRecord.type = "add";
-    this.visible = true;
-  }
-
-  handleEdit(record: any) {
-    this.currentRecord = record;
-    this.currentRecord.type = "edit";
-    this.visible = true;
-  }
 }
 </script>
-
-<style lang="less" scoped>
-button.operation-button {
-  margin-right: 12px;
-  padding: 0 15px;
-  font-size: 14px;
-  width: 120px;
-}
-</style>

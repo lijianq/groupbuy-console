@@ -132,7 +132,11 @@
       </a-form-item>
 
       <a-form-item>
-        <a-button :loading="loading" type="primary" class="step-button" @click="resetPassword"
+        <a-button
+          :loading="loading"
+          type="primary"
+          class="step-button"
+          @click="resetPassword"
           >{{ $t("account.reset") }}
         </a-button>
         <a-button type="primary" class="step-button" @click="backToLogin"
@@ -208,20 +212,23 @@ export default class ResetPassword extends Vue {
     } = this;
     validateFields((err, values) => {
       if (!err) {
-        console.log(values);
         const request: any = {};
         request.companyId = values.companyId;
         request.accountName = values.accountName;
         request.accountEmail = values.accountEmail;
         request.authCode = values.authCode;
         request.accountPassword = md5(values.password1);
-        accountAPI.resetPassword(request).then(() => {
-          this.$emit("nextStep");
-        }).catch(error => {
-          this.$message.error(error.message);
-        }).finally(() => {
-          this.loading = false;
-        })    
+        accountAPI
+          .resetPassword(request)
+          .then(() => {
+            this.$emit("nextStep");
+          })
+          .catch((error) => {
+            this.$message.error(error.message);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
       } else {
         this.loading = false;
       }

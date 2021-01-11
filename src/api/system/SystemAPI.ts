@@ -7,7 +7,8 @@ class SystemAPI {
         routeAction: "/system/route/action",
         company: "/system/company",
         permission: "/system/company/permission",
-        status: "/system/company/status"
+        status: "/system/company/status",
+        resource: "/system/resource"
     }
     private request = Request.getDefaultInstance()
 
@@ -105,6 +106,29 @@ class SystemAPI {
             url: `${this.apiPaths.status}/${companyId}`,
             method: 'put',
             data: request
+        })
+    }
+
+    getResources() {
+        return this.request.request({
+            url: this.apiPaths.resource,
+            method: 'get',
+        })
+    }
+
+    createResource(resource: any) {
+        return this.request.request({
+            url: this.apiPaths.resource,
+            method: 'put',
+            data: resource
+        })
+    }
+
+    deleteResources(resourceIds: string[]) {
+        return this.request.request({
+            url: this.apiPaths.resource,
+            method: 'delete',
+            data: resourceIds
         })
     }
 }

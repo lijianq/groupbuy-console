@@ -258,9 +258,6 @@ export default class Route extends Vue {
     const form: WrappedFormUtils = ref.form;
     this.confirmLoading = true;
     form.validateFields((err, values) => {
-      const route: any = {};
-      route.routeName = values.routeName;
-      route.routeType = values.routeType;
       if (!err) {
         const route: any = {};
         const meta: any = {};

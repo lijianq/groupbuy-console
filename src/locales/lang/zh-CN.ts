@@ -275,6 +275,27 @@ export default class ZhCN {
         "system.route.action.type.required": "请选择操作类型",
         "system.route.action.resource": "关联资源",
 
+        // System Resource
+        "system.resource.create": "新建资源",
+        "system.resource.name": "资源名称",
+        "system.resource.name.required": "请输入不超过30个字符的名称",
+        "system.resource.method": "访问方式",
+        "system.resource.method.required": "请选择访问方式",
+        "system.resource.path": "资源路径",
+        "system.resource.path.required": "请输入不超过100个字符的路径",
+        "system.resource.type": "资源类型",
+        "system.resource.type.required": "请选择资源类型",
+        "system.resource.id": "资源标识",
+        "system.resource.parent.id": "父资源标识",
+        "system.resource.preset": "预置",
+        "system.resource.group": "资源组",
+        "system.resource.item": "资源项",
+        "system.resource.modify": "修改资源",
+        "system.resource.child": "添加资源项",
+        "system.resource.delete.title": "删除资源",
+        "system.resource.delete.content": "该操作会删除所选资源以及它的资源项, 确认删除吗?",
+
+
         // role
         "role.name": "角色名称",
         "role.name.required": "请输入不多于30个字符的名称",
