@@ -352,13 +352,3 @@ export default class Company extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-button.operation-button {
-  margin-top: 10px;
-  padding: 0 15px;
-  font-size: 14px;
-  height: 35px;
-  width: 120px;
-}
-</style>

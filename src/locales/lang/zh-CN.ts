@@ -59,6 +59,7 @@ export default class ZhCN {
         "router.menu.personal": "个人中心",
         "router.menu.personal.setting": "账号设置",
         "router.menu.system": "系统管理",
+        "router.menu.system.resource": "资源配置",
         "router.menu.system.route": "路由配置",
         "router.menu.system.company": "公司管理",
         "router.menu.home": "首页",

@@ -14,11 +14,11 @@
           <a-col :md="12" :sm="24">
             <a-button
               type="primary"
-              class="operation-button"
+              class="query-button"
               @click="handleQuery"
               >{{ $t("route.action.query") }}</a-button
             >
-            <a-button class="operation-button" @click="handleReset">{{
+            <a-button class="query-button" @click="handleReset">{{
               $t("common.reset")
             }}</a-button>
           </a-col>
@@ -256,14 +256,3 @@ export default class RoleManage extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-button.operation-button {
-  margin-top: 10px;
-  margin-right: 12px;
-  padding: 0 15px;
-  font-size: 14px;
-  height: 32px;
-  width: 120px;
-}
-</style>

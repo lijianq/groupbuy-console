@@ -77,7 +77,7 @@ import companyAPI from "@/api/company/CompanyAPI";
 import { WrappedFormUtils } from "ant-design-vue/types/form/form";
 
 @Component
-export default class RoleOperation extends Vue {
+export default class ResourceOperation extends Vue {
   @Prop({ type: String, default: "" })
   title: string | undefined;
 
@@ -271,3 +271,12 @@ export default class RoleOperation extends Vue {
   }
 }
 </script>
+<style lang="less" scoped>
+button.right-button {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 0 15px;
+  font-size: 14px;
+  width: 120px;
+}
+</style>

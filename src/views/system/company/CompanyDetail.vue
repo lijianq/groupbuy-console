@@ -396,11 +396,4 @@ export default class CompanyDetail extends Vue {
   margin-bottom: 10px;
   font-weight: 500;
 }
-button.right-button {
-  margin-top: 10px;
-  margin-left: 10px;
-  padding: 0 15px;
-  font-size: 14px;
-  width: 120px;
-}
 </style>

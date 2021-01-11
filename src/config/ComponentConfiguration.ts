@@ -5,6 +5,7 @@ export class ComponentConfiguration {
         About: () => import('@/views/about/info/About.vue'),
 
         // System
+        SystemResource: () => import('@/views/system/resource/ResourceManage.vue'),
         SystemRoute: () => import('@/views/system/route/Route.vue'),
         SystemCompany: () => import('@/views/system/company/Company.vue'),
         // Company Setting

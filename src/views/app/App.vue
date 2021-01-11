@@ -1,43 +1,47 @@
 <template>
   <a-config-provider :locale="locale">
     <div id="app">
-      <router-view/>
+      <router-view />
     </div>
   </a-config-provider>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { DomUtil } from '@/utils/DomUtil'
-import { ThemeUtil } from '@/utils/ThemeUtil'
-import { AppPreferenceModule } from '@/store'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
-import isMobile from 'ismobilejs'
+import { Component, Vue } from "vue-property-decorator";
+import { DomUtil } from "@/utils/DomUtil";
+import { ThemeUtil } from "@/utils/ThemeUtil";
+import { AppPreferenceModule } from "@/store";
+import AppRuntimeModule from "@/store/modules/AppRuntime";
+import isMobile from "ismobilejs";
 
 @Component({
-  components: {}
+  components: {},
 })
-
 export default class App extends Vue {
-  primaryColor = AppPreferenceModule.getPrimaryColor()
+  primaryColor = AppPreferenceModule.getPrimaryColor();
   mounted() {
-    AppRuntimeModule.setMobileMode(isMobile().any)
-    ThemeUtil.updateTheme(this.primaryColor)
+    AppRuntimeModule.setMobileMode(isMobile().any);
+    ThemeUtil.updateTheme(this.primaryColor);
   }
-  get locale () {
-    const { title } = this.$route.meta
-    title && (DomUtil.setDocumentTitle(`${this.$t(title)} - ${this.$t(DomUtil.domTitle)}`))
-    return this.$i18n.getLocaleMessage(AppPreferenceModule.getLanguage()).antLocale
+  get locale() {
+    const { title } = this.$route.meta;
+    title &&
+      DomUtil.setDocumentTitle(
+        `${this.$t(title)} - ${this.$t(DomUtil.domTitle)}`
+      );
+    return this.$i18n.getLocaleMessage(AppPreferenceModule.getLanguage())
+      .antLocale;
   }
 }
 </script>
 
 <style lang="less">
-@import 'node_modules/ant-design-vue/es/style/themes/default.less';
+@import "node_modules/ant-design-vue/es/style/themes/default.less";
 
 html,
 body,
-#app, #root {
+#app,
+#root {
   height: 100%;
 }
 
@@ -79,7 +83,6 @@ ol {
 }
 // 数据列表 搜索条件
 .table-page-search-wrapper {
-
   .ant-form-inline {
     .ant-form-item {
       display: flex;
@@ -112,10 +115,9 @@ ol {
 }
 
 .page-common-header {
-
   padding: 10px 10px;
-  background-color: #F3F3F3;
-  border: 1px solid #E4E4E4;
+  background-color: #f3f3f3;
+  border: 1px solid #e4e4e4;
   margin-bottom: 20px;
   height: 55px;
 
@@ -123,7 +125,7 @@ ol {
     float: left;
     width: 5px;
     height: 20px;
-    background : #F56C6C;
+    background: #f56c6c;
     margin-top: 5px;
     margin-right: 10px;
     margin-left: 10px;
@@ -151,5 +153,26 @@ ol {
       }
     }
   }
+}
+button.query-button {
+  margin-right: 12px;
+  margin-bottom: 10px;
+  padding: 0 15px;
+  font-size: 14px;
+  width: 120px;
+}
+button.operation-button {
+  margin-right: 12px;
+  padding: 0 15px;
+  font-size: 14px;
+  height: 32px;
+  width: 120px;
+}
+button.right-button {
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 0 15px;
+  font-size: 14px;
+  width: 120px;
 }
 </style>
