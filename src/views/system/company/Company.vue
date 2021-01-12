@@ -182,7 +182,7 @@ export default class Company extends Vue {
         scopedSlots: { customRender: "companyStatus" },
       },
       {
-        title: "",
+        title: this.$t("common.action"),
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
       },

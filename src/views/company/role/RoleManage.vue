@@ -100,7 +100,7 @@ export default class RoleManage extends Vue {
         dataIndex: "roleName",
       },
       {
-        title: "",
+        title: this.$t("common.action"),
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
       },

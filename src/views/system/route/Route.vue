@@ -116,7 +116,7 @@ export default class Route extends Vue {
         scopedSlots: { customRender: "type" },
       },
       {
-        title: "",
+        title: this.$t("common.action"),
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
       },

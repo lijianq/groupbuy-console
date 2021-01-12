@@ -46,13 +46,14 @@
         </template>
         <template slot="routeActionResource" slot-scope="text, record">
           <a-tree-select
-            :disabled="!record.editable"
-            v-model="checkedValues"
+            v-if="record.editable"
             style="width: 100%"
             :tree-data="treeData"
             tree-checkable
-            search-placeholder="Please select"
+            v-model="checkedValues"
+            @change="handleChecked"
           />
+          <template v-else>{{ text }}</template>
         </template>
         <template
           slot="operation"
@@ -110,39 +111,14 @@ export default class RouteAction extends Vue {
 
   tempKey = 0;
 
-  treeData: any[] = [
-    {
-      title: "Node1",
-      value: "0-0",
-      key: "0-0",
-      children: [
-        {
-          title: "Child Node1",
-          value: "0-0-0",
-          key: "0-0-0",
-        },
-      ],
-    },
-    {
-      title: "Node2",
-      value: "0-1",
-      key: "0-1",
-      children: [
-        {
-          title: "Child Node3",
-          value: "0-1-0",
-          key: "0-1-0",
-        },
-        {
-          title: "Child Node4",
-          value: "0-1-1",
-          key: "0-1-1",
-        },
-      ],
-    },
-  ];
+  treeData: any[] = [];
+  checkedValues: any[] = [];
+  checkedLabels: any[] = [];
 
-  checkedValues: any[] = ["0-0-0"];
+  data: any[] = [];
+  editingKey = "";
+  editingRecord: any = {};
+  i18nKeys: any[] = [];
 
   get columns() {
     return [
@@ -154,7 +130,7 @@ export default class RouteAction extends Vue {
       },
       {
         title: this.$t("system.route.action.resource"),
-        dataIndex: "routeActionResource",
+        dataIndex: "resourceNameSet",
         width: "50%",
         scopedSlots: { customRender: "routeActionResource" },
       },
@@ -165,15 +141,17 @@ export default class RouteAction extends Vue {
     ];
   }
 
-  data: any[] = [];
-  editingKey = "";
-  editingRecord: any = {};
-  i18nKeys: any[] = [];
-
   created() {
     this.i18nKeys = Object.keys(ZhCN.messages).filter((str: string) =>
       str.startsWith("route.action.")
     );
+    SystemAPI.getResources()
+      .then((result: any) => {
+        this.treeData = result.data;
+      })
+      .catch((error) => {
+        this.$message.error(error.message);
+      });
   }
 
   @Watch("route")
@@ -196,7 +174,9 @@ export default class RouteAction extends Vue {
     this.editingRecord.routeActionId = record.routeActionId;
     this.editingRecord.routeId = record.routeId;
     this.editingRecord.routeActionType = record.routeActionType;
-    this.editingRecord.routeActionResource = record.routeActionResource;
+    if (record.resourceIdSet) {
+      this.checkedValues = record.resourceIdSet.split(",");
+    }
   }
 
   resetEditing(record?: any) {
@@ -205,6 +185,8 @@ export default class RouteAction extends Vue {
     }
     this.editingKey = "";
     this.editingRecord = {};
+    this.checkedValues = [];
+    this.checkedLabels = [];
   }
 
   handleAdd() {
@@ -213,7 +195,6 @@ export default class RouteAction extends Vue {
     const record: any = {
       routeActionId: key,
       routeActionType: "",
-      routeActionResource: "",
       routeId: this.route.routeId,
       editable: true,
     };
@@ -233,11 +214,17 @@ export default class RouteAction extends Vue {
     this.editingRecord[column] = value;
   }
 
+  handleChecked(values: any[], labels: any[]) {
+    this.checkedValues = values;
+    this.checkedLabels = labels;
+  }
+
   handleCancel(record: any) {
-    this.resetEditing(record);
     const key = record.routeActionId;
     if (key <= "0") {
       this.data = this.data.filter((item) => key !== item.routeActionId);
+    } else {
+      this.resetEditing(record);
     }
   }
 
@@ -250,21 +237,17 @@ export default class RouteAction extends Vue {
       return;
     }
 
-    if (
-      editingRecord.routeActionType === record.routeActionType &&
-      editingRecord.routeActionResource === record.routeActionResource
-    ) {
-      // no change
-      this.resetEditing(record);
-      return;
-    }
+    const request: any = {};
+    request.routeAction = editingRecord;
+    request.resourceIds = this.checkedValues;
 
-    SystemAPI.createRouteAction(editingRecord)
+    SystemAPI.createRouteAction(request)
       .then((result) => {
         const newRecord: any = result.data;
         record.routeActionId = newRecord.routeActionId;
         record.routeActionType = newRecord.routeActionType;
-        record.routeActionResource = newRecord.routeActionResource;
+        record.resourceIdSet = this.checkedValues.toString();
+        record.resourceNameSet = this.checkedLabels.toString();
         this.resetEditing(record);
       })
       .catch((error) => {

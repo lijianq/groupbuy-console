@@ -47,11 +47,11 @@ class SystemAPI {
         })
     }
 
-    createRouteAction(routeAction: any) {
+    createRouteAction(request: any) {
         return this.request.request({
             url: this.apiPaths.routeAction,
             method: 'put',
-            data: routeAction
+            data: request
         })
     }
 

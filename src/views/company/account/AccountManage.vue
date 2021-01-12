@@ -162,7 +162,7 @@ export default class AccountManage extends Vue {
         scopedSlots: { customRender: "accountStatus" },
       },
       {
-        title: "",
+        title: this.$t("common.action"),
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
       },

@@ -126,6 +126,7 @@ export default class ZhCN {
         "common.email.max": "邮件地址超过100个字符",
         "common.image.select": "选择图片",
         "permission.set": "设置权限",
+        "common.action": "操作",
 
         // common error
         "error.400": "无效请求",

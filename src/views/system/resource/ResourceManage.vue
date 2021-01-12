@@ -74,6 +74,11 @@ export default class ResourceManage extends Vue {
         dataIndex: "resourceName",
       },
       {
+        title: this.$t("system.resource.type"),
+        dataIndex: "resourceType",
+        scopedSlots: { customRender: "type" },
+      },
+      {
         title: this.$t("system.resource.method"),
         dataIndex: "resourceMethod",
       },
@@ -82,12 +87,7 @@ export default class ResourceManage extends Vue {
         dataIndex: "resourcePath",
       },
       {
-        title: this.$t("system.resource.type"),
-        dataIndex: "resourceType",
-        scopedSlots: { customRender: "type" },
-      },
-      {
-        title: "",
+        title: this.$t("common.action"),
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
       },
