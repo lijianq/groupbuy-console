@@ -158,6 +158,8 @@ export default class BasicSetting extends Vue {
             .finally(() => {
               this.loading = false;
             });
+        } else {
+          this.loading = false;
         }
       }
     );
