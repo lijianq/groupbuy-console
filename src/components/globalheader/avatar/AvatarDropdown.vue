@@ -35,7 +35,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AccountModule } from "@/store";
 import { Modal } from "ant-design-vue";
-import { accountAPI } from "@/api";
+import accountAPI from "@/api/account/AccountAPI";
 import { RouterConfiguration } from "@/config";
 
 @Component

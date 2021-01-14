@@ -9,7 +9,7 @@ export class CosAPI {
 
     async getCosToken(payload: any) {
         return this.request.request({
-            url: '/qcos/token',
+            url: '/platform/qcos/token',
             method: 'post',
             data: payload
         })

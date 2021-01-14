@@ -3,8 +3,8 @@ import Request from '@/api/common/Request'
 class RegisterAPI {
 
     private apiPaths = {
-        register: "/register",
-        status: "/status"
+        register: "/platform/register",
+        status: "/platform/status"
     }
     private request = Request.getDefaultInstance()
 

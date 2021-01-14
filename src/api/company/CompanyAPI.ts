@@ -3,10 +3,10 @@ import Request from '@/api/common/Request'
 class CompanyAPI {
 
     private apiPaths = {
-        role: "/company/role",
-        permission: "/company/role/permission",
-        account: "/company/account",
-        accountRole: "/company/account/role"
+        role: "/platform/company/role",
+        permission: "/platform/company/role/permission",
+        account: "/platform/company/account",
+        accountRole: "/platform/company/account/role"
     }
     private request = Request.getDefaultInstance()
 

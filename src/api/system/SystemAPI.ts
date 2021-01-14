@@ -3,12 +3,12 @@ import Request from '@/api/common/Request'
 class SystemAPI {
 
     private apiPaths = {
-        route: "/system/route",
-        routeAction: "/system/route/action",
-        company: "/system/company",
-        permission: "/system/company/permission",
-        status: "/system/company/status",
-        resource: "/system/resource"
+        route: "/platform/system/route",
+        routeAction: "/platform/system/route/action",
+        company: "/platform/system/company",
+        permission: "/platform/system/company/permission",
+        status: "/platform/system/company/status",
+        resource: "/platform/system/resource"
     }
     private request = Request.getDefaultInstance()
 

@@ -154,7 +154,7 @@ import {
   WrappedFormUtils,
 } from "ant-design-vue/types/form/form";
 import { RouterConfiguration } from "@/config";
-import { accountAPI } from "@/api";
+import accountAPI from "@/api/account/AccountAPI";
 import md5 from "md5";
 
 @Component

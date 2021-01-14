@@ -3,10 +3,10 @@ import Request from '@/api/common/Request'
 class PersonalAPI {
 
     private apiPaths = {
-        account: "/personal/account",
-        accountEmail: "/personal/account/email",
-        accountPassword: "/personal/account/password",
-        accountAuthCode: "/personal/account/authcode"
+        account: "/platform/account/info",
+        accountEmail: "/platform/account/email",
+        accountPassword: "/platform/account/password",
+        accountAuthCode: "/platform/account/authcode"
     }
 
     private request = Request.getDefaultInstance();

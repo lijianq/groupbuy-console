@@ -5,10 +5,10 @@ import { ComponentConfiguration, RouterConfiguration } from '@/config'
 class AccountAPI {
 
     private apiPaths = {
-        login: "/login",
-        accountActions: "/account/actions",
-        authcode: "/authcode",
-        reset: "/reset"
+        login: "/platform/login",
+        accountActions: "/platform/account/actions",
+        authcode: "/platform/authcode",
+        reset: "/platform/reset"
     }
 
     private request = Request.getDefaultInstance()
@@ -59,10 +59,10 @@ class AccountAPI {
         })
         const actions: any = response.data
         const routes = this.parseAccountRoutes(actions)
-        rootRoute.children=routes
+        rootRoute.children = routes
         const accountRoutes = []
         accountRoutes.push(rootRoute)
-        return { menus: actions, routes: accountRoutes}
+        return { menus: actions, routes: accountRoutes }
     }
 
     private parseAccountRoutes(actions: any[]) {

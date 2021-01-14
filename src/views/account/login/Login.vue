@@ -24,7 +24,7 @@
             {
               rules: [
                 { required: true, message: $t('account.company.message') },
-              ]
+              ],
             },
           ]"
         >
@@ -46,7 +46,7 @@
             {
               rules: [
                 { required: true, message: $t('account.sub.account.message') },
-              ]
+              ],
             },
           ]"
         >
@@ -67,7 +67,7 @@
             {
               rules: [
                 { required: true, message: $t('account.password.message') },
-              ]
+              ],
             },
           ]"
         >
@@ -88,7 +88,7 @@
             {
               rules: [
                 { required: true, message: $t('account.auth.code.required') },
-              ]
+              ],
             },
           ]"
         >
@@ -142,7 +142,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { WrappedFormUtils } from "ant-design-vue/types/form/form";
 import md5 from "md5";
-import { accountAPI } from "@/api";
+import accountAPI from "@/api/account/AccountAPI";
 import { AppPreferenceModule, AccountModule } from "@/store";
 import { RouterConfiguration } from "@/config";
 import PAuthCode from "@/components/auth/PAuthCode.vue";
@@ -207,7 +207,9 @@ export default class Login extends Vue {
         if (!err) {
           const authCode = values.accountCode;
           if (this.identifyCode !== authCode) {
-            this.$message.error(this.$t("account.auth.code.incorrect").toString());
+            this.$message.error(
+              this.$t("account.auth.code.incorrect").toString()
+            );
             this.state.loginBtn = false;
             return;
           }
