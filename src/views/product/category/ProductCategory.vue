@@ -52,12 +52,6 @@
           <a @click="handleDelete([record.routeId])">{{
             $t("route.action.delete")
           }}</a>
-          <span v-if="record.routeType !== 'Group'">
-            <a-divider type="vertical" />
-            <a @click="handleAction(record)">{{
-              $t("system.route.actions")
-            }}</a>
-          </span>
           <span v-if="record.routeType === 'Group'">
             <a-divider type="vertical" />
             <a @click="addChild(record)">{{ $t("system.route.child") }}</a>
@@ -66,7 +60,7 @@
       </span>
     </a-table>
 
-    <route-operation
+    <product-category-operation
       ref="createModal"
       :visible="visible"
       :loading="confirmLoading"
@@ -74,30 +68,22 @@
       @cancel="handleCancel"
       @ok="handleOk"
     />
-    <route-action
-      ref="actionModal"
-      :visible="actionVisible"
-      :route="currentRoute"
-      @cancel="handleActionCancel"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import RouteOperation from "./RouteOperation.vue";
-import RouteAction from "./RouteAction.vue";
+import ProductCategoryOperation from "./ProductCategoryOperation.vue";
 import SystemAPI from "@/api/system/SystemAPI";
 import { WrappedFormUtils } from "ant-design-vue/types/form/form";
 import { Modal } from "ant-design-vue";
 
 @Component({
   components: {
-    RouteOperation,
-    RouteAction,
+    ProductCategoryOperation,
   },
 })
-export default class Route extends Vue {
+export default class ProductCategory extends Vue {
   get columns() {
     return [
       {
@@ -134,7 +120,6 @@ export default class Route extends Vue {
   };
 
   mdl: any = null;
-  currentRoute: any = null;
   visible = false;
   confirmLoading = false;
 
@@ -331,18 +316,6 @@ export default class Route extends Vue {
         // do nothing
       },
     });
-  }
-
-  handleActionCancel() {
-    this.actionVisible = false;
-    setTimeout(() => {
-      this.currentRoute = null;
-    }, 150);
-  }
-
-  handleAction(record: any) {
-    this.actionVisible = true;
-    this.currentRoute = record;
   }
 }
 </script>

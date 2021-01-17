@@ -58,6 +58,7 @@ class AccountAPI {
             data: {}
         })
         const actions: any = response.data
+
         const routes = this.parseAccountRoutes(actions)
         rootRoute.children = routes
         const accountRoutes = []

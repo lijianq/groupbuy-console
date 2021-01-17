@@ -16,31 +16,13 @@ export default class Request {
     private processRequest(config: AxiosRequestConfig) {
         config.headers['Accept-Language'] = i18n.locale
         const accessToken = AccountModule.getAccount().accessToken
-        const companyId = AccountModule.getAccount().companyId;
         if (typeof accessToken !== 'undefined' && accessToken.trim().length > 0) {
             config.headers['x-platform-service-token'] = accessToken
-            config.headers["x-platform-company-id"] = companyId
         }
         return config;
     }
 
     private processResponse(response: any) {
-        if (response.data.authStatus === 3) {
-            const params = { refreshToken: AccountModule.getAccount().refreshToken }
-            const config = response.config
-            const requester = axios.create(response.config)
-            return requester.post('/refresh', params).then(res => {
-                const account = AccountModule.getAccount();
-                account.accessToken = res.data.accessToken
-                account.expiredTime = res.data.expiredTime
-                AccountModule.setAccount(account)
-                config.headers['x-platform-service-token'] = account.accessToken
-                return requester.request(config)
-            }).catch(() => {
-                AccountModule.setAccount({})
-                window.location.href = '/'
-            })
-        }
         return response
     }
 
@@ -65,10 +47,29 @@ export default class Request {
                     break;
                 }
                 case 403: {
-                    if (message) {
-                        error.message = message;
+                    if (error.response.data.authStatus === 3) {
+                        // refresh token
+                        const params = { refreshToken: AccountModule.getAccount().refreshToken }
+                        const config = error.config
+                        const requester = axios.create(error.config)
+                        return requester.post('/platform/refresh', params).then(res => {
+                            console.log(res);
+                            const account = AccountModule.getAccount();
+                            account.accessToken = res.data.accessToken
+                            account.expiredTime = res.data.expiredTime
+                            AccountModule.setAccount(account)
+                            config.headers['x-platform-service-token'] = account.accessToken
+                            return requester.request(config)
+                        }).catch(() => {
+                            AccountModule.setAccount({})
+                            window.location.href = '/'
+                        })
                     } else {
-                        error.message = i18n.t('error.403');
+                        if (message) {
+                            error.message = message;
+                        } else {
+                            error.message = i18n.t('error.403');
+                        }
                     }
                     break;
                 }

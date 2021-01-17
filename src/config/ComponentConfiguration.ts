@@ -13,9 +13,10 @@ export class ComponentConfiguration {
         AccountManage: () => import('@/views/company/account/AccountManage.vue'),
         // Personal Center
         AccountSetting: () => import('@/views/personal/setting/AccountSetting.vue'),
-
-        // Mall
-        Home: () => import('@/layouts/view/RouteView'),
+        // Product
+        ProductCategory: () => import('@/views/product/category/ProductCategory.vue'),
+        ProductBrand: () => import('@/views/product/brand/ProductBrand.vue'),
+        // Home
         Dashboard: () => import('@/views/home/Dashboard.vue'),
 
     }
