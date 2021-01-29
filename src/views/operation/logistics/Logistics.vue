@@ -4,9 +4,9 @@
       <a-form layout="inline">
         <a-row :gutter="48">
           <a-col :md="8" :sm="24">
-            <a-form-item :label="$t('product.brand.name')">
+            <a-form-item :label="$t('operation.logistics.name')">
               <a-input
-                v-model="queryParam.brandName"
+                v-model="queryParam.logisticsName"
                 :placeholder="$t('common.input.search.hint')"
               />
             </a-form-item>
@@ -29,10 +29,10 @@
     <div class="table-operator">
       <a-button
         type="primary"
-        class="operation-button"
+        class="add-button"
         @click="handleAdd"
         icon="plus"
-        >{{ $t("product.brand.add") }}</a-button
+        >{{ $t("operation.logistics.add") }}</a-button
       >
       <a-button
         type="danger"
@@ -45,7 +45,7 @@
     </div>
 
     <a-table
-      rowKey="brandId"
+      rowKey="logisticsId"
       :loading="loading"
       :pagination="pagination"
       :columns="columns"
@@ -53,11 +53,6 @@
       :rowSelection="rowSelection"
       @change="handleChange"
     >
-      <span slot="brandLogo" slot-scope="text, record">
-        <template>
-          <img v-if="record.brandLogo" :src="`http://${text}`" class="logo" />
-        </template>
-      </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <div>
@@ -67,8 +62,8 @@
       </span>
     </a-table>
 
-    <product-brand-operation
-      ref="brandOperation"
+    <logistics-operation
+      ref="logisticsOperation"
       :visible="visible"
       :record="currentRecord"
       @cancel="handleCancel"
@@ -79,27 +74,26 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import productAPI from "@/api/product/ProductAPI";
+import operationAPI from "@/api/operation/OperationAPI";
 import { Modal } from "ant-design-vue";
-import ProductBrandOperation from "./ProductBrandOperation.vue";
+import LogisticsOperation from "./LogisticsOperation.vue";
 
 @Component({
   components: {
-    ProductBrandOperation,
+    LogisticsOperation,
   },
 })
-export default class ProductBrand extends Vue {
+export default class Logistics extends Vue {
   queryParam: any = {};
   get columns() {
     return [
       {
-        title: this.$t("product.brand.name"),
-        dataIndex: "brandName",
+        title: this.$t("operation.logistics.id"),
+        dataIndex: "logisticsId",
       },
       {
-        title: this.$t("product.brand.logo"),
-        dataIndex: "brandLogo",
-        scopedSlots: { customRender: "brandLogo" },
+        title: this.$t("operation.logistics.name"),
+        dataIndex: "logisticsName",
       },
       {
         title: this.$t("common.action"),
@@ -138,10 +132,10 @@ export default class ProductBrand extends Vue {
     this.rowSelection.selectedRowKeys = selectedRowKeys;
   }
 
-  getBrands(query: any) {
+  getLogistics(query: any) {
     this.loading = true;
-    productAPI
-      .getBrands(query)
+    operationAPI
+      .getLogistics(query)
       .then((result: any) => {
         const records: any = result.data;
         const pagination = { ...this.pagination };
@@ -162,7 +156,7 @@ export default class ProductBrand extends Vue {
     const query: any = { ...this.queryParam };
     query.pageNumber = this.pagination.current;
     query.pageSize = this.pagination.pageSize;
-    this.getBrands(query);
+    this.getLogistics(query);
   }
 
   handleQuery() {
@@ -196,12 +190,12 @@ export default class ProductBrand extends Vue {
             twoToneColor: "#FF0000",
           },
         }),
-      title: this.$t("product.brand.delete.title"),
-      content: this.$t("product.brand.delete.content"),
+      title: this.$t("operation.logistics.delete.title"),
+      content: this.$t("operation.logistics.delete.content"),
       onOk: () => {
         this.loading = true;
-        productAPI
-          .deleteBrand(this.rowSelection.selectedRowKeys)
+        operationAPI
+          .deleteLogistics(this.rowSelection.selectedRowKeys)
           .then(() => {
             this.rowSelection.selectedRowKeys = [];
             this.handleQuery();
@@ -221,9 +215,8 @@ export default class ProductBrand extends Vue {
 
   handleOk(result: any) {
     this.visible = false;
-    if (this.currentRecord.brandId) {
-      this.currentRecord.brandName = result.brandName;
-      this.currentRecord.brandLogo = result.brandLogo;
+    if (this.currentRecord.logisticsId) {
+      this.currentRecord.logisticsName = result.logisticsName;
     } else {
       this.rowSelection.selectedRowKeys = [];
       this.handleQuery();
@@ -252,10 +245,11 @@ export default class ProductBrand extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.logo {
+button.add-button {
+  margin-right: 12px;
+  padding: 0 15px;
+  font-size: 14px;
   height: 32px;
-  vertical-align: center;
-  margin-right: 10px;
-  border-style: none;
+  width: 150px;
 }
 </style>

@@ -171,8 +171,7 @@ export default class RouteOperation extends Vue {
     "routeIcon",
   ];
 
-  @Prop({ type: String, default: "" })
-  title: string | undefined;
+  title: string = this.$t("router.menu.system.route").toString();
 
   @Prop({ type: Boolean, default: false })
   visible = false;

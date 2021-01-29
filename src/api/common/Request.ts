@@ -53,7 +53,6 @@ export default class Request {
                         const config = error.config
                         const requester = axios.create(error.config)
                         return requester.post('/platform/refresh', params).then(res => {
-                            console.log(res);
                             const account = AccountModule.getAccount();
                             account.accessToken = res.data.accessToken
                             account.expiredTime = res.data.expiredTime

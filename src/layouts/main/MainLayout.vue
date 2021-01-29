@@ -1,143 +1,153 @@
 <template>
   <pro-layout
-      :menus="menus"
-      :collapsed="sidebarCollapsed"
-      :mediaQuery="query"
-      :isMobile="isMobile"
-      :handleMediaQuery="handleMediaQuery"
-      :handleCollapse="handleCollapse"
-      :i18nRender="i18nRender"
-      v-bind="settings"
+    :menus="menus"
+    :collapsed="sidebarCollapsed"
+    :mediaQuery="query"
+    :isMobile="isMobile"
+    :handleMediaQuery="handleMediaQuery"
+    :handleCollapse="handleCollapse"
+    :i18nRender="i18nRender"
+    v-bind="settings"
   >
-
     <template v-slot:menuHeaderRender>
       <div>
-        <img src="~@/assets/logo.00.png" alt="logo"/>
+        <img src="~@/assets/logo.00.png" alt="logo" />
         <h1>{{ $t(title) }}</h1>
       </div>
     </template>
 
-    <setting-drawer :settings="settings" @change="handleChangeSetting"/>
+    <setting-drawer :settings="settings" @change="handleChangeSetting" />
     <template v-slot:rightContentRender>
-      <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme"/>
+      <right-content
+        :top-menu="settings.layout === 'topmenu'"
+        :is-mobile="isMobile"
+        :theme="settings.theme"
+      />
     </template>
-    <router-view/>
+    <router-view />
   </pro-layout>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import ProLayout, { SettingDrawer, updateColorWeak } from '@ant-design-vue/pro-layout'
-import { AppPreferenceModule } from '@/store'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
-import { DefaultSetting } from '@/config'
-import RightContent from '@/components/globalheader'
+import { Component, Vue, Watch } from "vue-property-decorator";
+import ProLayout, {
+  SettingDrawer,
+  updateColorWeak,
+} from "@ant-design-vue/pro-layout";
+import { AppPreferenceModule } from "@/store";
+import AppRuntimeModule from "@/store/modules/AppRuntime";
+import { DefaultSetting } from "@/config";
+import RightContent from "@/components/globalheader";
 
 @Component({
-    components: {
-        SettingDrawer,
-        RightContent,
-        ProLayout
-    }
+  components: {
+    SettingDrawer,
+    RightContent,
+    ProLayout,
+  },
 })
 export default class MainLayout extends Vue {
+  menus: any[] = [];
+  sidebarCollapsed = AppRuntimeModule.sidebarCollapsed;
+  title = DefaultSetting.title;
 
-    menus: any[] = []
-    sidebarCollapsed = AppRuntimeModule.sidebarCollapsed
-    title = DefaultSetting.title
+  settings: any = {
+    layout: AppPreferenceModule.getLayout(),
+    contentWidth:
+      AppPreferenceModule.getLayout() === "sidemenu"
+        ? "Fluid"
+        : AppPreferenceModule.getContentWidth(),
+    theme: AppPreferenceModule.getTheme(),
+    primaryColor: AppPreferenceModule.getPrimaryColor(),
+    fixedHeader: AppPreferenceModule.getFixedHeader(),
+    fixSiderbar: AppPreferenceModule.getFixSiderbar(),
+    colorWeak: AppPreferenceModule.getColorWeak(),
+    autoHideHeader: AppPreferenceModule.getAutoHideHeader(),
+    hideHintAlert: true,
+    hideCopyButton: true,
+  };
+  isMobile = AppRuntimeModule.isMobile;
+  query: any = {};
 
-    settings: any = {
-        layout: AppPreferenceModule.getLayout(),
-        contentWidth: AppPreferenceModule.getLayout() === 'sidemenu' ? 'Fluid' : AppPreferenceModule.getContentWidth(),
-        theme: AppPreferenceModule.getTheme(),
-        primaryColor: AppPreferenceModule.getPrimaryColor(),
-        fixedHeader: AppPreferenceModule.getFixedHeader(),
-        fixSiderbar: AppPreferenceModule.getFixSiderbar(),
-        colorWeak: AppPreferenceModule.getColorWeak(),
-        autoHideHeader: AppPreferenceModule.getAutoHideHeader(),
-        hideHintAlert: true,
-        hideCopyButton: true
+  @Watch("collapsed")
+  setCollapsed() {
+    AppRuntimeModule.setSidebarCollapsed(this.sidebarCollapsed);
+  }
+
+  created() {
+    if (AppRuntimeModule.menus) {
+      this.menus = AppRuntimeModule.menus;
     }
-    isMobile = AppRuntimeModule.isMobile
-    query: any = {}
+  }
 
-    @Watch('collapsed')
-    setCollapsed() {
-        AppRuntimeModule.setSidebarCollapsed(this.sidebarCollapsed)
+  mounted() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf("Edge") > -1) {
+      this.$nextTick(() => {
+        this.sidebarCollapsed = !this.sidebarCollapsed;
+        setTimeout(() => {
+          this.sidebarCollapsed = !this.sidebarCollapsed;
+        }, 16);
+      });
     }
+    updateColorWeak(this.settings.colorWeak);
+  }
 
-    created() {
-        this.menus = AppRuntimeModule.menus
-    }
+  i18nRender(key: string) {
+    return this.$t(key);
+  }
 
-    mounted() {
-        const userAgent = navigator.userAgent
-        if (userAgent.indexOf('Edge') > -1) {
-            this.$nextTick(() => {
-                this.sidebarCollapsed = !this.sidebarCollapsed
-                setTimeout(() => {
-                    this.sidebarCollapsed = !this.sidebarCollapsed
-                }, 16)
-            })
-        }
-        updateColorWeak(this.settings.colorWeak)
+  handleMediaQuery(val: any) {
+    this.query = val;
+    if (this.isMobile && !val["screen-xs"]) {
+      this.isMobile = false;
+      return;
     }
+    if (!this.isMobile && val["screen-xs"]) {
+      this.isMobile = true;
+      this.sidebarCollapsed = false;
+      this.settings.contentWidth = "Fluid";
+    }
+  }
 
-    i18nRender(key: string) {
-        return this.$t(key)
-    }
+  handleCollapse(val: boolean) {
+    this.sidebarCollapsed = val;
+  }
 
-    handleMediaQuery (val: any) {
-        this.query = val
-        if (this.isMobile && !val['screen-xs']) {
-            this.isMobile = false
-            return
-        }
-        if (!this.isMobile && val['screen-xs']) {
-            this.isMobile = true
-            this.sidebarCollapsed = false
-            this.settings.contentWidth = 'Fluid'
-        }
+  handleChangeSetting(setting: any) {
+    const type = setting.type;
+    const value = setting.value;
+    switch (type) {
+      case "theme":
+        this.settings.theme = value;
+        AppPreferenceModule.setTheme(value);
+        break;
+      case "primaryColor":
+        this.settings.primaryColor = value;
+        AppPreferenceModule.setPrimaryColor(value);
+        break;
+      case "layout":
+        this.settings.layout = value;
+        AppPreferenceModule.setLayout(value);
+        break;
+      case "fixedHeader":
+        this.settings.fixedHeader = value;
+        AppPreferenceModule.setFixedHeader(value);
+        break;
+      case "fixSiderbar":
+        this.settings.fixSiderbar = value;
+        AppPreferenceModule.setFixSiderbar(value);
+        break;
+      case "colorWeak":
+        this.settings.colorWeak = value;
+        AppPreferenceModule.setColorWeak(value);
+        break;
+      case "contentWidth":
+        this.settings.contentWidth = value;
+        AppPreferenceModule.setContentWidth(value);
+        break;
     }
-
-    handleCollapse (val: boolean) {
-        this.sidebarCollapsed = val
-    }
-
-    handleChangeSetting (setting: any) {
-        const type = setting.type
-        const value = setting.value
-        switch (type) {
-            case 'theme':
-                this.settings.theme = value
-                AppPreferenceModule.setTheme(value)
-                break
-            case 'primaryColor':
-                this.settings.primaryColor = value
-                AppPreferenceModule.setPrimaryColor(value)
-                break
-            case 'layout':
-                this.settings.layout = value
-                AppPreferenceModule.setLayout(value)
-                break
-            case 'fixedHeader':
-                this.settings.fixedHeader = value
-                AppPreferenceModule.setFixedHeader(value)
-                break
-            case 'fixSiderbar':
-                this.settings.fixSiderbar = value
-                AppPreferenceModule.setFixSiderbar(value)
-                break
-            case 'colorWeak':
-                this.settings.colorWeak = value
-                AppPreferenceModule.setColorWeak(value)
-                break
-            case 'contentWidth':
-                this.settings.contentWidth = value
-                AppPreferenceModule.setContentWidth(value)
-                break
-        }
-    }
+  }
 }
 </script>
 
@@ -149,7 +159,7 @@ export default class MainLayout extends Vue {
 
   &.ant-pro-global-header-index-dark {
     .ant-pro-global-header-index-action {
-      color: hsla(0, 0%, 100%, .85);
+      color: hsla(0, 0%, 100%, 0.85);
       &:hover {
         background: #1890ff;
       }
@@ -161,7 +171,7 @@ export default class MainLayout extends Vue {
       color: @primary-color;
       vertical-align: top;
       background: rgba(255, 255, 255, 0.85);
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)';
+      margin: ~"calc((@{layout-header-height} - 24px) / 2)";
       margin-right: 6px;
     }
   }

@@ -71,7 +71,7 @@ export default class AvatarDropdown extends Vue {
   }
 
   goSettings() {
-    this.$router.push({ path: "/account/setting" });
+    this.$router.push({ path: "/personal/setting" });
   }
 
   logout() {

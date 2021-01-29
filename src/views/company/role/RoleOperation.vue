@@ -78,8 +78,7 @@ import { WrappedFormUtils } from "ant-design-vue/types/form/form";
 
 @Component
 export default class RoleOperation extends Vue {
-  @Prop({ type: String, default: "" })
-  title: string | undefined;
+  title: string = this.$t("router.menu.company.role").toString();
 
   @Prop({ type: Boolean, default: false })
   visible = false;

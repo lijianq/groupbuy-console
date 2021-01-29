@@ -1,207 +1,80 @@
 <template>
   <a-modal
     :title="title"
-    :width="800"
-    :dialog-style="{ top: '50px' }"
+    :width="700"
     :visible="visible"
+    :confirmLoading="loading"
+    :okText="$t('common.ok')"
     @ok="handleOk"
-    @cancel="handleClose"
+    :cancelText="$t('common.cancel')"
+    @cancel="handleCancel"
   >
-    <template slot="footer">
-      <a-button class="right-button" @click="handleClose()">{{
-        $t("common.close")
-      }}</a-button>
-      <span v-if="isRole">
-        <a-button
-          type="primary"
-          class="right-button"
-          @click="handleSetRole()"
-          >{{ $t("acount.role.set") }}</a-button
-        >
-        <a-button class="right-button" @click="resetSelected()">{{
-          $t("route.action.reset")
-        }}</a-button>
-      </span>
-      <span v-else>
-        <a-button type="primary" class="right-button" @click="handleSave()">{{
-          $t("route.action.save")
-        }}</a-button>
-      </span>
-    </template>
     <a-spin :spinning="loading">
-      <a-card :bordered="false" v-if="record">
-        <div v-if="isRole">
-          <template>
-            <a-transfer
-              :data-source="roleData"
-              :target-keys="selectedKeys"
-              :render="renderItem"
-              @change="handleChange"
-              :list-style="{
-                width: '300px',
-                height: '300px',
-              }"
-            />
-          </template>
-        </div>
-        <div v-else>
-          <a-form :form="form" id="accountOpForm" v-bind="formLayout">
-            <a-form-item
-              v-show="record && record.accountId"
-              :label="$t('account.id')"
-            >
-              <a-input v-decorator="['accountId']" disabled />
-            </a-form-item>
-            <a-form-item :label="$t('account.name')">
-              <a-input
-                v-decorator="[
-                  'accountName',
+      <a-form :form="form" id="brandOpForm" v-bind="formLayout">
+        <a-form-item
+          v-show="record && record.brandId"
+          :label="$t('product.brand.id')"
+        >
+          <a-input v-decorator="['brandId']" disabled />
+        </a-form-item>
+        <a-form-item :label="$t('product.brand.name')">
+          <a-input
+            v-decorator="[
+              'brandName',
+              {
+                rules: [
                   {
-                    rules: [
-                      {
-                        required: true,
-                        max: 30,
-                        message: $t('account.name.required'),
-                      },
-                    ],
+                    required: true,
+                    max: 50,
+                    message: $t('product.brand.name.required'),
                   },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item :label="$t('account.full.name')">
-              <a-input
-                v-decorator="[
-                  'accountFullName',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        max: 50,
-                        message: $t('account.full.name.required'),
-                      },
-                    ],
-                  },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item :label="$t('account.email')">
-              <a-input
-                v-decorator="[
-                  'accountEmail',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        pattern: /^[A-Za-z0-9\u4e00-\u9fa5-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-                        message: $t('common.email.invalid'),
-                      },
-                      { max: 100, message: $t('common.email.max') },
-                    ],
-                  },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item :label="$t('account.phone')">
-              <a-input
-                v-decorator="[
-                  'accountPhone',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        pattern: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/,
-                        message: $t('common.phone.invalid'),
-                      },
-                      { max: 20, message: $t('common.phone.max') },
-                    ],
-                  },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item :label="$t('account.password')">
-              <a-input-password
-                v-decorator="[
-                  'password1',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: $t('account.password.message'),
-                      },
-                      { min: 8, message: $t('account.password.min') },
-                      { max: 30, message: $t('account.password.max') },
-                    ],
-                  },
-                ]"
-              >
-              </a-input-password>
-            </a-form-item>
-
-            <a-form-item :label="$t('account.password.confirm')">
-              <a-input-password
-                v-decorator="[
-                  'password2',
-                  {
-                    rules: [
-                      {
-                        validator: (rules, value, callback) => {
-                          checkConfirmPassword(rules, value, callback);
-                        },
-                      },
-                    ],
-                  },
-                ]"
-              >
-              </a-input-password>
-            </a-form-item>
-            <a-form-item :label="$t('account.status')">
-              <a-select
-                v-decorator="[
-                  'accountStatus',
-                  {
-                    rules: [
-                      {
-                        required: true,
-                        message: $t('account.status.required'),
-                      },
-                    ],
-                  },
-                ]"
-              >
-                <a-select-option value="Active">{{
-                  $t("account.status.active")
-                }}</a-select-option>
-                <a-select-option value="Inactive">{{
-                  $t("account.status.inactive")
-                }}</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-form>
-        </div>
-      </a-card>
+                ],
+              },
+            ]"
+          >
+          </a-input>
+        </a-form-item>
+        <a-form-item :label="$t('product.brand.logo')">
+          <a-upload
+            list-type="picture-card"
+            :before-upload="beforeUpload"
+            accept="image/*"
+            id="brandLogo"
+            :multiple="false"
+            :file-list="brandLogoList"
+            @change="handleLogoChange"
+          >
+            <div v-if="brandLogoList.length < 2">
+              <a-icon type="plus" />
+            </div>
+          </a-upload>
+        </a-form-item>
+      </a-form>
     </a-spin>
   </a-modal>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import companyAPI from "@/api/company/CompanyAPI";
-import {
-  WrappedFormUtils,
-  ValidationRule,
-} from "ant-design-vue/types/form/form";
-import md5 from "md5";
+import { WrappedFormUtils } from "ant-design-vue/types/form/form";
+import cosAPI from "@/api/cos/CosAPI";
+import productAPI from "@/api/product/ProductAPI";
 
 @Component
 export default class ProductBrandOperation extends Vue {
-  @Prop({ type: String, default: "" })
-  title: string | undefined;
+  fields = ["brandId", "brandName"];
+
+  title: string = this.$t("router.menu.product.brand").toString();
 
   @Prop({ type: Boolean, default: false })
   visible = false;
 
+  loading = false;
+
   @Prop({ type: Object, default: null })
   record: any | {};
+
+  brandLogoList: any[] = [];
 
   formLayout: any = {
     labelCol: {
@@ -214,180 +87,118 @@ export default class ProductBrandOperation extends Vue {
     },
   };
 
-  fields = [
-    "accountId",
-    "accountName",
-    "accountFullName",
-    "accountEmail",
-    "accountPhone",
-    "accountStatus",
-    "password1",
-    "password2",
-  ];
   form!: WrappedFormUtils;
 
-  isAdd = false;
-  isEdit = false;
-  isRole = false;
-  loading = false;
-  defaultSelectedKeys: any[] = [];
-  roleData: any[] = [];
-  selectedKeys: any[] = [];
-
   created() {
-    this.form = this.$form.createForm(this, { name: "accountOpForm" });
+    this.form = this.$form.createForm(this, { name: "brandOpForm" });
+  }
+
+  beforeUpload() {
+    return false;
+  }
+
+  handleLogoChange(info: any) {
+    let fileList = [...info.fileList];
+    fileList = fileList.slice(-1);
+    if (fileList.length > 0) {
+      const file = fileList[0].originFileObj;
+      if (this.isLarge(file, 0.5)) {
+        this.$message.error(`${this.$t("product.brand.logo.limit")}`);
+        fileList.pop();
+      }
+    }
+    this.brandLogoList = fileList;
+  }
+
+  isLarge(file: File, size: number) {
+    return file.size / 1024 / 1024 > size;
   }
 
   @Watch("record")
-  modelChanged() {
-    this.resetData();
+  recordChanged() {
+    this.brandLogoList = [];
     if (this.record && Object.keys(this.record).length > 0) {
-      this.setFlag(this.record.type);
-      if (this.isRole) {
-        this.loading = true;
-        companyAPI
-          .getAccountRoles(this.record.accountId)
-          .then((result: any) => {
-            this.processRoleData(result.data);
-          })
-          .catch((error) => {
-            this.$message.error(error.message);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
-      } else if (this.isEdit) {
-        this.fields.forEach((v) => this.form.getFieldDecorator(v, {}));
-        this.form.setFieldsValue({
-          accountId: this.record.accountId,
-          accountName: this.record.accountName,
-          accountFullName: this.record.accountFullName,
-          accountEmail: this.record.accountEmail,
-          accountPhone: this.record.accountPhone,
-          accountStatus: this.record.accountStatus,
-          password1: "••••••••",
-          password2: "••••••••",
-        });
-      }
-    }
-  }
-
-  resetData() {
-    this.defaultSelectedKeys = [];
-    this.roleData = [];
-    this.selectedKeys = [];
-    this.isAdd = false;
-    this.isEdit = false;
-    this.isRole = false;
-  }
-
-  setFlag(type: string) {
-    if (type === "role") {
-      this.isRole = true;
-    } else if (type === "add") {
-      this.isAdd = true;
-    } else if (type === "edit") {
-      this.isEdit = true;
-    }
-  }
-
-  checkConfirmPassword(
-    rules: ValidationRule,
-    value: string,
-    callback: Function
-  ) {
-    const password1 = this.form.getFieldValue("password1");
-    if (password1 && password1 !== value) {
-      callback(new Error(this.$t("account.password.mismatch") as string));
-    } else {
-      callback();
-    }
-  }
-
-  processRoleData(roles: any[]) {
-    roles.forEach((role) => {
-      const item: any = {};
-      item.key = role.roleId;
-      item.title = role.roleName;
-      this.roleData.push(item);
-      if (role.hasRole) {
-        this.defaultSelectedKeys.push(role.roleId);
-      }
-    });
-    this.selectedKeys = this.defaultSelectedKeys;
-  }
-
-  resetSelected() {
-    this.selectedKeys = this.defaultSelectedKeys;
-  }
-
-  handleChange(targetKeys: any[]) {
-    this.selectedKeys = targetKeys;
-  }
-
-  renderItem(record: any) {
-    return {
-      label: record.title,
-      value: record.key,
-    };
-  }
-
-  handleClose() {
-    this.$emit("cancel");
-  }
-
-  handleOk(result: any) {
-    this.$emit("ok", result);
-  }
-
-  handleSetRole() {
-    this.loading = true;
-    companyAPI
-      .setAccountRoles(this.record.accountId, this.selectedKeys)
-      .then(() => {
-        this.handleClose();
-      })
-      .catch((error) => {
-        this.$message.error(error.message);
-      })
-      .finally(() => {
-        this.loading = false;
+      this.fields.forEach((v) => this.form.getFieldDecorator(v, {}));
+      this.form.setFieldsValue({
+        brandId: this.record.brandId,
+        brandName: this.record.brandName,
       });
+      if (this.record.brandLogo) {
+        const file: any = {
+          uid: "-1",
+          name: "logo.png",
+          url: `http://${this.record.brandLogo}`,
+        };
+        this.brandLogoList.push(file);
+      }
+    } else {
+      this.form.resetFields();
+    }
   }
 
-  handleSave() {
+  handleOk() {
     this.loading = true;
+    const pic: any = this.brandLogoList[0];
     this.form.validateFields((err, values) => {
       if (!err) {
-        const account: any = {};
-        account.accountId = values.accountId || "-1";
-        account.accountAvatar = this.record.accountAvatar;
-        account.accountName = values.accountName;
-        account.accountEmail = values.accountEmail;
-        account.accountFullName = values.accountFullName;
-        account.accountStatus = values.accountStatus;
-        account.accountPhone = values.accountPhone;
-        if (values.password1 === "••••••••") {
-          account.accountPassword = this.record.accountPassword;
-        } else {
-          account.accountPassword = md5(values.password1);
+        const brand: any = {};
+        brand.brandId = values.brandId || "-1";
+        brand.brandName = values.brandName;
+        brand.companyId = "0";
+        let isAdd = false;
+        if (brand.brandId === "-1") {
+          isAdd = true;
         }
-        this.loading = false;
-        companyAPI
-          .saveCompanyAccount(account)
-          .then((result) => {
-            this.handleOk(result.data);
-          })
-          .catch((error) => {
-            this.$message.error(error.message);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+        if (pic && pic.uid !== "-1") {
+          cosAPI
+            .uploadFile(
+              pic.originFileObj,
+              isAdd ? undefined : brand.brandId,
+              "logo.png"
+            )
+            .then((result: any) => {
+              brand.brandId = result.targetId;
+              brand.brandLogo = result.Location;
+              productAPI
+                .saveBrand(brand, isAdd)
+                .then((result: any) => {
+                  this.$emit("ok", result.data);
+                })
+                .catch((error) => {
+                  this.$message.error(error.message);
+                })
+                .finally(() => {
+                  this.loading = false;
+                });
+            })
+            .catch((error) => {
+              this.$message.error(error.message);
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        } else {
+          brand.brandLogo = this.record.brandLogo;
+          productAPI
+            .saveBrand(brand, isAdd)
+            .then((result: any) => {
+              this.$emit("ok", result.data);
+            })
+            .catch((error) => {
+              this.$message.error(error.message);
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        }
       } else {
         this.loading = false;
       }
     });
+  }
+
+  handleCancel() {
+    this.$emit("cancel");
   }
 }
 </script>

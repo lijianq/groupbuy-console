@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="800"
+    :width="700"
     :dialog-style="{ top: '50px' }"
     :visible="visible"
     @ok="handleOk"
@@ -194,8 +194,7 @@ import md5 from "md5";
 
 @Component
 export default class AccountOperation extends Vue {
-  @Prop({ type: String, default: "" })
-  title: string | undefined;
+  title: string = this.$t("router.menu.company.account").toString();
 
   @Prop({ type: Boolean, default: false })
   visible = false;

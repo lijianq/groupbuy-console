@@ -48,10 +48,6 @@
       >
         <template>
           <a @click="handleEdit(record)">{{ $t("route.action.modify") }}</a>
-          <a-divider type="vertical" />
-          <a @click="handleDelete([record.routeId])">{{
-            $t("route.action.delete")
-          }}</a>
           <span v-if="record.routeType !== 'Group'">
             <a-divider type="vertical" />
             <a @click="handleAction(record)">{{

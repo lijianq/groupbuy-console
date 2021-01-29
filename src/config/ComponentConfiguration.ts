@@ -18,6 +18,8 @@ export class ComponentConfiguration {
         ProductBrand: () => import('@/views/product/brand/ProductBrand.vue'),
         // Home
         Dashboard: () => import('@/views/home/Dashboard.vue'),
-
+        // Operation
+        OpLogistics: () => import('@/views/operation/logistics/Logistics.vue'),
+        OpFreight: () => import('@/views/operation/freight/Freight.vue'),
     }
 }

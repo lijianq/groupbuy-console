@@ -3,10 +3,10 @@
     <div class="table-operator">
       <a-button
         type="primary"
-        class="operation-button"
+        class="add-button"
         icon="plus"
         @click="handleAdd"
-        >{{ $t("system.route.create") }}</a-button
+        >{{ $t("product.category.create") }}</a-button
       >
       <a-button
         type="danger"
@@ -18,44 +18,45 @@
       >
     </div>
 
+    <div>
+      <a-select
+        show-search
+        :showArrow="false"
+        size="large"
+        :placeholder="$t('product.category.select')"
+        option-filter-prop="children"
+        style="width: 100%; margin-bottom: 3px;"
+        :filter-option="filterOption"
+        :value="selectedTopCatId"
+        @change="handleChange"
+      >
+        <a-select-option
+          v-for="record in selectOptiondata"
+          :key="record.categoryId"
+          :value="record.categoryId"
+        >
+          {{ record.categoryName }}
+        </a-select-option>
+      </a-select>
+    </div>
     <a-table
       :columns="columns"
-      :data-source="data"
+      :data-source="treeData"
       :row-selection="rowSelection"
       :pagination="false"
       :loading="dataLoading"
-      rowKey="routeId"
+      :rowKey="
+        (record) => {
+          return record.category.categoryId;
+        }
+      "
     >
-      <span slot="name" slot-scope="text">
-        <template>
-          {{ $t(text) }}
-        </template>
-      </span>
-      <span slot="icon" slot-scope="text">
-        <template>
-          <a-icon :type="text" style="margin-right: 5px;"></a-icon>
-        </template>
-      </span>
-      <span slot="type" slot-scope="text">
-        <template>
-          {{ $t(`system.route.${text.toLowerCase()}`) }}
-        </template>
-      </span>
-      <span
-        v-if="record.routeType !== 'Preset'"
-        slot="action"
-        slot-scope="text, record"
-      >
+      <span slot="action" slot-scope="text, record">
         <template>
           <a @click="handleEdit(record)">{{ $t("route.action.modify") }}</a>
           <a-divider type="vertical" />
-          <a @click="handleDelete([record.routeId])">{{
-            $t("route.action.delete")
-          }}</a>
-          <span v-if="record.routeType === 'Group'">
-            <a-divider type="vertical" />
-            <a @click="addChild(record)">{{ $t("system.route.child") }}</a>
-          </span>
+          <a @click="addChild(record)">{{ $t("product.category.child") }}</a>
+          <a-divider type="vertical" />
         </template>
       </span>
     </a-table>
@@ -74,9 +75,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import ProductCategoryOperation from "./ProductCategoryOperation.vue";
-import SystemAPI from "@/api/system/SystemAPI";
+import ProductAPI from "@/api/product/ProductAPI";
 import { WrappedFormUtils } from "ant-design-vue/types/form/form";
 import { Modal } from "ant-design-vue";
+import productAPI from "@/api/product/ProductAPI";
+import cosAPI from "@/api/cos/CosAPI";
 
 @Component({
   components: {
@@ -87,19 +90,8 @@ export default class ProductCategory extends Vue {
   get columns() {
     return [
       {
-        title: this.$t("system.route.name"),
-        dataIndex: "routeName",
-        scopedSlots: { customRender: "name" },
-      },
-      {
-        title: this.$t("system.route.icon"),
-        dataIndex: "routeMeta.icon",
-        scopedSlots: { customRender: "icon" },
-      },
-      {
-        title: this.$t("system.route.type"),
-        dataIndex: "routeType",
-        scopedSlots: { customRender: "type" },
+        title: this.$t("product.category.name"),
+        dataIndex: "category.categoryName",
       },
       {
         title: this.$t("common.action"),
@@ -109,31 +101,55 @@ export default class ProductCategory extends Vue {
     ];
   }
 
-  data: any[] = [];
+  selectOptiondata: any[] = [];
+  selectedTopCatId: string = "";
+  treeData: any[] = [];
   dataLoading = false;
 
   rowSelection: any = {
     selectedRowKeys: [],
     onChange: this.onChange,
-    getCheckboxProps: this.canSelected,
     onSelect: this.onSelect,
   };
 
   mdl: any = null;
   visible = false;
   confirmLoading = false;
-
   actionVisible = false;
 
   created() {
-    this.refreshData();
+    this.getRootCategories();
   }
 
-  refreshData() {
+  getRootCategories() {
     this.dataLoading = true;
-    SystemAPI.getRoutes()
-      .then((response) => {
-        this.data = response.data as any[];
+    ProductAPI.getRootCategories()
+      .then((response: any) => {
+        this.selectOptiondata = response.data;
+      })
+      .catch((error) => {
+        this.$message.error(error.message);
+      })
+      .finally(() => {
+        this.dataLoading = false;
+      });
+  }
+
+  filterOption(input: any, option: any) {
+    return (
+      option.componentOptions.children[0].text
+        .toLowerCase()
+        .indexOf(input.toLowerCase()) >= 0
+    );
+  }
+
+  handleChange(value: any) {
+    this.selectedTopCatId = value;
+    this.dataLoading = true;
+    ProductAPI.getCategoryTree(value)
+      .then((response: any) => {
+        this.treeData = [];
+        this.treeData = response.data;
         this.rowSelection.selectedRowKeys = [];
       })
       .catch((error) => {
@@ -162,18 +178,18 @@ export default class ProductCategory extends Vue {
     if (children && children.length > 0) {
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        cids.push(child.routeId);
+        cids.push(child.category.categoryId);
         this.fetchChidrenIds(child, cids);
       }
     }
   }
 
   fetchSelectedPIds(record: any, selectedRows: any[], pids: string[]) {
-    const parentId: string = record.routeParentId;
+    const parentId: string = record.category.parentCategoryId;
     if (parentId !== "0") {
       pids.push(parentId);
       const parents: any[] = selectedRows.filter(
-        (item) => item.routeId === parentId
+        (item) => item.category.categoryId === parentId
       );
       if (parents && parents.length > 0) {
         this.fetchSelectedPIds(parents[0], selectedRows, pids);
@@ -186,8 +202,10 @@ export default class ProductCategory extends Vue {
     if (children && children.length > 0) {
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        if (!this.rowSelection.selectedRowKeys.includes(child.routeId)) {
-          this.rowSelection.selectedRowKeys.push(child.routeId);
+        if (
+          !this.rowSelection.selectedRowKeys.includes(child.category.categoryId)
+        ) {
+          this.rowSelection.selectedRowKeys.push(child.category.categoryId);
         }
         this.selectChildren(child);
       }
@@ -210,30 +228,25 @@ export default class ProductCategory extends Vue {
     );
   }
 
-  canSelected(record: any) {
-    if (record.routeType === "Preset") {
-      return {
-        props: {
-          disabled: true,
-        },
-      };
-    }
-    return { props: {} };
-  }
-
   handleEdit(record: any) {
     this.visible = true;
     this.mdl = { ...record };
   }
 
   handleAdd() {
-    this.mdl = {};
+    this.mdl = {
+      category: {},
+    };
     this.visible = true;
   }
 
   addChild(record: any) {
+    const category = {
+      parentCategoryId: record.category.categoryId,
+      topCategoryId: this.selectedTopCatId,
+    };
     this.mdl = {
-      routeParentId: record.routeId,
+      category: category,
     };
     this.visible = true;
   }
@@ -241,47 +254,95 @@ export default class ProductCategory extends Vue {
   handleOk() {
     const ref: any = this.$refs.createModal;
     const form: WrappedFormUtils = ref.form;
+    const pic: any = ref.categoryPicList[0];
     this.confirmLoading = true;
     form.validateFields((err, values) => {
       if (!err) {
-        const route: any = {};
-        const meta: any = {};
-        route.routeId = values.routeId || "-1";
-        route.routeParentId = values.routeParentId || "0";
-        route.routeName = values.routeName;
-        route.routeComponent = values.routeComponent;
-        route.routeType = values.routeType;
-        route.routePath = `/${values.routePath}`;
-        if (values.routeRedirect) {
-          route.routeRedirect = `/${values.routeRedirect}`;
-        } else {
-          route.routeRedirect = values.routeRedirect;
+        const category: any = {};
+        category.categoryId = values.categoryId || "-1";
+        category.parentCategoryId = values.parentCategoryId || "0";
+        category.categoryName = values.categoryName;
+        category.topCategoryId = this.selectedTopCatId || "-1";
+        category.companyId = "0";
+        let isAdd = false;
+        if (category.categoryId === "-1") {
+          isAdd = true;
         }
-        meta.icon = values.routeIcon;
-        meta.title = values.routeName;
-        route.routeMeta = JSON.stringify(meta);
-        SystemAPI.createRoute(route)
-          .then(() => {
-            this.visible = false;
-            this.refreshData();
-          })
-          .catch((error) => {
-            this.$message.error(error.message);
-          })
-          .finally(() => {
-            form.resetFields();
-            this.confirmLoading = false;
-            this.visible = false;
-          });
+        if (pic && pic.uid !== "-1") {
+          cosAPI
+            .uploadFile(
+              pic.originFileObj,
+              isAdd ? undefined : category.categoryId,
+              "cat-pic.png"
+            )
+            .then((result: any) => {
+              category.categoryId = result.targetId;
+              category.categoryPic = result.Location;
+              productAPI
+                .saveCategory(category, isAdd)
+                .then((result: any) => {
+                  const newCat = result.data;
+                  this.updateData(newCat);
+                  this.visible = false;
+                })
+                .catch((error) => {
+                  this.$message.error(error.message);
+                })
+                .finally(() => {
+                  this.confirmLoading = false;
+                });
+            })
+            .catch((error) => {
+              this.$message.error(error.message);
+            })
+            .finally(() => {
+              this.confirmLoading = false;
+            });
+        } else {
+          category.categoryPic = ref.model.category.categoryPic;
+          productAPI
+            .saveCategory(category, isAdd)
+            .then((result: any) => {
+              const newCat = result.data;
+              this.updateData(newCat);
+              this.visible = false;
+            })
+            .catch((error) => {
+              this.$message.error(error.message);
+            })
+            .finally(() => {
+              this.confirmLoading = false;
+            });
+        }
       } else {
         this.confirmLoading = false;
       }
     });
   }
+
+  updateData(category: any) {
+    if (category.parentCategoryId === "0") {
+      const newOption: any = {};
+      newOption.categoryId = category.categoryId;
+      newOption.categoryName = category.categoryName;
+      this.selectOptiondata = this.selectOptiondata.filter(
+        (item) => item.categoryId !== newOption.categoryId
+      );
+      this.selectOptiondata.push(newOption);
+    }
+    if (
+      this.selectedTopCatId &&
+      this.selectedTopCatId === category.topCategoryId
+    ) {
+      this.handleChange(this.selectedTopCatId);
+    }
+  }
+
   handleCancel() {
     const ref: any = this.$refs.createModal;
     const form: WrappedFormUtils = ref.form;
     form.resetFields();
+    ref.categoryPicList = [];
     this.visible = false;
   }
 
@@ -297,13 +358,22 @@ export default class ProductCategory extends Vue {
             twoToneColor: "#FF0000",
           },
         }),
-      title: this.$t("system.route.action.delete.title"),
-      content: this.$t("system.route.action.delete.content"),
+      title: this.$t("product.category.delete.title"),
+      content: this.$t("product.category.delete.content"),
       onOk: () => {
         this.dataLoading = true;
-        SystemAPI.deleteRoutes(ids)
+        productAPI
+          .deleteCategory(ids)
           .then(() => {
-            this.refreshData();
+            if (ids.includes(this.selectedTopCatId)) {
+              this.selectOptiondata = this.selectOptiondata.filter(
+                (item) => item.categoryId !== this.selectedTopCatId
+              );
+              this.selectedTopCatId = "";
+              this.treeData = [];
+            } else {
+              this.handleChange(this.selectedTopCatId);
+            }
           })
           .catch((error) => {
             this.$message.error(error.message);
@@ -319,3 +389,13 @@ export default class ProductCategory extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+button.add-button {
+  margin-right: 12px;
+  padding: 0 15px;
+  font-size: 14px;
+  height: 32px;
+  width: 150px;
+}
+</style>

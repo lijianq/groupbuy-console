@@ -238,7 +238,9 @@ export default class RouteAction extends Vue {
     }
 
     const request: any = {};
-    request.routeAction = editingRecord;
+    request.routeActionId = editingRecord.routeActionId;
+    request.routeId = editingRecord.routeId;
+    request.routeActionType = editingRecord.routeActionType;
     request.resourceIds = this.checkedValues;
 
     SystemAPI.createRouteAction(request)
