@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-card :border="fasle">
     <div class="table-operator">
       <a-button
         type="primary"
@@ -51,7 +51,7 @@
       @cancel="handleCancel"
       @ok="handleOk"
     />
-  </div>
+  </a-card>
 </template>
 
 <script lang="ts">

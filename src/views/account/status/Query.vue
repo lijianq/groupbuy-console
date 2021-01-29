@@ -9,39 +9,41 @@
       </a-step>
     </a-steps>
     <div class="content">
-      <query-input v-if="currentStep === 0" @nextStep="nextStep"/>
-      <query-result :queryResult="queryResult" v-if="currentStep === 1" @finish="finish"/>
+      <query-input v-if="currentStep === 0" @nextStep="nextStep" />
+      <query-result
+        :queryResult="queryResult"
+        v-if="currentStep === 1"
+        @finish="finish"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import QueryInput from './QueryInput.vue'
-import QueryResult from './QueryResult.vue'
+import { Component, Vue } from "vue-property-decorator";
+import QueryInput from "./QueryInput.vue";
+import QueryResult from "./QueryResult.vue";
 
 @Component({
-    components : {
-        QueryInput,
-        QueryResult
-    }
+  components: {
+    QueryInput,
+    QueryResult,
+  },
 })
 export default class Query extends Vue {
+  currentStep = 0;
+  queryResult = {};
 
-    currentStep = 0
-    queryResult = {}
-
-    nextStep(data: any) {
-        this.queryResult = data
-        if (this.currentStep < 1) {
-            this.currentStep += 1
-        }
+  nextStep(data: any) {
+    this.queryResult = data;
+    if (this.currentStep < 1) {
+      this.currentStep += 1;
     }
+  }
 
-    finish() {
-        this.currentStep = 0
-    }
-
+  finish() {
+    this.currentStep = 0;
+  }
 }
 </script>
 

@@ -1,13 +1,16 @@
 <template>
-  <div id="accountLayout" :class="['account-layout-wrapper', isMobile && 'mobile']">
+  <div
+    id="accountLayout"
+    :class="['account-layout-wrapper', isMobile && 'mobile']"
+  >
     <div class="container">
       <div style="float: right; margin-right: 20px;">
-        <lang-selector/>
+        <lang-selector />
       </div>
       <router-view />
       <div class="footer">
         <div class="copyright">
-          {{ $t('common.copyright')}}
+          {{ $t("common.copyright") }}
         </div>
       </div>
     </div>
@@ -15,31 +18,29 @@
 </template>
 
 <script lang="ts">
-import {Component,Vue} from 'vue-property-decorator'
-import AppRuntimeModule from '@/store/modules/AppRuntime'
-import LangSelector from '@/components/globalheader/lang/LangSelector'
+import { Component, Vue } from "vue-property-decorator";
+import AppRuntimeModule from "@/store/modules/AppRuntime";
+import LangSelector from "@/components/globalheader/lang/LangSelector";
 
 @Component({
-    components: {
-        LangSelector
-    }
+  components: {
+    LangSelector,
+  },
 })
 export default class AccountLayout extends Vue {
+  isMobile = AppRuntimeModule.isMobile;
 
-    isMobile = AppRuntimeModule.isMobile
+  constructor() {
+    super();
+  }
 
-    constructor() {
-        super()
-    }
+  mounted() {
+    document.body.classList.add("accountLayout");
+  }
 
-    mounted() {
-        document.body.classList.add('accountLayout')
-    }
-
-    beforeDestroy() {
-        document.body.classList.remove('accountLayout')
-    }
-
+  beforeDestroy() {
+    document.body.classList.remove("accountLayout");
+  }
 }
 </script>
 
@@ -70,16 +71,15 @@ export default class AccountLayout extends Vue {
 
     .main {
       min-width: 260px;
-      width: 368px;
-      margin: 0 auto;
+      width: 468px;
+      margin: 40px auto;
     }
 
     .footer {
       position: absolute;
       width: 100%;
-      bottom: 0;
       padding: 0 16px;
-      margin: 0 0 24px;
+      margin: 30px 0 0;
       text-align: center;
 
       .copyright {

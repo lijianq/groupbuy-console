@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-card :border="false">
     <div v-if="currentIndex === 0">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -67,22 +67,37 @@
     <div v-if="currentIndex === 1">
       <a-tabs default-active-key="1">
         <a-tab-pane key="1" :tab="$t('operation.freight.add')">
-          <a-form layout="inline">
-            <a-row>
-              <a-col>
-                <a-form-item :label="$t('operation.freight.name')">
-                  <a-input
-                    v-model="queryParam.freightName"
-                    :placeholder="$t('common.input.search.hint')"
-                  />
-                </a-form-item>
-              </a-col>
-            </a-row>
+          <a-form
+            :form="form"
+            id="logisticsOpForm"
+            v-bind="formLayout"
+            labelAlign="left"
+          >
+            <a-form-item :label="$t('operation.freight.id')">
+              <a-input v-decorator="['logisticsId']" disabled />
+            </a-form-item>
+            <a-form-item :label="$t('operation.freight.name')">
+              <a-input
+                v-decorator="[
+                  'freightName',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        max: 100,
+                        message: $t('operation.freight.name.required'),
+                      },
+                    ],
+                  },
+                ]"
+              >
+              </a-input>
+            </a-form-item>
           </a-form>
         </a-tab-pane>
       </a-tabs>
     </div>
-  </div>
+  </a-card>
 </template>
 
 <script lang="ts">
@@ -92,6 +107,16 @@ import { Modal } from "ant-design-vue";
 
 @Component
 export default class Freight extends Vue {
+  formLayout: any = {
+    labelCol: {
+      xs: { span: 12 },
+      sm: { span: 3 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 12 },
+    },
+  };
   currentIndex = 0;
   queryParam: any = {};
   get columns() {

@@ -9,38 +9,42 @@
       </a-step>
     </a-steps>
     <div class="content">
-      <reset-password v-if="currentStep === 0" @nextStep="nextStep"/>
-      <reset-finish v-if="currentStep === 1" @prevStep="prevStep" @finish="finish"/>
+      <reset-password v-if="currentStep === 0" @nextStep="nextStep" />
+      <reset-finish
+        v-if="currentStep === 1"
+        @prevStep="prevStep"
+        @finish="finish"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import ResetPassword from './ResetPassword.vue'
-import ResetFinish from './ResetFinish.vue'
+import { Component, Vue } from "vue-property-decorator";
+import ResetPassword from "./ResetPassword.vue";
+import ResetFinish from "./ResetFinish.vue";
 
 @Component({
-    components: {
-        ResetPassword,
-        ResetFinish
-    }
+  components: {
+    ResetPassword,
+    ResetFinish,
+  },
 })
 export default class ForgotPassword extends Vue {
-    currentStep = 0
-    nextStep() {
-        if (this.currentStep < 1) {
-            this.currentStep += 1
-        }
+  currentStep = 0;
+  nextStep() {
+    if (this.currentStep < 1) {
+      this.currentStep += 1;
     }
-    prevStep() {
-        if (this.currentStep > 0) {
-            this.currentStep -= 1
-        }
+  }
+  prevStep() {
+    if (this.currentStep > 0) {
+      this.currentStep -= 1;
     }
-    finish() {
-        this.currentStep = 0
-    }
+  }
+  finish() {
+    this.currentStep = 0;
+  }
 }
 </script>
 

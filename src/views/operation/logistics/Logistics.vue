@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-card :border="false">
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="48">
@@ -69,7 +69,7 @@
       @cancel="handleCancel"
       @ok="handleOk"
     />
-  </div>
+  </a-card>
 </template>
 
 <script lang="ts">

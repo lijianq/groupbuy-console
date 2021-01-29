@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <a-card :border="false">
     <div class="table-operator">
       <a-button
         type="primary"
@@ -76,7 +76,7 @@
       :route="currentRoute"
       @cancel="handleActionCancel"
     />
-  </div>
+  </a-card>
 </template>
 
 <script lang="ts">

@@ -1,15 +1,17 @@
 <template>
-  <a-tabs default-active-key="1">
-    <a-tab-pane key="1" :tab="$t('account.basic.setting')">
-      <basic-setting
-        :account="account"
-        @accountChanged="accountChanged"
-      ></basic-setting>
-    </a-tab-pane>
-    <a-tab-pane key="2" :tab="$t('account.security.setting')">
-      <security-setting :account="account"></security-setting>
-    </a-tab-pane>
-  </a-tabs>
+  <a-card :border="fasle">
+    <a-tabs default-active-key="1">
+      <a-tab-pane key="1" :tab="$t('account.basic.setting')">
+        <basic-setting
+          :account="account"
+          @accountChanged="accountChanged"
+        ></basic-setting>
+      </a-tab-pane>
+      <a-tab-pane key="2" :tab="$t('account.security.setting')">
+        <security-setting :account="account"></security-setting>
+      </a-tab-pane>
+    </a-tabs>
+  </a-card>
 </template>
 
 <script lang="ts">
