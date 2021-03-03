@@ -16,6 +16,7 @@ export class ComponentConfiguration {
         // Product
         ProductCategory: () => import('@/views/product/category/ProductCategory.vue'),
         ProductBrand: () => import('@/views/product/brand/ProductBrand.vue'),
+        Attribute: () => import('@/views/product/attribute/Attribute.vue'),
         // Home
         Dashboard: () => import('@/views/home/Dashboard.vue'),
         // Operation

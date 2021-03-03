@@ -1,5 +1,5 @@
 <template>
-  <a-card :border="fasle" class="main">
+  <a-card :border="false" class="main">
     <div class="top">
       <div class="header">
         <img src="~@/assets/logo.svg" class="logo" alt="logo" />

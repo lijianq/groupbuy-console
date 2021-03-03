@@ -4,14 +4,29 @@
       <a-form layout="inline">
         <a-row :gutter="48">
           <a-col :md="8" :sm="24">
-            <a-form-item :label="$t('role.name')">
+            <a-form-item :label="$t('product.attribute.name')">
               <a-input
-                v-model="queryParam.roleName"
+                v-model="queryParam.attributeName"
                 :placeholder="$t('common.input.search.hint')"
               />
             </a-form-item>
           </a-col>
-          <a-col :md="12" :sm="24">
+          <a-col :md="8" :sm="24">
+            <a-form-item :label="$t('product.attribute.type')">
+              <a-select
+                v-model="queryParam.attributeType"
+                :placeholder="$t('common.select.search.hint')"
+              >
+                <a-select-option value="0">{{
+                  $t("product.attribute.type.0")
+                }}</a-select-option>
+                <a-select-option value="1">{{
+                  $t("product.attribute.type.1")
+                }}</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="8" :sm="24">
             <a-button
               type="primary"
               class="query-button"
@@ -32,7 +47,7 @@
         class="operation-button"
         @click="handleAdd"
         icon="plus"
-        >{{ $t("role.add") }}</a-button
+        >{{ $t("product.attribute.add") }}</a-button
       >
       <a-button
         type="danger"
@@ -45,7 +60,7 @@
     </div>
 
     <a-table
-      rowKey="roleId"
+      rowKey="attributeId"
       :loading="loading"
       :pagination="pagination"
       :columns="columns"
@@ -53,21 +68,22 @@
       :rowSelection="rowSelection"
       @change="handleChange"
     >
+      <span slot="attributeType" slot-scope="text">
+        <template>
+          {{ $t(`product.attribute.type.${text.toString()}`) }}
+        </template>
+      </span>
       <span slot="action" slot-scope="text, record">
         <template>
           <div>
             <a @click="handleEdit(record)">{{ $t("route.action.edit") }}</a>
-            <a-divider type="vertical" />
-            <a @click="handlePermission(record)">{{
-              $t("route.action.permission")
-            }}</a>
           </div>
         </template>
       </span>
     </a-table>
 
-    <role-operation
-      ref="roleOperation"
+    <attribute-operation
+      ref="attributeOperation"
       :visible="visible"
       :record="currentRecord"
       @cancel="handleCancel"
@@ -78,26 +94,27 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import companyAPI from "@/api/company/CompanyAPI";
+import productAPI from "@/api/product/ProductAPI";
 import { Modal } from "ant-design-vue";
-import RoleOperation from "./RoleOperation.vue";
+import AttributeOperation from "./AttributeOperation.vue";
 
 @Component({
   components: {
-    RoleOperation,
+    AttributeOperation,
   },
 })
-export default class RoleManage extends Vue {
+export default class Attribute extends Vue {
   queryParam: any = {};
   get columns() {
     return [
       {
-        title: this.$t("role.id"),
-        dataIndex: "roleId",
+        title: this.$t("product.attribute.name"),
+        dataIndex: "attributeName",
       },
       {
-        title: this.$t("role.name"),
-        dataIndex: "roleName",
+        title: this.$t("product.attribute.type"),
+        dataIndex: "attributeType",
+        scopedSlots: { customRender: "attributeType" },
       },
       {
         title: this.$t("common.action"),
@@ -136,10 +153,10 @@ export default class RoleManage extends Vue {
     this.rowSelection.selectedRowKeys = selectedRowKeys;
   }
 
-  getCompanyRoles(query: any) {
+  getBrands(query: any) {
     this.loading = true;
-    companyAPI
-      .getCompanyRoles(query)
+    productAPI
+      .getBrands(query)
       .then((result: any) => {
         const records: any = result.data;
         const pagination = { ...this.pagination };
@@ -160,7 +177,7 @@ export default class RoleManage extends Vue {
     const query: any = { ...this.queryParam };
     query.pageNumber = this.pagination.current;
     query.pageSize = this.pagination.pageSize;
-    this.getCompanyRoles(query);
+    this.getBrands(query);
   }
 
   handleQuery() {
@@ -194,12 +211,12 @@ export default class RoleManage extends Vue {
             twoToneColor: "#FF0000",
           },
         }),
-      title: this.$t("role.delete.title"),
-      content: this.$t("role.delete.content"),
+      title: this.$t("product.brand.delete.title"),
+      content: this.$t("product.brand.delete.content"),
       onOk: () => {
         this.loading = true;
-        companyAPI
-          .deleteCompanyRoles(this.rowSelection.selectedRowKeys)
+        productAPI
+          .deleteBrand(this.rowSelection.selectedRowKeys)
           .then(() => {
             this.rowSelection.selectedRowKeys = [];
             this.handleQuery();
@@ -219,8 +236,9 @@ export default class RoleManage extends Vue {
 
   handleOk(result: any) {
     this.visible = false;
-    if (this.currentRecord.roleId) {
-      this.currentRecord.roleName = result.roleName;
+    if (this.currentRecord.brandId) {
+      this.currentRecord.brandName = result.brandName;
+      this.currentRecord.brandLogo = result.brandLogo;
     } else {
       this.rowSelection.selectedRowKeys = [];
       this.handleQuery();
@@ -237,22 +255,22 @@ export default class RoleManage extends Vue {
     }, 150);
   }
 
-  handlePermission(record: any) {
-    this.currentRecord = record;
-    this.currentRecord.type = "permission";
-    this.visible = true;
-  }
-
   handleAdd() {
     this.currentRecord = {};
-    this.currentRecord.type = "add";
     this.visible = true;
   }
 
   handleEdit(record: any) {
     this.currentRecord = record;
-    this.currentRecord.type = "edit";
     this.visible = true;
   }
 }
 </script>
+<style lang="less" scoped>
+.logo {
+  height: 32px;
+  vertical-align: center;
+  margin-right: 10px;
+  border-style: none;
+}
+</style>

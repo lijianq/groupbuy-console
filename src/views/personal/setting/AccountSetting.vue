@@ -1,5 +1,5 @@
 <template>
-  <a-card :border="fasle">
+  <a-card :border="false">
     <a-tabs default-active-key="1">
       <a-tab-pane key="1" :tab="$t('account.basic.setting')">
         <basic-setting

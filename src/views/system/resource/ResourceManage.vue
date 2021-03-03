@@ -1,5 +1,5 @@
 <template>
-  <a-card :border="fasle">
+  <a-card :border="false">
     <div class="table-operator">
       <a-button
         type="primary"

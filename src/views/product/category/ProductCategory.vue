@@ -370,6 +370,7 @@ export default class ProductCategory extends Vue {
                 (item) => item.categoryId !== this.selectedTopCatId
               );
               this.selectedTopCatId = "";
+              this.rowSelection.selectedRowKeys = [];
               this.treeData = [];
             } else {
               this.handleChange(this.selectedTopCatId);
