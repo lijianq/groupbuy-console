@@ -13,8 +13,7 @@ const router = new VueRouter(
         routes: RouterConfiguration.constantRoutes
     })
 
-
-router.beforeEach( (to, from, next) => {
+router.beforeEach((to, from, next) => {
     routerGuard.beforeEach(to, from, next)
 })
 
@@ -23,4 +22,3 @@ router.afterEach(() => {
 })
 
 export default router
-

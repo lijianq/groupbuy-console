@@ -5,7 +5,7 @@ class Account {
 
     getAccount() {
         let account: string | null
-        if ( AppPreferenceModule.getAutoLogin()) {
+        if (AppPreferenceModule.getAutoLogin()) {
             account = localStorage.getItem(StorageKeys.accountKey)
         } else {
             account = sessionStorage.getItem(StorageKeys.accountKey)
@@ -14,7 +14,7 @@ class Account {
     }
 
     setAccount(account: any) {
-        if ( AppPreferenceModule.getAutoLogin()) {
+        if (AppPreferenceModule.getAutoLogin()) {
             localStorage.setItem(StorageKeys.accountKey, JSON.stringify(account))
         } else {
             sessionStorage.setItem(StorageKeys.accountKey, JSON.stringify(account))

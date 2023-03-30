@@ -5,6 +5,7 @@ declare module 'lodash.get'
 declare module 'lodash.pick'
 declare module 'v-charts'
 declare module 'vue-cropper'
+declare module 'print-js'
 declare module '*.svg?inline' {
     const content: any
     export default content

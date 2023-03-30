@@ -10,7 +10,7 @@
       <router-view />
       <div class="footer">
         <div class="copyright">
-          {{ $t("common.copyright") }}
+          {{ $t("platform.copyright") }}
         </div>
       </div>
     </div>

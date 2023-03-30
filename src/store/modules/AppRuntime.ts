@@ -1,12 +1,8 @@
-import {Module, VuexModule, getModule, Mutation} from 'vuex-module-decorators'
+import { Module, VuexModule, getModule, Mutation } from 'vuex-module-decorators'
 import store from '@/store'
 
-@Module({ name: 'appRuntime', dynamic: true, namespaced: true, store: store})
+@Module({ name: 'appRuntime', dynamic: true, namespaced: true, store: store })
 class AppRuntime extends VuexModule {
-
-    public menus: any = null
-
-    public routes: any = null
 
     public isMobile = false
 
@@ -20,16 +16,6 @@ class AppRuntime extends VuexModule {
     @Mutation
     setMobileMode(isMobile: boolean) {
         this.isMobile = isMobile
-    }
-
-    @Mutation
-    setMenus(menus: any) {
-        this.menus = menus
-    }
-
-    @Mutation
-    setRoutes(routes: any) {
-        this.routes = routes
     }
 
 }

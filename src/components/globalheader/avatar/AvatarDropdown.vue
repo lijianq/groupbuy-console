@@ -1,24 +1,15 @@
 <template>
-  <a-dropdown
-    v-if="currentAccount && currentAccount.accountId"
-    placement="bottomRight"
-  >
+  <a-dropdown v-if="currentAccount" placement="bottomRight">
     <span class="ant-pro-account-avatar">
       <a-avatar
         size="small"
         :src="avatar"
         class="antd-pro-global-header-index-avatar"
       />
-      <span>{{ currentAccount.accountFullName }}</span>
+      <span>{{ currentAccount.accountFullname }}</span>
     </span>
-
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
-        <a-menu-item v-if="menu" key="settings" @click="goSettings">
-          <a-icon type="setting" />
-          {{ $t("account.setting") }}
-        </a-menu-item>
-        <a-menu-divider v-if="menu" />
         <a-menu-item key="logout" @click="logout">
           <a-icon type="logout" />
           {{ $t("account.logout") }}
@@ -33,10 +24,9 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { AccountModule } from "@/store";
 import { Modal } from "ant-design-vue";
-import accountAPI from "@/api/account/AccountAPI";
 import { RouterConfiguration } from "@/config";
+import { AccountModule } from "@/store";
 
 @Component
 export default class AvatarDropdown extends Vue {
@@ -53,25 +43,11 @@ export default class AvatarDropdown extends Vue {
 
   setData() {
     this.currentAccount = AccountModule.getAccount();
-    let avatarSrc: string = this.currentAccount.accountAvatar;
-    if (avatarSrc != null) {
-      avatarSrc = avatarSrc.trim();
-      if (avatarSrc.toLowerCase().startsWith("http")) {
-        this.avatar = `${avatarSrc}?${Date.now()}`;
-      } else {
-        this.avatar = `http://${avatarSrc}?${Date.now()}`;
-      }
-    } else {
-      this.avatar = require("@/assets/avatars/default.png");
-    }
+    this.avatar = require("@/assets/avatars/default.png");
   }
 
   currentAccountChanged() {
     this.setData();
-  }
-
-  goSettings() {
-    this.$router.push({ path: "/personal/setting" });
   }
 
   logout() {
@@ -81,13 +57,13 @@ export default class AvatarDropdown extends Vue {
       title: this.$t("account.logout"),
       content: this.$t("account.logout.confirm.message"),
       onOk: () => {
-        accountAPI.logout();
+        AccountModule.setAccount({});
         this.$router.push({ path: RouterConfiguration.loginPath }).then(() => {
           location.reload();
         });
       },
       onCancel: () => {
-        console.log("Cancel logout.");
+        //
       },
     });
   }

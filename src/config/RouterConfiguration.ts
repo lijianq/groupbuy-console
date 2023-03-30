@@ -1,17 +1,32 @@
-import {AccountLayout, MainLayout} from '@/layouts'
+import { MainLayout, AccountLayout } from '@/layouts'
 
 export class RouterConfiguration {
 
-    static homePath = "/home";
-
     static loginPath = "/account/login";
 
-    static allowList = ['/account/login', '/account/forgot', '/account/register', '/account/status']
+    static allowList = ['/account/login']
+
+    static homePath = "/home";
 
     static constantRoutes = [
         {
             path: '/',
-            redirect: '/account',
+            redirect: '/home',
+        },
+        {
+            path: '/home',
+            component: MainLayout,
+            redirect: '/home/dashboard',
+            children: [
+                {
+                    path: 'dashboard',
+                    name: 'Dashboard',
+                    meta: {
+                        title: 'home.dashboard.title'
+                    },
+                    component: () => import('@/views/home/Dashboard.vue')
+                },
+            ]
         },
         {
             path: '/account',
@@ -22,33 +37,56 @@ export class RouterConfiguration {
                     path: 'login',
                     name: 'Login',
                     meta: {
-                        title: 'router.account.login'
+                        title: 'account.login.title'
                     },
                     component: () => import('@/views/account/login/Login.vue')
                 },
+            ]
+        },
+        {
+            path: '/manage',
+            component: MainLayout,
+            redirect: '/manage/product',
+            children: [
                 {
-                    path: 'forgot',
-                    name: 'Forgot',
+                    path: 'product',
+                    name: 'Product',
                     meta: {
-                        title: 'router.account.forgot'
+                        title: 'manage.product.title'
                     },
-                    component: () => import('@/views/account/forgot/ForgotPassword.vue')
+                    component: () => import('@/views/manage/Product.vue')
                 },
                 {
-                    path: 'register',
-                    name: 'Register',
+                    path: 'customer',
+                    name: 'Customer',
                     meta: {
-                        title: 'router.account.register'
+                        title: 'manage.customer.title'
                     },
-                    component: () => import('@/views/account/company/Register.vue')
+                    component: () => import('@/views/manage/Customer.vue')
                 },
                 {
-                    path: 'status',
-                    name: 'Status',
+                    path: 'order',
+                    name: 'Order',
                     meta: {
-                        title: 'router.account.status'
+                        title: 'manage.order.title'
                     },
-                    component: () => import('@/views/account/status/Query.vue')
+                    component: () => import('@/views/manage/Order.vue')
+                },
+                {
+                    path: 'productstat',
+                    name: 'ProductStatistic',
+                    meta: {
+                        title: 'manage.statistic.title'
+                    },
+                    component: () => import('@/views/manage/ProductStatistic.vue')
+                },
+                {
+                    path: 'customerstat',
+                    name: 'CustomerStatistic',
+                    meta: {
+                        title: 'manage.statistic.title'
+                    },
+                    component: () => import('@/views/manage/CustomerStatistic.vue')
                 },
             ]
         },
@@ -61,7 +99,7 @@ export class RouterConfiguration {
                     path: '401',
                     name: '401',
                     meta: {
-                        title: 'router.error.401'
+                        title: '401'
                     },
                     component: () => import('@/views/error/401.vue')
                 },
@@ -69,7 +107,7 @@ export class RouterConfiguration {
                     path: '404',
                     name: '404',
                     meta: {
-                        title: 'router.error.404'
+                        title: '404'
                     },
                     component: () => import('@/views/error/404.vue')
                 },
@@ -77,7 +115,7 @@ export class RouterConfiguration {
                     path: '500',
                     name: '500',
                     meta: {
-                        title: 'router.error.500'
+                        title: '500'
                     },
                     component: () => import('@/views/error/500.vue')
                 }
@@ -91,5 +129,63 @@ export class RouterConfiguration {
             redirect: '/error/404',
             hidden: true
         }
+    ]
+
+    static menus = [
+        {
+            id: "1",
+            parentId: "0",
+            name: 'Dashboard',
+            path: '/home/dashboard',
+            meta: { icon: "desktop", title: "menu.dashboard", "show": true }
+        },
+        {
+            id: "2",
+            parentId: "0",
+            name: 'Product',
+            path: '/manage/product',
+            meta: { icon: "appstore", title: "menu.product", "show": true }
+        },
+        {
+            id: "3",
+            parentId: "0",
+            name: 'Customer',
+            path: '/manage/customer',
+            meta: { icon: "team", title: "menu.customer", "show": true }
+        },
+        {
+            id: "4",
+            parentId: "0",
+            name: 'Order',
+            path: '/manage/order',
+            meta: { icon: "shop", title: "menu.order", "show": true }
+        },
+        {
+            id: "5",
+            parentId: "0",
+            Comment: () => import('@/layouts/view/RouteView'),
+            name: 'Statistic',
+            path: '/manage',
+            redirect: '/manage/productstat',
+            meta: { icon: "table", title: "menu.statistic", "show": true },
+            children:
+                [
+                    {
+                        id: "51",
+                        parentId: "5",
+                        name: 'ProductStatistic',
+                        path: '/manage/productstat',
+                        meta: { icon: "bar-chart", title: "menu.statistic.product", "show": true }
+                    },
+                    {
+                        id: "52",
+                        parentId: "5",
+                        name: 'CustomerStatistic',
+                        path: '/manage/customerstat',
+                        meta: { icon: "line-chart", title: "menu.statistic.customer", "show": true }
+                    },
+                ]
+        }
+
     ]
 }

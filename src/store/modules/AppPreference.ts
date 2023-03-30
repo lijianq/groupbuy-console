@@ -16,7 +16,7 @@ class AppPreference {
 
     getLayout() {
         const layout = localStorage.getItem(StorageKeys.layoutKey)
-        return layout ? layout : 'sidemenu'
+        return layout ? layout : 'topmenu'
     }
 
     setTheme(theme: string) {
@@ -52,7 +52,7 @@ class AppPreference {
 
     getColorWeak() {
         const colorWeak = localStorage.getItem(StorageKeys.colorWeakKey)
-        return colorWeak ? ( colorWeak === 'true') : false
+        return colorWeak ? (colorWeak === 'true') : false
     }
 
     setFixedHeader(fixedHeader: boolean) {
@@ -61,7 +61,7 @@ class AppPreference {
 
     getFixedHeader() {
         const fixedHeader = localStorage.getItem(StorageKeys.fixedHeaderKey)
-        return fixedHeader ? ( fixedHeader === 'true') : true
+        return fixedHeader ? (fixedHeader === 'true') : true
     }
 
     setFixSiderbar(fixSiderbar: boolean) {
@@ -70,7 +70,7 @@ class AppPreference {
 
     getFixSiderbar() {
         const fixSiderbar = localStorage.getItem(StorageKeys.fixSiderbarKey)
-        return fixSiderbar ? ( fixSiderbar === 'true') : true
+        return fixSiderbar ? (fixSiderbar === 'true') : true
     }
 
     setAutoHideHeader(autoHideHeader: boolean) {
@@ -79,7 +79,7 @@ class AppPreference {
 
     getAutoHideHeader() {
         const autoHideHeader = localStorage.getItem(StorageKeys.autoHideHeaderKey)
-        return autoHideHeader ? ( autoHideHeader === 'true') : false
+        return autoHideHeader ? (autoHideHeader === 'true') : false
     }
 
     setMultiTab(multiTab: boolean) {
@@ -88,7 +88,7 @@ class AppPreference {
 
     getMultiTab() {
         const multiTab = localStorage.getItem(StorageKeys.multiTabKey)
-        return multiTab ? ( multiTab === 'true') : false
+        return multiTab ? (multiTab === 'true') : false
     }
 
     setAutoLogin(autoLogin: boolean) {
@@ -97,7 +97,7 @@ class AppPreference {
 
     getAutoLogin() {
         const autoLogin = localStorage.getItem(StorageKeys.autoLoginKey)
-        return autoLogin ? ( autoLogin === 'true') : false
+        return autoLogin ? (autoLogin === 'true') : false
     }
 }
 

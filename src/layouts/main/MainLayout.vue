@@ -38,6 +38,7 @@ import { AppPreferenceModule } from "@/store";
 import AppRuntimeModule from "@/store/modules/AppRuntime";
 import { DefaultSetting } from "@/config";
 import RightContent from "@/components/globalheader";
+import { RouterConfiguration } from "@/config";
 
 @Component({
   components: {
@@ -75,9 +76,7 @@ export default class MainLayout extends Vue {
   }
 
   created() {
-    if (AppRuntimeModule.menus) {
-      this.menus = AppRuntimeModule.menus;
-    }
+    this.menus = RouterConfiguration.menus;
   }
 
   mounted() {
